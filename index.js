@@ -1,5 +1,5 @@
 const { Client, Collection } = require('discord.js');
-require('events').EventEmitter.defaultMaxListeners = 20;
+require('events').EventEmitter.defaultMaxListeners = 100;
 
 const client = new Client();
 ['commands', 'aliases'].forEach((x) => (client[x] = new Collection()));

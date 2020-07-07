@@ -1,6 +1,7 @@
 module.exports = {
     name: 'avatar',
-    description: 'Get the avatar URL of the tagged user(s), or your own avatar.',
+    description:
+        'Get the avatar URL of the tagged user(s), or your own avatar.',
     aliases: ['icon', 'pfp'],
     usage: '<user>',
     category: 'basic',
@@ -10,7 +11,9 @@ module.exports = {
                 embed: {
                     title: `Your avatar avatar:`,
                     image: {
-                        url: `${message.author.displayAvatarURL({ dynamic: true })}`,
+                        url: `${message.author.displayAvatarURL({
+                            dynamic: true,
+                        })}`,
                     },
                 },
             });
