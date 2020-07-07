@@ -9,10 +9,13 @@ module.exports = {
     guildOnly: true,
     adminOnly: true,
     category: 'initialization',
-    async execute(message) {
+    async execute(message, shouldDelete = true) {
         const embedMessage = await message.channel.send({
             embed: new MessageEmbed({
-                color: 0x1e90ff,
+                color: 0xb20000,
+                // thumbnail: {
+                //     url: 'https://i.imgur.com/96ZgOBc.jpg',
+                // },
                 title: 'Math Roles',
                 description:
                     '1️) Pre-Algebra\n' +
@@ -38,7 +41,7 @@ module.exports = {
 
         emojis.forEach(async (value, emoji) => await embedMessage.react(emoji));
 
-        await message.delete();
+        if (shouldDelete) await message.delete();
 
         const reactionMessage = new ReactionMessage({
             _id: mongoose.Types.ObjectId(),
