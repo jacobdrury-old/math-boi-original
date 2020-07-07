@@ -4,7 +4,7 @@ const { MessageEmbed } = require('discord.js');
 const { getRoles } = require('../../modules/utils.js');
 module.exports = {
     name: 'sendMathRoles',
-    description: `Sends an embed for the reaction roles for the pnm chats role`,
+    description: `Sends an embed for the reaction roles for the math roles`,
     usage: `use in channel you want the message sent in`,
     guildOnly: true,
     adminOnly: true,
