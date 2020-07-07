@@ -15,7 +15,8 @@ module.exports = {
 
         if (isNaN(rawChannelId)) return;
 
-        const rulesMessage = await message.channel.messages.fetch(rawChannelId);
+        const rulesMessage =
+            (await message.channel.messages.fetch(rawChannelId)) || null;
 
         if (!rulesMessage)
             return message.reply(
