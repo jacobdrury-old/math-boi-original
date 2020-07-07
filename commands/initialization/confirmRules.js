@@ -17,21 +17,17 @@ module.exports = {
 
         const rulesMessage = await message.channel.messages.fetch(rawChannelId);
 
-        return console.log(rulesMessage.content);
+        if (!rulesMessage)
+            return message.reply(
+                'You must use this command in the same channel as the targeted message'
+            );
 
         const roles = await getRoles(message.client);
 
         if (!roles) return message.reply("Cannot find 'Roles' in the database");
 
-        const emojis = new Map();
-        emojis.set('1️⃣', roles.preAlgebra.Id);
-        emojis.set('2️⃣', roles.algebra_statistics.Id);
-        emojis.set('3️⃣', roles.geometry.Id);
-        emojis.set('4️⃣', roles.preCalc.Id);
-        emojis.set('5️⃣', roles.calc.Id);
-        emojis.set('6️⃣', roles.upperMath.Id);
-
-        emojis.forEach(async (value, emoji) => await embedMessage.react(emoji));
+        const emoji = '✅';
+        await rulesMessage.react(emoji);
 
         await message.delete();
 
@@ -41,7 +37,7 @@ module.exports = {
             reactions: {},
         });
 
-        reactionMessage.reactions = emojis;
+        reactionMessage.reactions.set(emoji, roles.verified.Id);
 
         return reactionMessage.save();
     },
