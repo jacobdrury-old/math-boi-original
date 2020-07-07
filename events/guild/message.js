@@ -1,6 +1,5 @@
 const { Collection } = require('discord.js');
 const cooldowns = new Collection();
-const { getRoles } = require('../../modules/utils.js');
 module.exports = async (client, message) => {
     const prefix = client.prefix;
 
@@ -11,7 +10,9 @@ module.exports = async (client, message) => {
 
     const command =
         client.commands.get(commandName) ||
-        client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
+        client.commands.find(
+            (cmd) => cmd.aliases && cmd.aliases.includes(commandName)
+        );
 
     if (!command) return;
 
@@ -19,13 +20,13 @@ module.exports = async (client, message) => {
         return message.reply("I can't execute that command inside DMs!");
     }
 
-    const roles = await getRoles(message.client);
-
     const member = await (message.channel.type !== 'text'
-        ? message.client.guilds.cache.get(client.guildId).members.fetch(message.author.id)
+        ? message.client.guilds.cache
+              .get(client.guildId)
+              .members.fetch(message.author.id)
         : message.member);
 
-    const isAdmin = member.hasPermission('ADMINISTRATOR') || member.roles.cache.has(roles.dev.Id);
+    const isAdmin = member.hasPermission('ADMINISTRATOR');
 
     if (command.adminOnly && !isAdmin) {
         return message.reply('This command is for admins only');
@@ -50,12 +51,17 @@ module.exports = async (client, message) => {
     const cooldownAmount = (command.cooldown || 3) * 1000;
 
     if (timestamps.has(message.author.id)) {
-        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+        const expirationTime =
+            timestamps.get(message.author.id) + cooldownAmount;
 
         if (now < expirationTime) {
             const timeLeft = (expirationTime - now) / 1000;
             return message.reply(
-                `please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`
+                `please wait ${timeLeft.toFixed(
+                    1
+                )} more second(s) before reusing the \`${
+                    command.name
+                }\` command.`
             );
         }
     }

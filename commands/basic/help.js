@@ -1,6 +1,5 @@
 const { MessageEmbed } = require('discord.js');
 const { readdirSync } = require('fs');
-const { getRoles } = require('../../modules/utils.js');
 module.exports = {
     name: 'help',
     description: 'List all of my commands or info about a specific command.',
@@ -18,11 +17,7 @@ module.exports = {
                   .members.fetch(message.author.id)
             : message.member);
 
-        const roles = await getRoles(message.client);
-
-        const isUserAdmin =
-            guildMember.hasPermission('ADMINISTRATOR') ||
-            guildMember.roles.cache.has(roles.dev.Id);
+        const isUserAdmin = guildMember.hasPermission('ADMINISTRATOR');
 
         const useableCommands = commands.filter(
             (cmd) => cmd.adminOnly == null || isUserAdmin
