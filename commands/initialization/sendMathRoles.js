@@ -29,12 +29,12 @@ module.exports = {
         if (!roles) return message.reply("Cannot find 'Roles' in the database");
 
         const emojis = new Map();
-        emojis.set('1️⃣', roles.preAlgebra);
-        emojis.set('2️⃣', roles.algebra_statistics);
-        emojis.set('3️⃣', roles.geometry);
-        emojis.set('4️⃣', roles.preCalc);
-        emojis.set('5️⃣', roles.calc);
-        emojis.set('6️⃣', roles.upperMath);
+        emojis.set('1️⃣', roles.preAlgebra.Id);
+        emojis.set('2️⃣', roles.algebra_statistics.Id);
+        emojis.set('3️⃣', roles.geometry.Id);
+        emojis.set('4️⃣', roles.preCalc.Id);
+        emojis.set('5️⃣', roles.calc.Id);
+        emojis.set('6️⃣', roles.upperMath.Id);
 
         emojis.forEach(async (value, emoji) => await embedMessage.react(emoji));
 

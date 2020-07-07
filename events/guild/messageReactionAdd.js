@@ -26,7 +26,6 @@ const roleAssignment = async (
 ) => {
     const roleId = reactionMessage.reactions.get(messageReaction.emoji.name);
     if (!roleId) return;
-
     const member = await client.guilds.cache
         .get(client.guildId)
         .members.fetch(user.id);
