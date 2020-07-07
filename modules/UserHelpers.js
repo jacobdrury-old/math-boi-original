@@ -10,7 +10,10 @@ exports.setToRole = async (member, role, adminId = null, shouldLog = true) => {
 
         const logChannel = await getLogChannel(member.client);
         if (logChannel) {
-            const webhookClient = new WebhookClient(logChannel.Id, logChannel.token);
+            const webhookClient = new WebhookClient(
+                logChannel.Id,
+                logChannel.token
+            );
             const embed = logEmbed(member, 'Role Added').addFields(
                 {
                     name: 'User',
