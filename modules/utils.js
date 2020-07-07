@@ -1,5 +1,6 @@
 const Webhook = require('../db/models/webhooks.js');
 const Role = require('../db/models/roles.js');
+const ReactionMessage = require('../db/models/reactionMessages.js');
 exports.getLogChannel = async (client) => {
     client.mongoose.init();
     const logChannel = await Webhook.findOne({ name: 'logChannel' });
