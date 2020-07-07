@@ -19,3 +19,8 @@ exports.getRoles = async (client) => {
 
     return arrayToObject(roles);
 };
+
+exports.getReactionMessage = async (client, id) => {
+    client.mongoose.init();
+    return (await ReactionMessage.findOne({ messageId: id })) || null;
+};
