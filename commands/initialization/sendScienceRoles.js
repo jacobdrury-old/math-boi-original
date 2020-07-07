@@ -3,7 +3,7 @@ const ReactionMessage = require('../../db/models/reactionMessages.js');
 const { MessageEmbed } = require('discord.js');
 const { getRoles } = require('../../modules/utils.js');
 module.exports = {
-    name: 'sendMathRoles',
+    name: 'sendScienceRoles',
     description: `Sends an embed for the reaction roles for the science roles`,
     usage: `use in channel you want the message sent in`,
     guildOnly: true,
