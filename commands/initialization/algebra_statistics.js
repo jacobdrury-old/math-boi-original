@@ -1,5 +1,5 @@
 const addRoleToDb = require('../../modules/RoleHelpers.js').addRoleToDb;
-const roleName = 'dev';
+const roleName = 'algebra_statistics';
 module.exports = {
     name: roleName,
     description: `Sets the ${roleName} role for the server`,
@@ -13,9 +13,13 @@ module.exports = {
         const roleId = rawId.replace('<@&', '').replace('>', '');
         addRoleToDb(message.client, roleId, roleName, (err) => {
             if (err) {
-                message.channel.send(`Could not set the ${roleName} role to ${rawId}`);
+                message.channel.send(
+                    `Could not set the ${roleName} role to ${rawId}`
+                );
             } else {
-                message.channel.send(`Successfully set the ${roleName} role to ${rawId}`);
+                message.channel.send(
+                    `Successfully set the ${roleName} role to ${rawId}`
+                );
             }
         });
     },
