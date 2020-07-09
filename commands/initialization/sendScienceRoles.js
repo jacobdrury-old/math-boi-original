@@ -18,11 +18,11 @@ module.exports = {
                 // },
                 title: 'Science Roles',
                 description:
-                    '1️) Computer Science\n' +
-                    '2️) Biology\n' +
-                    '3️) Physics\n' +
-                    '4️) Physical Science\n' +
-                    '5️) Chemistry',
+                    '1️⃣ Computer Science\n' +
+                    '2️⃣ Biology\n' +
+                    '3️⃣ Physics\n' +
+                    '4️⃣ Physical Science\n' +
+                    '5️⃣ Chemistry',
             }),
         });
 

@@ -18,12 +18,12 @@ module.exports = {
                 // },
                 title: 'Math Roles',
                 description:
-                    '1️) Pre-Algebra\n' +
-                    '2️) Algebra/Statistics\n' +
-                    '3️) Geometry\n' +
-                    '4️) Pre-Calc\n' +
-                    '5️) Calculus (1 & 2)\n' +
-                    '6️) Upper Math (Calc 3, Diff Eq, Discrete, Linear Algebra, etc)',
+                    '1️⃣ Pre-Algebra\n' +
+                    '2️⃣ Algebra/Statistics\n' +
+                    '3️⃣ Geometry\n' +
+                    '4️⃣ Pre-Calc\n' +
+                    '5️⃣ Calculus (1 & 2)\n' +
+                    '6️⃣ Upper Math (Calc 3, Diff Eq, Discrete, Linear Algebra, etc)',
             }),
         });
 
