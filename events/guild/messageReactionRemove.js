@@ -3,10 +3,11 @@ const { removeRole } = require('../../modules/UserHelpers.js');
 module.exports = async (client, messageReaction, user) => {
     if (user.bot) return;
     if (
-        messageReaction.message.channel.id !== '725171177235939379' ||
+        messageReaction.message.channel.id !== '725171177235939379' &&
         messageReaction.message.channel.id !== '729885614492876830'
     )
         return;
+
     try {
         const reactionMessage = await getReactionMessage(
             client,
