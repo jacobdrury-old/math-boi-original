@@ -8,6 +8,17 @@
         "ecmaVersion": 2019
     },
     "rules": {
+        "max-len": [
+            "error",
+            {
+                "ignoreComments": true,
+                "ignoreTrailingComments": true,
+                "ignoreUrls": true,
+                "ignoreTemplateLiterals": true
+            }
+        ],
+        "function-call-argument-newline": ["error", "consistent"],
+        "function-paren-newline": ["error", "never"],
         "comma-spacing": "error",
         "comma-style": "error",
         "curly": ["error", "multi-line", "consistent"],
@@ -21,7 +32,10 @@
         "no-inline-comments": "error",
         "no-lonely-if": "error",
         "no-multi-spaces": "error",
-        "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1, "maxBOF": 0 }],
+        "no-multiple-empty-lines": [
+            "error",
+            { "max": 2, "maxEOF": 1, "maxBOF": 0 }
+        ],
         "no-shadow": ["error", { "allow": ["err", "resolve", "reject"] }],
         "no-trailing-spaces": ["error"],
         "no-var": "error",
