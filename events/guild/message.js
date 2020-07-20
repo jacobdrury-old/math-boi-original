@@ -3,8 +3,9 @@ const cooldowns = new Collection();
 module.exports = async (client, message) => {
     const prefix = client.prefix;
 
-    if (message.includes('invite link'))
-        return message.reply('Use this link: https://discord.gg/S2azCgw');
+    if (message.content.toLowerCase().includes('invite link')) {
+        return message.reply('https://discord.gg/S2azCgw');
+    }
 
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
@@ -32,7 +33,9 @@ module.exports = async (client, message) => {
     const isAdmin = member.hasPermission('ADMINISTRATOR');
 
     if (command.adminOnly && !isAdmin) {
-        return message.reply('This command is for admins only');
+        return message.reply(
+            'This is an admin only command\nhttps://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905'
+        );
     }
 
     if (command.args && !args.length) {
