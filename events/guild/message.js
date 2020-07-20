@@ -1,13 +1,28 @@
 const { Collection } = require('discord.js');
 const cooldowns = new Collection();
+const banGifs = [
+    'https://tenor.com/view/ban-oprah-gif-10045949',
+    'https://tenor.com/view/when-your-team-too-good-ban-salt-bae-gif-7580925',
+    'https://tenor.com/view/ban-hammer-thor-mod-moderator-gif-13991887',
+    'https://tenor.com/view/trump-donaldtrump-interview-banned-cnn-gif-7677105',
+];
+
 module.exports = async (client, message) => {
     const prefix = client.prefix;
+
+    if (message.author.bot) return;
 
     if (message.content.toLowerCase().includes('invite link')) {
         return message.reply('https://discord.gg/S2azCgw');
     }
 
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
+    if (message.content.toLowerCase().includes('ban')) {
+        return message.reply(
+            banGifs[Math.floor(Math.random() * banGifs.length)]
+        );
+    }
+
+    if (!message.content.startsWith(prefix)) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const commandName = args.shift();
