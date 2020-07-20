@@ -3,6 +3,9 @@ const cooldowns = new Collection();
 module.exports = async (client, message) => {
     const prefix = client.prefix;
 
+    if (message.includes('invite link'))
+        return message.reply('https://discord.gg/S2azCgw');
+
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
