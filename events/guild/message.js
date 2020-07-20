@@ -6,6 +6,7 @@ const banGifs = [
     'https://tenor.com/view/ban-hammer-thor-mod-moderator-gif-13991887',
     'https://tenor.com/view/trump-donaldtrump-interview-banned-cnn-gif-7677105',
     'https://tenor.com/view/sao-liz-lisbeth-anime-ban-gif-14368031',
+    'https://tenor.com/view/flipping-off-flip-off-teich-middle-finger-fuck-off-fuck-you-gif-15587868',
 ];
 
 module.exports = async (client, message) => {
@@ -17,7 +18,7 @@ module.exports = async (client, message) => {
         return message.reply('https://discord.gg/S2azCgw');
     }
 
-    if (message.content.toLowerCase().includes('ban')) {
+    if (message.content.toLowerCase().includes('!ban')) {
         return message.reply(
             banGifs[Math.floor(Math.random() * banGifs.length)]
         );
