@@ -50,15 +50,24 @@ module.exports = async (client, message) => {
               .members.fetch(message.author.id)
         : message.member);
 
-    const isAdmin = member.hasPermission('ADMINISTRATOR');
+    if (command.adminOnly || command.moderatorOnly) {
+        const isAdmin = member.hasPermission('ADMINISTRATOR');
+        const isModerator = member.roles.cache.find(
+            (role) => role.name === 'moderator'
+        );
 
-    if (command.adminOnly && !isAdmin) {
+        let roleType = '';
+        if (isAdmin) roleType = 'admins';
+        else if (!isModerator) roleType = 'moderators';
+
         await message.channel.send(
             'https://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905'
         );
 
         const dmChannel = await message.author.createDM();
-        return dmChannel.send(`${prefix}${command.name} is for admins only`);
+        return dmChannel.send(
+            `${prefix}${command.name} is for ${roleType} only`
+        );
     }
 
     if (command.args && !args.length) {
