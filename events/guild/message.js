@@ -58,7 +58,7 @@ module.exports = async (client, message) => {
         );
 
         const dmChannel = await message.author.createDM();
-        return dmChannel.send(`${prefix}${command} is for admins only`);
+        return dmChannel.send(`${prefix}${command.name} is for admins only`);
     }
 
     if (command.args && !args.length) {
