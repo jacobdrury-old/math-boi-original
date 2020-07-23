@@ -27,7 +27,7 @@ module.exports = {
             : commands.filter(
                   (cmd) =>
                       cmd.adminOnly == null ||
-                      (cmd.moderatorOnly == null && !isUserModerator)
+                      (cmd.moderatorOnly == true && isUserModerator)
               );
 
         if (!args.length) {
