@@ -60,7 +60,7 @@ function getAll(message, helpEmbed, useableCommands) {
             `You can send \`${message.client.prefix}help [command name]\` to get info on a specific command!`
         );
 
-    return message.reply({ embed: helpEmbed });
+    return message.channel.send({ embed: helpEmbed });
 }
 
 function getCMD(message, args, helpEmbed, useableCommands) {

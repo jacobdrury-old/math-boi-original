@@ -3,7 +3,7 @@ module.exports = {
     description: 'Clones and deletes original channel',
     adminOnly: true,
     guildOnly: true,
-    category: 'moderation',
+    category: 'admin',
     async execute(message) {
         const originalChannel = message.channel;
         const channels = message.channel.guild.channels;
