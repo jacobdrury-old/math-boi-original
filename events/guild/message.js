@@ -16,6 +16,12 @@ module.exports = async (client, message) => {
 
     if (message.author.bot) return;
 
+    const member = await (message.channel.type !== 'text'
+        ? message.client.guilds.cache
+              .get(client.guildId)
+              .members.fetch(message.author.id)
+        : message.member);
+
     const isAdmin = member.hasPermission('ADMINISTRATOR');
     const isModerator = member.roles.cache.get('725171176774828054');
 
@@ -46,12 +52,6 @@ module.exports = async (client, message) => {
     if (command.guildOnly && message.channel.type !== 'text') {
         return message.reply("I can't execute that command inside DMs!");
     }
-
-    const member = await (message.channel.type !== 'text'
-        ? message.client.guilds.cache
-              .get(client.guildId)
-              .members.fetch(message.author.id)
-        : message.member);
 
     if (command.adminOnly && !isAdmin) {
         await message.channel.send(
