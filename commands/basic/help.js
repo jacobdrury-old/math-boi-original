@@ -18,10 +18,17 @@ module.exports = {
             : message.member);
 
         const isUserAdmin = guildMember.hasPermission('ADMINISTRATOR');
-
-        const useableCommands = commands.filter(
-            (cmd) => cmd.adminOnly == null || isUserAdmin
+        const isUserModerator = guildMember.roles.cache.get(
+            '725171176774828054'
         );
+
+        const useableCommands = isUserAdmin
+            ? commands
+            : commands.filter(
+                  (cmd) =>
+                      cmd.adminOnly == null ||
+                      (cmd.moderatorOnly && isUserModerator)
+              );
 
         if (!args.length) {
             return getAll(message, helpEmbed, useableCommands);
