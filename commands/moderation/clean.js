@@ -1,5 +1,5 @@
 module.exports = {
-    name: 'prune',
+    name: 'clean',
     description: 'Deletes the past 10 messages',
     usage: '<number of messages to delete>',
     aliases: ['clear', 'prune'],
