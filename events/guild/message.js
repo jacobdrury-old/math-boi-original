@@ -16,11 +16,12 @@ module.exports = async (client, message) => {
 
     if (message.author.bot) return;
 
-    if (message.content.toLowerCase().includes('invite link')) {
+    const lowerMessage = message.content.toLowerCase();
+    if (lowerMessage.includes('invite link')) {
         return message.channel.send('https://discord.gg/S2azCgw');
     }
 
-    if (message.content.toLowerCase().includes('!ban')) {
+    if (lowerMessage.includes('!ban')) {
         return message.channel.send(
             banGifs[Math.floor(Math.random() * banGifs.length)]
         );
@@ -52,9 +53,12 @@ module.exports = async (client, message) => {
     const isAdmin = member.hasPermission('ADMINISTRATOR');
 
     if (command.adminOnly && !isAdmin) {
-        return message.reply(
-            'This is an admin only command\nhttps://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905'
+        await message.channel.send(
+            'https://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905'
         );
+
+        const dmChannel = await message.author.createDM();
+        return dmChannel.send(`${prefix}${command} is for admins only`);
     }
 
     if (command.args && !args.length) {
