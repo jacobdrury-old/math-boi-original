@@ -62,7 +62,7 @@ module.exports = async (client, message) => {
     }
 
     const isModerator = member.roles.cache.get('725171176774828054');
-    if (command.moderatorOnly && (!isModerator || !isAdmin)) {
+    if (command.moderatorOnly && !isModerator && !isAdmin) {
         await message.channel.send(
             'https://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905'
         );
