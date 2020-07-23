@@ -6,7 +6,7 @@ module.exports = {
     moderatorOnly: true,
     guildOnly: true,
     category: 'moderation',
-    async execute(message, args) {
+    execute(message, args) {
         let amount = parseInt(args[0]) + 1;
 
         if (isNaN(amount)) {
@@ -17,13 +17,16 @@ module.exports = {
             );
         }
 
-        message.channel.bulkDelete(amount, true).catch((err) => {
-            console.error(err);
-            message.channel.send(
-                'There was an error trying to prune messages in this channel!'
-            );
-        });
-
-        await message.delete();
+        message.channel
+            .bulkDelete(amount, true)
+            .then(() => {
+                message.delete();
+            })
+            .catch((err) => {
+                console.error(err);
+                message.channel.send(
+                    'There was an error trying to prune messages in this channel!'
+                );
+            });
     },
 };
