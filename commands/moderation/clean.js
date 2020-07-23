@@ -6,7 +6,7 @@ module.exports = {
     moderatorOnly: true,
     guildOnly: true,
     category: 'moderation',
-    execute(message, args) {
+    async execute(message, args) {
         let amount = parseInt(args[0]) + 1;
 
         if (isNaN(amount)) {
