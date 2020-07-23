@@ -3,7 +3,10 @@ module.exports = {
     description: "I'll tell you how monk you are",
     category: 'basic',
     execute(message) {
-        const monkRating = Math.floor(Math.random() * 100) + 1 + '%';
+        const monkRating =
+            message.author.id === '495365100837011456'
+                ? '100%'
+                : Math.floor(Math.random() * 100) + 1 + '%';
         message.channel.send(`You are ${monkRating} monke`);
     },
 };
