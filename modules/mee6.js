@@ -1,3 +1,5 @@
+const command = require('../handlers/command');
+
 const banGifs = [
     'https://tenor.com/view/ban-oprah-gif-10045949',
     'https://tenor.com/view/when-your-team-too-good-ban-salt-bae-gif-7580925',
@@ -10,17 +12,32 @@ const banGifs = [
 ];
 const prefix = '!';
 
-exports.handle = async (client, message, permission) => {
+exports.handle = async (client, message) => {
     const args = message.content.slice(prefix.length).split(/ +/);
     const commandName = args.shift();
     console.log(args);
     console.log(commandName);
-    // if (
-    //     message.content.startsWith('!ban') &&
-    //     (permission.isAdmin || permission.isModerator)
-    // ) {
-    //     return message.channel.send(
-    //         banGifs[Math.floor(Math.random() * banGifs.length)]
-    //     );
-    // } else if (message.content.startsWith('!warn'))
+
+    if (commandName === 'ban') {
+        return message.channel.send(
+            banGifs[Math.floor(Math.random() * banGifs.length)]
+        );
+    } else if (commandName === 'warn') {
+        const rawId = args[0];
+        const userId = rawId.replace('<@!', '').replace('>', '');
+        const reason = args.shift().join(' ');
+
+        const member = await message.guild.members.fetch(userId);
+        const moderator = await message.guild.members.fetch(message.author.id);
+
+        member.send('', {
+            embed: {
+                color: '0xFF0000',
+                title: 'Warning',
+                description:
+                    `You have been given a warning by ${moderator.displayName}\n\n` +
+                    `Reason: ${reason}`,
+            },
+        });
+    }
 };

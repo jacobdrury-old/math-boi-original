@@ -21,8 +21,8 @@ module.exports = async (client, message) => {
         return message.channel.send('https://discord.gg/S2azCgw');
     }
 
-    if (message.content.startsWith('!')) {
-       return await mee6.handle(client, message, { isAdmin, isModerator });
+    if (message.content.startsWith('!') && (isAdmin || isModerator)) {
+        return await mee6.handle(client, message);
     }
 
     if (!message.content.startsWith(prefix)) return;
