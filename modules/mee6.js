@@ -1,9 +1,13 @@
+const punishments = ['WARN', 'MUTE', 'UNMUTE'];
+
 exports.readLogs = async (client, message) => {
     const embed = message.embeds[0];
     const punishment = embed.author.name
         .split(' ')[0]
         .replace('[', '')
         .replace(']', '');
+
+    if (!punishments.includes(punishment)) return;
 
     const userId = embed.fields[0].value.replace('<@', '').replace('>', '');
     const user = await message.guild.members.fetch(userId);
