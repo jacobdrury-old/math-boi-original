@@ -1,4 +1,5 @@
 const { Collection } = require('discord.js');
+const mee6 = require('../../modules/mee6.js');
 const cooldowns = new Collection();
 const banGifs = [
     'https://tenor.com/view/ban-oprah-gif-10045949',
@@ -13,6 +14,9 @@ const banGifs = [
 
 module.exports = async (client, message) => {
     const prefix = client.prefix;
+    if (message.channel.id === '725171177235939382') {
+        return await mee6.readLogs(client, message);
+    }
 
     if (message.author.bot) return;
 
@@ -25,12 +29,14 @@ module.exports = async (client, message) => {
     const isAdmin = member.hasPermission('ADMINISTRATOR');
     const isModerator = member.roles.cache.get('725171176774828054');
 
-    const lowerMessage = message.content.toLowerCase();
-    if (lowerMessage.includes('invite link')) {
+    if (message.content.toLowerCase().includes('invite link')) {
         return message.channel.send('https://discord.gg/S2azCgw');
     }
 
-    if (lowerMessage.includes('!ban') && (isAdmin || isModerator)) {
+    if (
+        message.content.toLowerCase().startsWith('!warn') &&
+        (isAdmin || isModerator)
+    ) {
         return message.channel.send(
             banGifs[Math.floor(Math.random() * banGifs.length)]
         );
