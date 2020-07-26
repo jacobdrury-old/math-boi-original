@@ -17,7 +17,7 @@ exports.handle = async (client, message) => {
         .replace('[', '')
         .replace(']', '');
 
-    const userId = embed.fields[0].value.replace('<@!', '').replace('>', '');
+    const userId = embed.fields[0].value.replace('<@', '').replace('>', '');
     const user = await message.guild.members.fetch(userId);
 
     if (punishment === 'WARN') {
