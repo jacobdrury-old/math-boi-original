@@ -14,7 +14,7 @@ exports.handle = async (client, message) => {
     //const args = message.content.slice(prefix.length).split(/ +/);
     //const commandName = args.shift();
 
-    console.log(message.embeds.first());
+    console.log(message.embeds[0]);
     return;
     if (commandName === 'ban') {
         return message.channel.send(
