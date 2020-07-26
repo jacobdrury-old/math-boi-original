@@ -15,8 +15,10 @@ module.exports = async (client, message) => {
     const isModerator = member.roles.cache.get('725171176774828054');
 
     if (
+        message.channel.id === '725171177235939382'
+        /*
         message.author.id ===
-        '159985870458322944' /*&&
+        '159985870458322944' &&
         message.content.startsWith('!') &&
         (isAdmin || isModerator)*/
     ) {
