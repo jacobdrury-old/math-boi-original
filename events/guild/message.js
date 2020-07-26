@@ -34,7 +34,7 @@ module.exports = async (client, message) => {
     }
 
     if (
-        message.content.toLowerCase().startsWith('!warn') &&
+        message.content.toLowerCase().startsWith('!ban') &&
         (isAdmin || isModerator)
     ) {
         return message.channel.send(
