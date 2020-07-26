@@ -17,5 +17,7 @@ exports.readLogs = async (client, message) => {
         return user.send(
             `You have been muted.\n**Reason:** ${reason}\n**Duration:** ${duration}`
         );
+    } else if (punishment === 'UNMUTE') {
+        return user.send(`You have been unmuted!`);
     }
 };
