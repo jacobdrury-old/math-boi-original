@@ -14,7 +14,17 @@ exports.handle = async (client, message) => {
     //const args = message.content.slice(prefix.length).split(/ +/);
     //const commandName = args.shift();
 
-    console.log(message.embeds[0]);
+    const embed = message.embeds[0];
+    const username = embed.author.name.split()[0];
+
+    if (embed.author.name.includes('warned')) {
+        console.log(username);
+        console.log(embed.description);
+
+        return message.channel.send(
+            `${username} has been warned; ${embed.description}`
+        );
+    }
     return;
     if (commandName === 'ban') {
         return message.channel.send(
