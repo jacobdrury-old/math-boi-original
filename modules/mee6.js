@@ -11,12 +11,26 @@ const banGifs = [
 const prefix = '!';
 
 exports.handle = async (client, message) => {
-    //const args = message.content.slice(prefix.length).split(/ +/);
-    //const commandName = args.shift();
-
     const embed = message.embeds[0];
-    // const username = embed.author.name.split()[0];
-    console.log(embed);
+    const punishment = embed.author.name
+        .split(' ')[0]
+        .replace('[', '')
+        .replace(']', '');
+
+    const userId = embed.fields[0].value.replace('<@!', '').replace('>', '');
+    const user = await message.guild.members.fetch(userId);
+
+    if (punishment === 'WARN') {
+        const reason = embed.fields[2].value;
+        return user.send(`You have received a warning. **Reason:** ${reason}`);
+    } else if (punishment === 'MUTE') {
+        const reason = embed.fields[2].value;
+        const duration = embed.fields[3].value;
+        return user.send(
+            `You have been muted. **Reason:** ${reason}\n**Duration:** ${duration}`
+        );
+    }
+
     // console.log(username);
     // console.log(embed.description);
 
