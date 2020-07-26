@@ -5,8 +5,6 @@ const cooldowns = new Collection();
 module.exports = async (client, message) => {
     const prefix = client.prefix;
 
-    if (message.author.bot) return;
-
     const member = await (message.channel.type !== 'text'
         ? message.client.guilds.cache
               .get(client.guildId)
@@ -16,13 +14,18 @@ module.exports = async (client, message) => {
     const isAdmin = member.hasPermission('ADMINISTRATOR');
     const isModerator = member.roles.cache.get('725171176774828054');
 
-    const lowerMessage = message.content.toLowerCase();
-    if (lowerMessage.includes('invite link')) {
-        return message.channel.send('https://discord.gg/S2azCgw');
+    if (
+        message.author.id === '159985870458322944' &&
+        message.content.startsWith('!') &&
+        (isAdmin || isModerator)
+    ) {
+        return await mee6.handle(client, message);
     }
 
-    if (message.content.startsWith('!') && (isAdmin || isModerator)) {
-        return await mee6.handle(client, message);
+    if (message.author.bot) return;
+
+    if (message.content.toLowerCase().includes('invite link')) {
+        return message.channel.send('https://discord.gg/S2azCgw');
     }
 
     if (!message.content.startsWith(prefix)) return;

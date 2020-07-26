@@ -1,5 +1,3 @@
-const command = require('../handlers/command');
-
 const banGifs = [
     'https://tenor.com/view/ban-oprah-gif-10045949',
     'https://tenor.com/view/when-your-team-too-good-ban-salt-bae-gif-7580925',
@@ -13,11 +11,11 @@ const banGifs = [
 const prefix = '!';
 
 exports.handle = async (client, message) => {
-    const args = message.content.slice(prefix.length).split(/ +/);
-    const commandName = args.shift();
-    console.log(args);
-    console.log(commandName);
+    //const args = message.content.slice(prefix.length).split(/ +/);
+    //const commandName = args.shift();
 
+    console.log(message);
+    return;
     if (commandName === 'ban') {
         return message.channel.send(
             banGifs[Math.floor(Math.random() * banGifs.length)]
