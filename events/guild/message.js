@@ -1,18 +1,21 @@
 const { Collection } = require('discord.js');
 const mee6 = require('../../modules/mee6.js');
 const cooldowns = new Collection();
+const banGifs = [
+    'https://tenor.com/view/ban-oprah-gif-10045949',
+    'https://tenor.com/view/when-your-team-too-good-ban-salt-bae-gif-7580925',
+    'https://tenor.com/view/ban-hammer-thor-mod-moderator-gif-13991887',
+    'https://tenor.com/view/trump-donaldtrump-interview-banned-cnn-gif-7677105',
+    'https://tenor.com/view/sao-liz-lisbeth-anime-ban-gif-14368031',
+    'https://tenor.com/view/flipping-off-flip-off-teich-middle-finger-fuck-off-fuck-you-gif-15587868',
+    'https://tenor.com/view/banned-and-you-are-banned-explosion-yoshi-hammer-gif-17493177',
+    'https://tenor.com/view/ban-nope-ban-for-life-you-you-guys-gif-16051005',
+];
 
 module.exports = async (client, message) => {
     const prefix = client.prefix;
-    if (
-        message.channel.id === '725171177235939382'
-        /*
-        message.author.id ===
-        '159985870458322944' &&
-        message.content.startsWith('!') &&
-        (isAdmin || isModerator)*/
-    ) {
-        return await mee6.handle(client, message);
+    if (message.channel.id === '725171177235939382') {
+        return await mee6.readLogs(client, message);
     }
 
     if (message.author.bot) return;
@@ -28,6 +31,15 @@ module.exports = async (client, message) => {
 
     if (message.content.toLowerCase().includes('invite link')) {
         return message.channel.send('https://discord.gg/S2azCgw');
+    }
+
+    if (
+        message.content.toLowerCase().startsWith('!warn') &&
+        (isAdmin || isModerator)
+    ) {
+        return message.channel.send(
+            banGifs[Math.floor(Math.random() * banGifs.length)]
+        );
     }
 
     if (!message.content.startsWith(prefix)) return;
