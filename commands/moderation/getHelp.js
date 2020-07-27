@@ -9,7 +9,13 @@ module.exports = {
         let memberTag = '';
         const mention = args[0];
         if (mention && mention.startsWith('<@') && mention.endsWith('>')) {
-            memberTag = `${mention} `;
+            const id = mention
+                .replace('<@', '')
+                .replace('!', '')
+                .replace('>', '');
+            if (!isNaN(id) && id.length == 18) {
+                memberTag = `${mention} `;
+            }
         }
 
         message.channel.send(
