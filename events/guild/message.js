@@ -24,7 +24,10 @@ module.exports = async (client, message) => {
         return message.channel.send('https://discord.gg/S2azCgw');
     }
 
-    if (isAdmin || isModerator) {
+    if (
+        message.content.toLowerCase().startsWith('!') &&
+        (isAdmin || isModerator)
+    ) {
         return gifs.handle(message);
     }
 
