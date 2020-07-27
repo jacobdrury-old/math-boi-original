@@ -2,6 +2,9 @@ const punishments = ['WARN', 'MUTE', 'UNMUTE'];
 
 exports.readLogs = async (client, message) => {
     const embed = message.embeds[0];
+
+    if (!embed.author) return;
+
     const punishment = embed.author.name
         .split(' ')[0]
         .replace('[', '')
