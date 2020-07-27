@@ -26,7 +26,7 @@ exports.handle = (message) => {
         );
     } else if (cmd.startsWith('!kick')) {
         return message.channel.send(
-            kickGifs[Math.floor(Math.random() * banGifs.length)]
+            kickGifs[Math.floor(Math.random() * kickGifs.length)]
         );
     }
 };
