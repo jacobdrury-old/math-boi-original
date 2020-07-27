@@ -1,8 +1,7 @@
 module.exports = {
     name: 'slendy',
     description: 'slendy',
-    moderatorOnly: true,
-    category: 'moderator',
+    category: 'basic',
     execute(message) {
         message.channel.send('Simp');
     },
