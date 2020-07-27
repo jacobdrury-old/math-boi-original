@@ -3,6 +3,9 @@ const mee6 = require('../../modules/mee6.js');
 const gifs = require('../../modules/gifs.js');
 const cooldowns = new Collection();
 
+const moderatorId = '725171176774828054';
+const traineeModId = '725442011758461049';
+
 module.exports = async (client, message) => {
     const prefix = client.prefix;
     if (message.channel.id === '725171177235939382') {
@@ -18,7 +21,9 @@ module.exports = async (client, message) => {
         : message.member);
 
     const isAdmin = member.hasPermission('ADMINISTRATOR');
-    const isModerator = member.roles.cache.get('725171176774828054');
+    const isModerator =
+        member.roles.cache.get(moderatorId) ||
+        member.roles.cache.get(traineeModId);
 
     if (message.content.toLowerCase().includes('invite link')) {
         return message.channel.send('https://discord.gg/S2azCgw');
