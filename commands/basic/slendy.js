@@ -3,6 +3,6 @@ module.exports = {
     description: 'slendy',
     category: 'basic',
     execute(message) {
-        message.channel.send('**Simps for susan**');
+        message.channel.send('**Simps for Susan**');
     },
 };
