@@ -1,8 +1,8 @@
 module.exports = {
     name: 'lance',
     description: 'lance',
-    moderatorOnly: true,
-    category: 'moderator',
+    adminOnly: true,
+    category: 'admin',
     execute(message) {
         message.channel.send(
             'Go to your left, no your other left, no thats straight'
