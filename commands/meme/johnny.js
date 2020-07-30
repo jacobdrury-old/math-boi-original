@@ -1,7 +1,7 @@
 module.exports = {
     name: 'johnny',
     description: 'idk',
-    category: 'basic',
+    category: 'meme',
     execute(message) {
         message.channel.send('**Lame**');
     },

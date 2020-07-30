@@ -1,7 +1,7 @@
 module.exports = {
     name: 'monke',
     description: "I'll tell you how monk you are",
-    category: 'basic',
+    category: 'meme',
     execute(message) {
         const monkRating =
             message.author.id === '495365100837011456'
