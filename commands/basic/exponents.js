@@ -1,5 +1,6 @@
 module.exports = {
     name: 'exponent',
+    aliases: ['exponents', 'exp'],
     description: 'Sends the exponent identities',
     category: 'basic',
     execute(message) {
