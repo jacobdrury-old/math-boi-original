@@ -1,5 +1,6 @@
 module.exports = {
     name: 'getHelp',
+    aliases: ['gh', 'gethelp'],
     description:
         'Lets people know how to get help with questions in the server',
     moderatorOnly: true,
