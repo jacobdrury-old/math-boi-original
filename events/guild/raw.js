@@ -20,5 +20,11 @@ module.exports = async (client, event) => {
 
     const reaction = message.reactions.cache.get(emojiKey);
 
+    await sleep(500);
+
     client.emit(events[event.t], reaction, user);
+};
+
+const sleep = async (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
 };

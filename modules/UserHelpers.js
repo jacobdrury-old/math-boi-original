@@ -34,6 +34,8 @@ exports.setToRole = async (member, role, adminId = null, shouldLog = true) => {
             await webhookClient.send({ embeds: [embed] });
         }
     }
+
+    return member.guild.roles.fetch(role);
 };
 
 exports.removeRole = async (member, role, adminId = null, shouldLog = true) => {

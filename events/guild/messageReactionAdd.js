@@ -1,5 +1,7 @@
 const { getReactionMessage } = require('../../modules/utils.js');
 const { setToRole } = require('../../modules/UserHelpers.js');
+const verifiedRoleId = '729871004368633936';
+
 module.exports = async (client, messageReaction, user) => {
     try {
         if (user.bot) return;
@@ -40,5 +42,11 @@ const roleAssignment = async (
         .get(client.guildId)
         .members.fetch(user.id);
 
-    return setToRole(member, roleId, null, false);
+    const role = await setToRole(member, roleId, null, false);
+
+    if (role.id === verifiedRoleId) {
+        client.emit('welcome', member);
+    }
+
+    return role;
 };
