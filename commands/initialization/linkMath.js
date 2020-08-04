@@ -3,23 +3,21 @@ const ReactionMessage = require('../../db/models/reactionMessages.js');
 const { MessageEmbed } = require('discord.js');
 const { getRoles } = require('../../modules/utils.js');
 module.exports = {
-    name: 'confirmRules',
-    description: `Adds the check mark confirmation to the message id passed`,
+    name: 'linkMath',
+    description: `Sends an embed for the reaction roles for the math roles`,
     usage: `use in channel you want the message sent in`,
-    usage: '<message id>',
     guildOnly: true,
     adminOnly: true,
-    args: true,
     category: 'initialization',
     async execute(message, args) {
         const rawMessageId = args[0];
 
         if (isNaN(rawMessageId)) return;
 
-        const rulesMessage =
+        const mathMessage =
             (await message.channel.messages.fetch(rawMessageId)) || null;
 
-        if (!rulesMessage)
+        if (!mathMessage)
             return message.reply(
                 'You must use this command in the same channel as the targeted message'
             );
@@ -28,18 +26,25 @@ module.exports = {
 
         if (!roles) return message.reply("Cannot find 'Roles' in the database");
 
-        const emoji = '✅';
-        await rulesMessage.react(emoji);
+        const emojis = new Map();
+        emojis.set('🧃', roles.preAlgebra.Id);
+        emojis.set('📕', roles.algebra_statistics.Id);
+        emojis.set('📗', roles.geometry.Id);
+        emojis.set('📘', roles.preCalc.Id);
+        emojis.set('📙', roles.calc.Id);
+        emojis.set('📚', roles.upperMath.Id);
+
+        emojis.forEach(async (value, emoji) => await mathMessage.react(emoji));
 
         await message.delete();
-
+        return;
         const reactionMessage = new ReactionMessage({
             _id: mongoose.Types.ObjectId(),
-            messageId: rulesMessage.id,
+            messageId: embedMessage.id,
             reactions: {},
         });
 
-        reactionMessage.reactions.set(emoji, roles.verified.Id);
+        reactionMessage.reactions = emojis;
 
         return reactionMessage.save();
     },
