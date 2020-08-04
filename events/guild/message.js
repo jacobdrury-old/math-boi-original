@@ -5,6 +5,7 @@ const cooldowns = new Collection();
 
 const moderatorId = '725171176774828054';
 const traineeModId = '725442011758461049';
+const headModId = '739922768954392586';
 
 module.exports = async (client, message) => {
     const prefix = client.prefix;
@@ -20,7 +21,10 @@ module.exports = async (client, message) => {
               .members.fetch(message.author.id)
         : message.member);
 
-    const isAdmin = member.hasPermission('ADMINISTRATOR');
+    const isAdmin =
+        member.hasPermission('ADMINISTRATOR') ||
+        member.roles.cache.get(headModId);
+        
     const isModerator =
         member.roles.cache.get(moderatorId) ||
         member.roles.cache.get(traineeModId);
