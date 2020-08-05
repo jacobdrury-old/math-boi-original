@@ -2,12 +2,15 @@ const { getReactionMessage } = require('../../modules/utils.js');
 const { setToRole } = require('../../modules/UserHelpers.js');
 const verifiedRoleId = '729871004368633936';
 
+const rulesId = '725171177235939379';
+const roleSelectionId = '740316361032728615';
+
 module.exports = async (client, messageReaction, user) => {
     try {
         if (user.bot) return;
         if (
-            messageReaction.message.channel.id !== '725171177235939379' &&
-            messageReaction.message.channel.id !== '729885614492876830'
+            messageReaction.message.channel.id !== rulesId &&
+            messageReaction.message.channel.id !== roleSelectionId
         )
             return;
 
