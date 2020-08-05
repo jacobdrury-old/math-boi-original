@@ -1,5 +1,5 @@
 const addRoleToDb = require('../../modules/RoleHelpers.js').addRoleToDb;
-const roleName = 'undergrad';
+const roleName = 'phd';
 module.exports = {
     name: roleName,
     description: `Sets the ${roleName} role for the server`,
