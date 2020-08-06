@@ -1,4 +1,5 @@
 const { Client, Collection } = require('discord.js');
+const mongoose = require('mongoose');
 require('events').EventEmitter.defaultMaxListeners = 100;
 
 const client = new Client();
@@ -9,6 +10,12 @@ const client = new Client();
 );
 client.prefix = process.env.PREFIX;
 client.guildId = process.env.GUILD_ID;
-client.mongoose = require('./db/mongoose');
 
-client.login(process.env.TOKEN);
+(async () => {
+    client.db = await mongoose.connect(process.env.DB_CONNECTION_STRING, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    });
+
+    return client.login(process.env.TOKEN);
+})();
