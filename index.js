@@ -10,13 +10,12 @@ const client = new Client();
 );
 client.prefix = process.env.PREFIX;
 client.guildId = process.env.GUILD_ID;
-client.mongoose = require('./db/mongoose');
 
-async () => {
+(async () => {
     client.db = await mongoose.connect(process.env.DB_CONNECTION_STRING, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
 
-    client.login(process.env.TOKEN);
-};
+    return client.login(process.env.TOKEN);
+})();
