@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 exports.init = () => {
     const connectionString = process.env.DB_CONNECTION_STRING;
 
@@ -12,5 +11,7 @@ exports.init = () => {
 
     mongoose.connection.on('connected', () => {});
     mongoose.connection.on('err', console.error);
-    mongoose.connection.on('disconnected', () => console.log('Mongoose connection disconnected'));
+    mongoose.connection.on('disconnected', () =>
+        console.log('Mongoose connection disconnected')
+    );
 };
