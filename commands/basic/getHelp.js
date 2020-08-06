@@ -3,9 +3,8 @@ module.exports = {
     aliases: ['gh', 'gethelp'],
     description:
         'Lets people know how to get help with questions in the server',
-    moderatorOnly: true,
     guildOnly: true,
-    category: 'moderation',
+    category: 'basic',
     execute(message, args) {
         let memberTag = '';
         const mention = args[0];
@@ -20,7 +19,7 @@ module.exports = {
         }
 
         message.channel.send(
-            `${memberTag}To get help with a question please go to <#729885614492876830> and add the subject you need help with.\n\nGo to the corresponding channel and post your question! Make sure you tag \`@Tutor\` so they can get notified of your question!`
+            `${memberTag}To get help with a question please go to <#740316361032728615> and add the subject you need help with.\n\nGo to the corresponding channel and post your question! Make sure you tag \`@Tutor\` so they can get notified of your question!`
         );
     },
 };
