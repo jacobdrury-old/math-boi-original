@@ -1,5 +1,5 @@
 module.exports = {
-    name: 'purge',
+    name: 'reset',
     description: 'Clones and deletes original channel',
     adminOnly: true,
     guildOnly: true,
