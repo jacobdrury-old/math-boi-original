@@ -10,6 +10,7 @@ const headModId = '739922768954392586';
 module.exports = async (client, message) => {
     const prefix = client.prefix;
     if (message.channel.id === '725171177235939382') {
+        client.emit('logChannelMessage', message);
         return await mee6.readLogs(client, message);
     }
 
