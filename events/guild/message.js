@@ -1,5 +1,4 @@
 const { Collection } = require('discord.js');
-const mee6 = require('../../modules/mee6.js');
 const gifs = require('../../modules/gifs.js');
 const cooldowns = new Collection();
 
@@ -9,9 +8,9 @@ const headModId = '739922768954392586';
 
 module.exports = async (client, message) => {
     const prefix = client.prefix;
-    if (message.channel.id === '725171177235939382') {
-        client.emit('logChannelMessage', message);
-        return await mee6.readLogs(client, message);
+
+    if (message.channel.id === client.logChannelId) {
+        return client.emit('logChannelMessage', message);
     }
 
     if (message.author.bot) return;
@@ -25,7 +24,7 @@ module.exports = async (client, message) => {
     const isAdmin =
         member.hasPermission('ADMINISTRATOR') ||
         member.roles.cache.get(headModId);
-        
+
     const isModerator =
         member.roles.cache.get(moderatorId) ||
         member.roles.cache.get(traineeModId);
