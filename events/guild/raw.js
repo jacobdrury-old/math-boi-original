@@ -20,7 +20,7 @@ module.exports = async (client, event) => {
 
     const reaction = message.reactions.cache.get(emojiKey);
 
-    await sleep(500);
+    await sleep(750);
 
     client.emit(events[event.t], reaction, user);
 };
