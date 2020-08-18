@@ -1,5 +1,6 @@
 const { Client, Collection } = require('discord.js');
 const mongoose = require('mongoose');
+const { getLogChannel } = require('./modules/utils.js');
 require('events').EventEmitter.defaultMaxListeners = 100;
 
 const client = new Client();
@@ -17,5 +18,7 @@ client.guildId = process.env.GUILD_ID;
         useUnifiedTopology: true,
     });
 
+    const logChannel = await getLogChannel();
+    if (logChannel) client.logChannelId = logChannel.channelId;
     return client.login(process.env.TOKEN);
 })();

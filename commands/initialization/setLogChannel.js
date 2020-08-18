@@ -13,11 +13,21 @@ module.exports = {
         try {
             const webhook = await createWebhook(message, args);
 
-            const existingWebhook = await Webhook.findOne({ name: 'logChannel' });
+            const existingWebhook = await Webhook.findOne({
+                name: 'logChannel',
+            });
 
-            await (!existingWebhook ? createNewWebhook(webhook) : updateExistingWebhook(existingWebhook, webhook));
+            await (!existingWebhook
+                ? createNewWebhook(webhook)
+                : updateExistingWebhook(existingWebhook, webhook));
 
-            await webhook.send(`Successfully ${!existingWebhook ? 'initialized' : 'updated'} the log channel!`);
+            message.client.logChannelId = webhook.channelID;
+
+            await webhook.send(
+                `Successfully ${
+                    !existingWebhook ? 'initialized' : 'updated'
+                } the log channel!`
+            );
         } catch (ex) {
             console.error(ex);
             await message.reply('Something went wrong :(\n' + ex.message);
@@ -35,7 +45,10 @@ const createWebhook = async (message, args) => {
 };
 
 const updateExistingWebhook = async (existingWebhook, webhook) => {
-    const webhookClient = new WebhookClient(existingWebhook.Id, existingWebhook.token);
+    const webhookClient = new WebhookClient(
+        existingWebhook.Id,
+        existingWebhook.token
+    );
     if (webhookClient) await webhookClient.delete();
 
     existingWebhook.channelID = webhook.channelID;
