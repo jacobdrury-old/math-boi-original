@@ -115,7 +115,25 @@ const inviteLink = async (member) => {
                     },
                 });
             } else if (reaction.emoji.id === '740468921961938974') {
-                return await banUser(member);
+                await banUser(member);
+
+                return embedMessage.edit('<@&737374602719920191>', {
+                    embed: {
+                        color: 0x00c766,
+                        author: {
+                            name: `${member.user.username}#${member.user.discriminator}`,
+                            icon_url: member.user.displayAvatarURL(),
+                        },
+                        description: `<@${member.id}> has been banned by <@${
+                            reaction.users.cache.filter((u) => !u.bot).first()
+                                .id
+                        }>`,
+                        timestamp: new Date(),
+                        footer: {
+                            text: 'Bye Bitch',
+                        },
+                    },
+                });
             }
         })
         .catch(async () => {
