@@ -1,7 +1,8 @@
 const punishments = ['WARN', 'MUTE', 'UNMUTE'];
 const inviteLinkMsg = 'Posted an invite';
 
-exports.readLogs = async (client, message) => {
+module.exports = async (client, message) => {
+    return;
     const logEmbed = message.embeds[0];
     if (!embed.author) return;
 
@@ -13,18 +14,18 @@ exports.readLogs = async (client, message) => {
     if (!punishments.includes(punishment)) return;
 };
 
-const buildResponse = (member, name, description, fields, color = 0xff0000) => {
-    return {
-        color,
-        author: {
-            name,
-            icon_url: member.user.displayAvatarURL(),
-        },
-        description,
-        fields,
-        timestamp: new Date(),
-        footer: {
-            text: member.guild.name,
-        },
-    };
-};
+// const buildResponse = (member, name, description, fields, color = 0xff0000) => {
+//     return {
+//         color,
+//         author: {
+//             name,
+//             icon_url: member.user.displayAvatarURL(),
+//         },
+//         description,
+//         fields,
+//         timestamp: new Date(),
+//         footer: {
+//             text: member.guild.name,
+//         },
+//     };
+// };
