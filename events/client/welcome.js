@@ -8,9 +8,10 @@ module.exports = async (client, member) => {
 
     const isSent = prevMessages.filter((msg) => msg.content === welcomeMsg);
 
-    const userMsgs = await userMessages(member.guild, member.id);
+    //const userMsgs = await userMessages(member.guild, member.id);
 
-    if (isSent.size === 0 && userMsgs < 10) return generalChat.send(welcomeMsg);
+    if (isSent.size === 0 /*&& userMsgs < 10*/)
+        return generalChat.send(welcomeMsg);
 
     return;
 };
