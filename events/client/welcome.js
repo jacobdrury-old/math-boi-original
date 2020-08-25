@@ -1,19 +1,20 @@
 const generalId = '729870525119332414';
 
 module.exports = async (client, member) => {
+    console.log('welcome');
     const generalChat = member.guild.channels.cache.get(generalId);
-    const prevMessages = await generalChat.messages.fetch({ limit: 20 });
+    //const prevMessages = await generalChat.messages.fetch({ limit: 20 });
 
     const welcomeMsg = `Welcome to the server <@${member.id}>!`;
 
-    const isSent = prevMessages.filter((msg) => msg.content === welcomeMsg);
+    //const isSent = prevMessages.filter((msg) => msg.content === welcomeMsg);
 
     //const userMsgs = await userMessages(member.guild, member.id);
 
-    if (isSent.size === 0 /*&& userMsgs < 10*/)
-        return generalChat.send(welcomeMsg);
+    //if (isSent.size === 0 /*&& userMsgs < 10*/)
+    return generalChat.send(welcomeMsg);
 
-    return;
+    //return;
 };
 
 const userMessages = async (guild, userID) => {
