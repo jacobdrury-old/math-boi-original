@@ -29,7 +29,6 @@ module.exports = {
                 `${member} Check your DM's for the invite link!`
             );
         } catch (ex) {
-            console.log(ex);
             await message.channel.send('I cannot DM this user');
         }
     },
