@@ -23,9 +23,14 @@ module.exports = {
             }
         }
 
-        await member.send('https://discord.gg/S2azCgw');
-        await message.channel.send(
-            `${member} Check your DM's for the invite link!`
-        );
+        try {
+            await member.send('https://discord.gg/S2azCgw');
+            await message.channel.send(
+                `${member} Check your DM's for the invite link!`
+            );
+        } catch (ex) {
+            console.log(ex);
+            await message.channel.send('I cannot DM this user');
+        }
     },
 };
