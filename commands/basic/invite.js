@@ -12,9 +12,7 @@ module.exports = {
                 .replace('!', '')
                 .replace('>', '');
             if (!isNaN(id) && id.length == 18) {
-                member = await message.client.guilds.cache
-                    .get(client.guildId)
-                    .members.fetch(id);
+                member = await message.guild.members.fetch(id);
             }
 
             await member.send('https://discord.gg/S2azCgw');
