@@ -1,7 +1,6 @@
 const { Client, Collection } = require('discord.js');
-const mongoose = require('mongoose');
 const { getLogChannel } = require('./modules/utils.js');
-require('events').EventEmitter.defaultMaxListeners = 100;
+const mongoose = require('mongoose');
 
 const client = new Client({
     partials: ['MESSAGE', 'REACTION'],
