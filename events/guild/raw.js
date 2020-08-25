@@ -4,6 +4,7 @@ const events = {
 };
 
 module.exports = async (client, event) => {
+    return;
     if (!events.hasOwnProperty(event.t)) return;
 
     const { d: data } = event;

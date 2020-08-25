@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const { getLogChannel } = require('./modules/utils.js');
 require('events').EventEmitter.defaultMaxListeners = 100;
 
-const client = new Client();
+const client = new Client({
+    partials: ['MESSAGE', 'REACTION'],
+});
 ['commands', 'aliases'].forEach((x) => (client[x] = new Collection()));
 
 ['event', 'command'].forEach((handler) =>
