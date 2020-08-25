@@ -6,7 +6,14 @@ module.exports = {
     async execute(message, args) {
         let member = message.author;
         const mention = args[0];
+
         if (mention && mention.startsWith('<@') && mention.endsWith('>')) {
+            if (!member.hasPermission('MANAGE_ROLES')) {
+                return await message.reply(
+                    "Only staff members can send an invite to another user's DM"
+                );
+            }
+
             const id = mention
                 .replace('<@', '')
                 .replace('!', '')
