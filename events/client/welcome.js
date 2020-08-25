@@ -1,7 +1,6 @@
 const generalId = '729870525119332414';
 
 module.exports = async (client, member) => {
-    console.log('welcome');
     const generalChat = member.guild.channels.cache.get(generalId);
     //const prevMessages = await generalChat.messages.fetch({ limit: 20 });
 
