@@ -76,7 +76,6 @@ exports.removeRole = async (member, role, adminId = null, shouldLog = true) => {
 };
 
 exports.checkUserAge = async (member) => {
-    return await userDMsClosed(member);
     try {
         const memberDM = await member.createDM();
         memberDM.send('How old are you?');
@@ -106,7 +105,9 @@ const handleConvo = async (member, channel) => {
 
         // await member.ban({ days: 14, reason: `User is ${age} years old` });
     } else {
-        await channel.send('Thank you for verifying your age!');
+        await channel.send(
+            'Thank you for verifying your age! I have added the middle school role to you!'
+        );
     }
 
     return oldEnough;
@@ -146,7 +147,7 @@ const userDMsClosed = async (member) => {
 
     const oldEnough = await handleConvo(member, channel);
 
-    await sleep(60000);
+    await sleep(30000);
     await channel.delete();
     return oldEnough;
 };

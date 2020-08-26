@@ -6,8 +6,9 @@ module.exports = {
     adminOnly: true,
     guildOnly: true,
     category: 'admin',
-    async execute(message) {
-        const member = await message.guild.members.fetch(message.author.id);
+    async execute(message, args) {
+        const id = args[0];
+        const member = await message.guild.members.fetch(id);
         const response = await checkUserAge(member);
         console.log(`Response: ${response}`);
     },
