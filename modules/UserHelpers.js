@@ -87,31 +87,36 @@ exports.checkUserAge = async (member) => {
 };
 
 const handleConvo = async (member, channel) => {
-    const filter = (m) => m.author.id === member.id;
+    try {
+        const filter = (m) => m.author.id === member.id;
 
-    const messages = await channel.awaitMessages(filter, {
-        max: 1,
-        time: 1000, //600000,
-        errors: ['time'],
-    });
+        const messages = await channel.awaitMessages(filter, {
+            max: 1,
+            time: 1000, //600000,
+            errors: ['time'],
+        });
 
-    const age = messages.first().content.replace(/\D/g, '');
+        const age = messages.first().content.replace(/\D/g, '');
 
-    const oldEnough = age >= minAge;
+        const oldEnough = age >= minAge;
 
-    if (!oldEnough) {
-        await channel.send(
-            'Unfortunately you are not old enough to participate in this server'
-        );
+        if (!oldEnough) {
+            await channel.send(
+                'Unfortunately you are not old enough to participate in this server'
+            );
 
-        // await member.ban({ days: 14, reason: `User is ${age} years old` });
-    } else {
-        await channel.send(
-            'Thank you for verifying your age! I have added the middle school role to you!'
-        );
+            // await member.ban({ days: 14, reason: `User is ${age} years old` });
+        } else {
+            await channel.send(
+                'Thank you for verifying your age! I have added the middle school role to you!'
+            );
+        }
+
+        return oldEnough;
+    } catch (err) {
+        await channel.send('This request has timed out, please try again');
+        return true;
     }
-
-    return oldEnough;
 };
 
 const userDMsClosed = async (member) => {
