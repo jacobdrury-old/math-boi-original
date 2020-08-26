@@ -80,8 +80,9 @@ exports.checkUserAge = async (member) => {
         const memberDM = await member.createDM();
         memberDM.send('How old are you?');
         return await handleConvo(member, memberDM);
-    } catch (ex) {
-        return await userDMsClosed(member);
+    } catch (err) {
+        console.log(err.message);
+        //return await userDMsClosed(member);
     }
 };
 
@@ -90,7 +91,7 @@ const handleConvo = async (member, channel) => {
 
     const messages = await channel.awaitMessages(filter, {
         max: 1,
-        time: 60000,
+        time: 1000, //600000,
         errors: ['time'],
     });
 
