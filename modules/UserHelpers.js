@@ -81,8 +81,7 @@ exports.checkUserAge = async (member) => {
         memberDM.send('How old are you?');
         return await handleConvo(member, memberDM);
     } catch (err) {
-        console.log(err);
-        //return await userDMsClosed(member);
+        return await userDMsClosed(member);
     }
 };
 
@@ -92,7 +91,7 @@ const handleConvo = async (member, channel) => {
 
         const messages = await channel.awaitMessages(filter, {
             max: 1,
-            time: 1000, //600000,
+            time: 600000,
             errors: ['time'],
         });
 
@@ -114,7 +113,9 @@ const handleConvo = async (member, channel) => {
 
         return oldEnough;
     } catch (err) {
-        await channel.send('This request has timed out, please try again');
+        await channel.send(
+            'This request has timed out, please try again later.'
+        );
         return true;
     }
 };
