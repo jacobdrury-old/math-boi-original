@@ -1,6 +1,7 @@
 const { WebhookClient } = require('discord.js');
 const { logEmbed, setToRoleEmbedForUser } = require('./embeds.js');
 const { getLogChannel } = require('../modules/utils.js');
+const minAge = 13;
 
 exports.setToRole = async (member, role, adminId = null, shouldLog = true) => {
     await member.roles.add(role);
@@ -74,15 +75,21 @@ exports.removeRole = async (member, role, adminId = null, shouldLog = true) => {
     }
 };
 
-const minAge = 13;
-
 exports.checkUserAge = async (member) => {
+    return await userDMsClosed(member);
+    try {
+        const memberDM = await member.createDM();
+        memberDM.send('How old are you?');
+        return await handleConvo(member, memberDM);
+    } catch (ex) {
+        return await userDMsClosed(member);
+    }
+};
+
+const handleConvo = async (member, channel) => {
     const filter = (m) => m.author.id === member.id;
-    const memberDM = await member.createDM();
 
-    memberDM.send('How old are you?');
-
-    const messages = await memberDM.awaitMessages(filter, {
+    const messages = await channel.awaitMessages(filter, {
         max: 1,
         time: 60000,
         errors: ['time'],
@@ -92,9 +99,46 @@ exports.checkUserAge = async (member) => {
 
     const oldEnough = age >= minAge;
 
-    if (oldEnough) memberDM.send('Thank you for verifying your age!');
-    else
-        memberDM.send(
+    if (!oldEnough) {
+        await channel.send(
             'Unfortunately you are not old enough to participate in this server'
         );
+
+        await member.ban({ days: 14, reason: `User is ${age} years old` });
+    } else {
+        await channel.send('Thank you for verifying your age!');
+    }
+
+    return oldEnough;
+};
+
+const userDMsClosed = async (member) => {
+    const channel = await member.guild.channels.create(
+        `Age Verification ${member.user.discriminator}`,
+        {
+            type: 'text',
+            permissionOverwrites: [
+                { id: member.guild.id, deny: ['VIEW_CHANNEL'] },
+                {
+                    id: member.id,
+                    allow: [
+                        'VIEW_CHANNEL',
+                        'SEND_MESSAGES',
+                        'READ_MESSAGE_HISTORY',
+                    ],
+                },
+                {
+                    type: 'role',
+                    id: '737374602719920191',
+                    allow: [
+                        'VIEW_CHANNEL',
+                        'SEND_MESSAGES',
+                        'READ_MESSAGE_HISTORY',
+                    ],
+                },
+            ],
+        }
+    );
+
+    return channel;
 };
