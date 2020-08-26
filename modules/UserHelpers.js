@@ -73,3 +73,20 @@ exports.removeRole = async (member, role, adminId = null, shouldLog = true) => {
         }
     }
 };
+
+const minAge = 13;
+
+exports.checkUserAge = async (member) => {
+    const filter = (m) => m.author.id === member.id;
+    const memberDM = member.user.createDM();
+
+    memberDM.send('How old are you?');
+
+    const messages = await memberDM.awaitMessages(filter, {
+        max: 1,
+        time: 60000,
+        errors: ['time'],
+    });
+
+    console.log(messages);
+};

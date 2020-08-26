@@ -1,9 +1,12 @@
 const { getReactionMessage } = require('../../modules/utils.js');
 const { setToRole } = require('../../modules/UserHelpers.js');
+const { checkUserAge } = require('../../modules/UserHelpers.js');
+
 const verifiedRoleId = '729871004368633936';
 
 const rulesId = '725171177235939379';
 const roleSelectionId = '740316361032728615';
+const middleSchoolRoleId = '742498991119269978';
 
 module.exports = async (client, messageReaction, user) => {
     try {
@@ -44,6 +47,13 @@ const roleAssignment = async (
     const member = await client.guilds.cache
         .get(client.guildId)
         .members.fetch(user.id);
+
+    let userIsTooYoung = false;
+    if (roleId === middleSchoolRoleId) {
+        isUserOfAge = await checkUserAge(member);
+    }
+
+    if (userIsTooYoung) return;
 
     const role = await setToRole(member, roleId, null, false);
 
