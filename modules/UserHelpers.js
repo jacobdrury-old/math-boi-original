@@ -140,8 +140,19 @@ const userDMsClosed = async (member) => {
         }
     );
 
+    await channel.send(
+        `${member} Before I am able to give you the middle school role, I have to verify your age! How old are you?`
+    );
+
     const oldEnough = await handleConvo(member, channel);
 
+    await sleep(60000);
     await channel.delete();
     return oldEnough;
+};
+
+const sleep = (ms) => {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
 };
