@@ -140,5 +140,8 @@ const userDMsClosed = async (member) => {
         }
     );
 
-    return channel;
+    const oldEnough = await handleConvo(member, channel);
+
+    await channel.delete();
+    return oldEnough;
 };
