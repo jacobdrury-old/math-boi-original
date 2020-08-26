@@ -104,7 +104,7 @@ const handleConvo = async (member, channel) => {
             'Unfortunately you are not old enough to participate in this server'
         );
 
-        await member.ban({ days: 14, reason: `User is ${age} years old` });
+        // await member.ban({ days: 14, reason: `User is ${age} years old` });
     } else {
         await channel.send('Thank you for verifying your age!');
     }
