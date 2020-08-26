@@ -90,5 +90,11 @@ exports.checkUserAge = async (member) => {
 
     const age = messages.first().content.replace(/\D/g, '');
 
-    return age < minAge;
+    const oldEnough = age >= minAge;
+
+    if (oldEnough) memberDM.send('Thank you for verifying your age!');
+    else
+        memberDM.send(
+            'Unfortunately you are not old enough to participate in this server'
+        );
 };
