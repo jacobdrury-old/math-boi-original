@@ -9,6 +9,7 @@ module.exports = {
     async execute(message, args) {
         const id = args[0].replace('<@!', '').replace('>', '');
         const member = await message.guild.members.fetch(id);
+        await message.channel.send('Message sent');
         const response = await checkUserAge(member);
         console.log(`Response: ${response}`);
     },
