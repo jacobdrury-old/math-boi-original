@@ -78,7 +78,7 @@ const minAge = 13;
 
 exports.checkUserAge = async (member) => {
     const filter = (m) => m.author.id === member.id;
-    const memberDM = member.user.createDM();
+    const memberDM = member.createDM();
 
     memberDM.send('How old are you?');
 
