@@ -88,5 +88,7 @@ exports.checkUserAge = async (member) => {
         errors: ['time'],
     });
 
-    console.log(messages);
+    const age = messages.first().content.replace(/\D/g, '');
+
+    return age < minAge;
 };
