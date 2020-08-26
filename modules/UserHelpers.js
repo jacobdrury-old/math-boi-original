@@ -81,7 +81,7 @@ exports.checkUserAge = async (member) => {
         memberDM.send('How old are you?');
         return await handleConvo(member, memberDM);
     } catch (err) {
-        console.log(err.message);
+        console.log(err);
         //return await userDMsClosed(member);
     }
 };
