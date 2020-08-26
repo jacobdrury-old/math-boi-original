@@ -97,9 +97,9 @@ const handleConvo = async (member, channel) => {
 
         const age = messages.first().content.replace(/\D/g, '');
 
-        const oldEnough = age >= minAge;
+        const isTooYoung = age >= minAge;
 
-        if (!oldEnough) {
+        if (isTooYoung) {
             await channel.send(
                 'Unfortunately you are not old enough to participate in this server'
             );
@@ -111,7 +111,7 @@ const handleConvo = async (member, channel) => {
             );
         }
 
-        return oldEnough;
+        return isTooYoung;
     } catch (err) {
         await channel.send(
             'This request has timed out, please try again later.'
@@ -152,11 +152,11 @@ const userDMsClosed = async (member) => {
         `${member} Before I am able to give you the middle school role, I have to verify your age! How old are you?`
     );
 
-    const oldEnough = await handleConvo(member, channel);
+    const isTooYoung = await handleConvo(member, channel);
 
     await sleep(30000);
     await channel.delete();
-    return oldEnough;
+    return isTooYoung;
 };
 
 const sleep = (ms) => {
