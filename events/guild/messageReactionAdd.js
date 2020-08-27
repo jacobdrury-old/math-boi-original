@@ -1,6 +1,6 @@
 const { getReactionMessage } = require('../../modules/utils.js');
 const { setToRole } = require('../../modules/UserHelpers.js');
-const { checkUserAge } = require('../../modules/UserHelpers.js');
+const { isUserTooYoung } = require('../../modules/UserHelpers.js');
 
 const verifiedRoleId = '729871004368633936';
 
@@ -50,7 +50,7 @@ const roleAssignment = async (
 
     let userIsTooYoung = false;
     if (roleId === middleSchoolRoleId) {
-        isUserOfAge = await checkUserAge(member);
+        userIsTooYoung = await isUserTooYoung(member);
     }
 
     if (userIsTooYoung) return;

@@ -75,7 +75,9 @@ exports.removeRole = async (member, role, adminId = null, shouldLog = true) => {
     }
 };
 
-exports.checkUserAge = async (member) => {
+exports.isUserTooYoung = async (member) => {
+    console.log('here');
+    return true;
     try {
         const memberDM = await member.createDM();
         memberDM.send('How old are you?');
@@ -97,7 +99,7 @@ const handleConvo = async (member, channel) => {
 
         const age = messages.first().content.replace(/\D/g, '');
 
-        const isTooYoung = age >= minAge;
+        const isTooYoung = age < minAge;
 
         if (isTooYoung) {
             await channel.send(
