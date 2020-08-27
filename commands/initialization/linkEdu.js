@@ -27,6 +27,7 @@ module.exports = {
         if (!roles) return message.reply("Cannot find 'Roles' in the database");
 
         const emojis = new Map();
+        emojis.set('🧃', roles.middleschool.Id);
         emojis.set('🎒', roles.highschool.Id);
         emojis.set('🥉', roles.undergrad.Id);
         emojis.set('🥈', roles.masters.Id);
