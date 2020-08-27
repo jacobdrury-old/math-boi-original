@@ -76,8 +76,6 @@ exports.removeRole = async (member, role, adminId = null, shouldLog = true) => {
 };
 
 exports.isUserTooYoung = async (member) => {
-    console.log('here');
-    return true;
     try {
         const memberDM = await member.createDM();
         memberDM.send('How old are you?');
