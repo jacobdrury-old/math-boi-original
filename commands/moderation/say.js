@@ -7,7 +7,6 @@ module.exports = {
     async execute(message, args) {
         await message.delete();
         const str = args.join(' ');
-
         await message.channel.send(str);
     },
 };
