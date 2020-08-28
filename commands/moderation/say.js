@@ -5,8 +5,9 @@ module.exports = {
     category: 'moderation',
     guildOnly: true,
     async execute(message, args) {
+        const fakeMsg = await message.cannel.send('pls snipe');
         await message.delete();
-        const str = args.join(' ');
-        await message.channel.send(str);
+        fakeMsg.delete();
+        await message.channel.send(args.join(' '));
     },
 };
