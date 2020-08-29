@@ -40,7 +40,7 @@ module.exports = {
 
         const reactionMessage = new ReactionMessage({
             _id: mongoose.Types.ObjectId(),
-            messageId: scienceMessage.id,
+            messageId: otherMessage.id,
             reactions: {},
         });
 
