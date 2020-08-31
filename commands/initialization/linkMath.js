@@ -33,6 +33,7 @@ module.exports = {
         emojis.set('📘', roles.preCalc.Id);
         emojis.set('📙', roles.calc.Id);
         emojis.set('📚', roles.upperMath.Id);
+        emojis.set('🔧', roles.engineering.Id);
 
         emojis.forEach(async (value, emoji) => await mathMessage.react(emoji));
 
