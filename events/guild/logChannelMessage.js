@@ -1,9 +1,12 @@
+const undergrad = require('../../commands/roles/undergrad');
+
 const punishments = ['WARN', 'MUTE', 'UNMUTE'];
 const inviteLinkMsg = 'Posted an invite';
 
 module.exports = async (client, message) => {
     const logEmbed = message.embeds[0];
-    if (!logEmbed.author) return;
+    if (logEmbed.author == undefined || logEmbed == null || !logEmbed.author)
+        return;
 
     const punishment = logEmbed.author.name
         .split(' ')[0]
