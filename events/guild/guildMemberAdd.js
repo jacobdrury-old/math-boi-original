@@ -5,7 +5,7 @@ module.exports = async (client, member) => {
     const nickname = member.displayName;
     const regex = /^[a-zA-Z0-9?{}[\]_!@#$\^&*|']*$/;
 
-    if (nickname.match(regex)) {
+    if (!nickname.match(regex)) {
         await member.setNickname('Moderated Nickname', 'Invalid username');
 
         const logChannel = await getLogChannel(member.client);
