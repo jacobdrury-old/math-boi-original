@@ -5,8 +5,8 @@ module.exports = {
         'Lets people know how to get help with questions in the server',
     guildOnly: true,
     category: 'basic',
-    execute(message, args) {
-        await message.delete()
+    async execute(message, args) {
+        await message.delete();
         let memberTag = '';
         const mention = args[0];
         if (mention && mention.startsWith('<@') && mention.endsWith('>')) {
