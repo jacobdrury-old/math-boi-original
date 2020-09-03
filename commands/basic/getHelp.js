@@ -6,6 +6,7 @@ module.exports = {
     guildOnly: true,
     category: 'basic',
     execute(message, args) {
+        await message.delete()
         let memberTag = '';
         const mention = args[0];
         if (mention && mention.startsWith('<@') && mention.endsWith('>')) {
