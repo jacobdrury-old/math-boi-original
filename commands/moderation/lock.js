@@ -15,14 +15,42 @@ module.exports = {
     guildOnly: true,
     args: true,
     async execute(message, args) {
-        const channels = message.guild.channels.cache;
-        console.log(channels);
+        const channels = message.guild.channels.cache.filter(
+            (c) => !IGNORED.has(c.parentID) && c.type != 'category'
+        );
 
-        if (args[0] == 'on') return await lock();
-        else if (args[0] == 'off') return await unlock();
+        if (args[0] == 'on') {
+            await lock(channels);
+            return message.channel.send('All channels have been locked 🔒');
+        } else if (args[0] == 'off') {
+            await unlock(channels);
+            return message.channel.send('All channels have been unlocked 🔓');
+        }
     },
 };
 
-const lock = async (channels) => {};
+const lock = async (channels) => {
+    channels.forEach((channel) => {
+        channel
+            .updateOverwrite(message.guild.roles.everyone, {
+                SEND_MESSAGE: false,
+            })
+            .then(() => {
+                channel.name += '🔒';
+            })
+            .catch((err) => console.error(err));
+    });
+};
 
-const unlock = async (channels) => {};
+const unlock = async (channels) => {
+    channels.forEach((channel) => {
+        channel
+            .updateOverwrite(message.guild.roles.everyone, {
+                SEND_MESSAGE: null,
+            })
+            .then(() => {
+                channel.name.replace('🔒', '');
+            })
+            .catch((err) => console.error(err));
+    });
+};
