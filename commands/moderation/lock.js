@@ -27,16 +27,16 @@ module.exports = {
 };
 
 const lock = async (message, channels) => {
-    // channels.forEach((channel) => {
-    //     channel
-    //         .updateOverwrite(message.guild.id, {
-    //             SEND_MESSAGES: false,
-    //         })
-    //         .then(() => {
-    //             channel.setName(`${channel.name}🔒`);
-    //         })
-    //         .catch((err) => console.error(err));
-    // });
+    channels.forEach((channel) => {
+        channel
+            .updateOverwrite(message.guild.id, {
+                SEND_MESSAGES: false,
+            })
+            .then(() => {
+                channel.setName(`${channel.name}🔒`);
+            })
+            .catch((err) => console.error(err));
+    });
 
     const announcementC = message.guild.channels.cache.get(announcementID);
     await announcementC.send('', {
@@ -51,22 +51,22 @@ const lock = async (message, channels) => {
 };
 
 const unlock = async (message, channels) => {
-    // channels.forEach((channel) => {
-    //     channel
-    //         .updateOverwrite(message.guild.id, {
-    //             SEND_MESSAGES: null,
-    //         })
-    //         .then(() => {
-    //             channel.setName(channel.name.replace('🔒', ''));
-    //         })
-    //         .catch((err) => console.error(err));
-    // });
+    channels.forEach((channel) => {
+        channel
+            .updateOverwrite(message.guild.id, {
+                SEND_MESSAGES: null,
+            })
+            .then(() => {
+                channel.setName(channel.name.replace('🔒', ''));
+            })
+            .catch((err) => console.error(err));
+    });
 
     const announcementC = message.guild.channels.cache.get(announcementID);
     await announcementC.send('', {
         embed: {
             color: 0x00f763,
-            title: '🔒 Server Unlocked 🔒',
+            title: '🔓 Server Unlocked 🔓',
             description: `The server has been unlocked! Thank you for your patience!`,
         },
     });
