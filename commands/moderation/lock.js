@@ -19,17 +19,12 @@ module.exports = {
             (c) => !IGNORED.has(c.parentID) && c.type != 'category'
         );
 
-        if (args[0] == 'on') {
-            await lock(channels);
-            return message.channel.send('All channels have been locked 🔒');
-        } else if (args[0] == 'off') {
-            await unlock(channels);
-            return message.channel.send('All channels have been unlocked 🔓');
-        }
+        if (args[0] == 'on') return await lock(message, channels);
+        else if (args[0] == 'off') return await unlock(message, channels);
     },
 };
 
-const lock = async (channels) => {
+const lock = async (message, channels) => {
     channels.forEach((channel) => {
         channel
             .updateOverwrite(message.guild.roles.everyone, {
@@ -40,9 +35,10 @@ const lock = async (channels) => {
             })
             .catch((err) => console.error(err));
     });
+    return message.channel.send('All channels have been locked 🔒');
 };
 
-const unlock = async (channels) => {
+const unlock = async (message, channels) => {
     channels.forEach((channel) => {
         channel
             .updateOverwrite(message.guild.roles.everyone, {
@@ -53,4 +49,5 @@ const unlock = async (channels) => {
             })
             .catch((err) => console.error(err));
     });
+    return message.channel.send('All channels have been unlocked 🔓');
 };
