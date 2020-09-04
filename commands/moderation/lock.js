@@ -31,7 +31,7 @@ const lock = async (message, channels) => {
                 SEND_MESSAGES: false,
             })
             .then((channel) => {
-                channel.setName((channel.name += '🔒'));
+                channel.setName(`${channel.name}🔒`);
             })
             .catch((err) => console.error(err));
     });
@@ -45,7 +45,7 @@ const unlock = async (message, channels) => {
                 SEND_MESSAGES: null,
             })
             .then((channel) => {
-                channel.setName(channel.name.replace('🔒', ''));
+                channel.setName(`${channel.name.replace('🔒', '')}`);
             })
             .catch((err) => console.error(err));
     });
