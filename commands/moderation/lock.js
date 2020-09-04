@@ -31,7 +31,7 @@ const lock = async (message, channels) => {
                 SEND_MESSAGES: false,
             })
             .then(() => {
-                channel.setName((channel.name += '🔒'));
+                channel.setName(`${channel.name}🔒`);
             })
             .catch((err) => console.error(err));
     });
