@@ -27,7 +27,7 @@ module.exports = {
 const lock = async (message, channels) => {
     channels.forEach((channel) => {
         channel
-            .updateOverwrite(message.guild.roles.everyone, {
+            .updateOverwrite(message.guild.id, {
                 SEND_MESSAGE: false,
             })
             .then(() => {
@@ -41,7 +41,7 @@ const lock = async (message, channels) => {
 const unlock = async (message, channels) => {
     channels.forEach((channel) => {
         channel
-            .updateOverwrite(message.guild.roles.everyone, {
+            .updateOverwrite(message.guild.id, {
                 SEND_MESSAGE: null,
             })
             .then(() => {
