@@ -4,6 +4,7 @@ module.exports = {
     moderatorOnly: true,
     category: 'moderation',
     guildOnly: true,
+    args: true,
     async execute(message, args) {
         await message.delete();
         await message.channel.send(args.join(' '));
