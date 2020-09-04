@@ -30,7 +30,7 @@ const lock = async (message, channels) => {
             .updateOverwrite(message.guild.id, {
                 SEND_MESSAGES: false,
             })
-            .then((channel) => {
+            .then(() => {
                 channel.setName(`${channel.name}🔒`);
             })
             .catch((err) => console.error(err));
@@ -44,7 +44,7 @@ const unlock = async (message, channels) => {
             .updateOverwrite(message.guild.id, {
                 SEND_MESSAGES: null,
             })
-            .then((channel) => {
+            .then(() => {
                 channel.setName(`${channel.name.replace('🔒', '')}`);
             })
             .catch((err) => console.error(err));
