@@ -1,6 +1,6 @@
 const cron = require('cron');
 const clean = require('../../commands/admin/clean.js').execute;
-const welcomeId = '737118741510357063';
+const helpId = '737118741510357063';
 module.exports = (client) => {
     // client.user.setPresence({
     //     status: 'online',
@@ -17,7 +17,7 @@ module.exports = (client) => {
         const channel = client.guilds.cache
             .get(client.guildId)
             .first()
-            .channels.cache.get(welcomeId);
+            .channels.cache.get(helpId);
 
         await channel.bulkDelete(20, true);
         await channel.send(
