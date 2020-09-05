@@ -1,4 +1,4 @@
-const cron = require('cron').CronJob;
+const CronJob = require('cron').CronJob;
 const clean = require('../../commands/admin/clean.js').execute;
 const helpId = '737118741510357063';
 module.exports = (client) => {
