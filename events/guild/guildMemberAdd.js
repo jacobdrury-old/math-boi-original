@@ -3,9 +3,9 @@ const { logEmbed } = require('../../modules/embeds.js');
 const { getLogChannel } = require('../../modules/utils.js');
 module.exports = async (client, member) => {
     const nickname = member.displayName;
-    const regex = /^[a-zA-Z0-9?{}\.[\]_-!@#$\^&*|']*$/;
+    const regex = /^[a-zA-Z0-9?{}[\]_-!@#$\^&*|']*$/;
 
-    if (!nickname.replace(' ', '').match(regex)) {
+    if (!nickname.replace(' ', '').replace('.', '').match(regex)) {
         await member.setNickname('Moderated Nickname', 'Invalid username');
 
         const logChannel = await getLogChannel(member.client);
