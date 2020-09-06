@@ -104,7 +104,8 @@ class Ticket {
         return new Promise((resolve, reject) => {
             dmCollector.on('collect', async (m) => {
                 const files = getAttachmentLinks(m.attachments);
-
+                console.log(m.attachments);
+                console.log(files);
                 await this.channel.send('', {
                     embed: {
                         author: {
@@ -163,10 +164,7 @@ class Ticket {
 
 const getAttachmentLinks = (attachments) => {
     const valid = /^.*(gif|png|jpg|jpeg)&/g;
-    return attachments
-        .array()
-        .filter((attachment) => valid.test(attachment.url))
-        .map((attachment) => attachment.url);
+    return attachments.array().map((attachment) => attachment.url);
 };
 
 module.exports = Ticket;
