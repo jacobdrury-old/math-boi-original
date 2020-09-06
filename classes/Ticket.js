@@ -76,6 +76,7 @@ class Ticket {
         let newEmbed = this.msg.embeds[0];
         newEmbed.color = 0xb14cf3;
         newEmbed.title = 'Ticket Active';
+        newEmbed.fields = [{ name: 'Message', value: newEmbed.description }];
         newEmbed.description =
             'This ticket is now open!\nYou may close this ticket at anytime by typing -close';
 
