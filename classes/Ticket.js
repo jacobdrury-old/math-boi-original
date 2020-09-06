@@ -51,7 +51,7 @@ class Ticket {
 
             const reactions = await this.msg.awaitReactions(reactionFilter, {
                 max: 1,
-                time: 10000,
+                time: 3.6e6,
                 errors: ['time'],
             });
 
