@@ -9,6 +9,7 @@ class Ticket {
     channel;
     dmChannel;
     msg;
+    isActive = false;
     constructor(client, message, guild) {
         this.client = client;
         this.message = message;
@@ -92,6 +93,7 @@ class Ticket {
     }
 
     handleConvo() {
+        this.isActive = true;
         const dmFilter = (m) => m.author.id === this.user.id;
         const dmCollector = this.dmChannel.createMessageCollector(dmFilter);
 
@@ -128,8 +130,8 @@ class Ticket {
                 await this.dmChannel.send('', {
                     embed: {
                         author: {
-                            name: this.user.tag,
-                            icon_url: this.user.displayAvatarURL(),
+                            name: m.author.tag,
+                            icon_url: m.author.displayAvatarURL(),
                         },
                         description: m.content,
                     },
@@ -140,6 +142,7 @@ class Ticket {
     }
 
     async close() {
+        this.isActive = false;
         await this.msg.reactions.removeAll();
         await this.channel.send('', {
             embed: {

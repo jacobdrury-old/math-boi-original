@@ -5,10 +5,8 @@ module.exports = async (client, message) => {
     if (message.author.bot) return;
 
     if (openedTickets.has(message.author.id)) {
-        if (!openedTickets.get(message.author.id))
-            return await message.channel.send(
-                'You already have an open ticket'
-            );
+        if (openedTickets.get(message.author.id).isActive) return;
+        return await message.channel.send('You already have an open ticket');
     }
 
     message.channel.send('', {
@@ -23,7 +21,7 @@ module.exports = async (client, message) => {
     const guild = client.guilds.cache.get(client.guildId);
 
     const ticket = new Ticket(client, message, guild);
-    openedTickets.set(message.author.id, false);
+    openedTickets.set(message.author.id, ticket);
 
     const channel = await ticket.init();
 
@@ -42,6 +40,5 @@ module.exports = async (client, message) => {
             openedTickets.delete(message.author.id);
         }, 10000);
 
-    openedTickets.get(message.author.id, true);
     await ticket.handleConvo();
 };
