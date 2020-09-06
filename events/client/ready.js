@@ -17,7 +17,6 @@ module.exports = async (client) => {
         const job = new CronJob('0 12 * * *', async () => {
             const channel = client.guilds.cache
                 .get(client.guildId)
-                .first()
                 .channels.cache.get(helpId);
 
             await channel.bulkDelete(20, true);
