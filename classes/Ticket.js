@@ -1,5 +1,3 @@
-const { description } = require('../commands/admin/clean');
-
 const mailCategory = '751999833597804624';
 const archiveCategory = '752000303787933706';
 const staffID = '737374602719920191';
@@ -204,7 +202,6 @@ class Ticket {
 }
 
 const getAttachmentLinks = (attachments) => {
-    const valid = /^.*(gif|png|jpg|jpeg)&/g;
     return attachments.array().map((attachment) => attachment.url);
 };
 

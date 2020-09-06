@@ -38,7 +38,7 @@ module.exports = async (client, message) => {
     else if (!isAccepted)
         setTimeout(() => {
             openedTickets.delete(message.author.id);
-        }, 10000);
+        }, 300000);
 
     const isClosed = await ticket.handleConvo();
 

@@ -14,14 +14,14 @@ module.exports = async (client) => {
 
     //Auto send verify message everyday at noon
     try {
-        const job = new CronJob('0 12 * * *', async () => {
+        const job = new CronJob('0 17 * * *', async () => {
             const channel = client.guilds.cache
                 .get(client.guildId)
                 .channels.cache.get(helpId);
 
-            await channel.bulkDelete(20, true);
+            await channel.bulkDelete(99, true);
             await channel.send(
-                'Hey! @everyone I see you guys are not verified yet, please go check out #📜rules Then all you have to do it react the the :white_check_mark: to have access to the server! If you have any issues please tag @Staff 🧙‍♂️ . :slight_smile: Once you Verify you should check out #💎role-selection Thank you!'
+                'Hey! @everyone I see you guys are not verified yet, please go check out <#725171177235939379> Then all you have to do it react the the :white_check_mark: to have access to the server! If you have any issues please tag <@&737374602719920191> 🧙‍♂️ . :slight_smile: Once you Verify you should check out <#740316361032728615> Thank you!'
             );
         });
         job.start();
