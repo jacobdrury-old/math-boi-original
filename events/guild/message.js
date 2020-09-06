@@ -7,6 +7,10 @@ const traineeModId = '725442011758461049';
 const headModId = '739922768954392586';
 
 module.exports = async (client, message) => {
+    if (message.channel.type === 'dm') {
+        return client.emit('directMessage', message);
+    }
+
     const prefix = client.prefix;
 
     if (message.channel.id === client.logChannelId) {

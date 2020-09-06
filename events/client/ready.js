@@ -2,13 +2,13 @@ const CronJob = require('cron').CronJob;
 const { getLogChannel } = require('../../modules/utils.js');
 const helpId = '737118741510357063';
 module.exports = async (client) => {
-    // client.user.setPresence({
-    //     status: 'online',
-    //     activity: {
-    //         name: 'me getting developed',
-    //         type: 'WATCHING',
-    //     },
-    // });
+    client.user.setPresence({
+        status: 'online',
+        activity: {
+            name: 'DM for Staff help!',
+            type: 'PLAYING',
+        },
+    });
 
     console.log('Ready!');
 
@@ -17,7 +17,6 @@ module.exports = async (client) => {
         const job = new CronJob('0 12 * * *', async () => {
             const channel = client.guilds.cache
                 .get(client.guildId)
-                .first()
                 .channels.cache.get(helpId);
 
             await channel.bulkDelete(20, true);
