@@ -14,7 +14,7 @@ module.exports = async (client, message) => {
             color: 0x00f763,
             title: 'Ticket Opened!',
             description:
-                'Hello! We have received your message. Please wait momentarily while one of our staff members gets back to you.',
+                'Hello! We have received your message. Please wait while one of our staff members gets back to you.',
         },
     });
 
@@ -40,5 +40,9 @@ module.exports = async (client, message) => {
             openedTickets.delete(message.author.id);
         }, 10000);
 
-    await ticket.handleConvo();
+    const isClosed = await ticket.handleConvo();
+
+    if (isClosed) {
+        openedTickets.delete(message.author.id);
+    }
 };

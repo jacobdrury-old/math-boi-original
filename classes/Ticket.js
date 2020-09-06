@@ -4,7 +4,6 @@ const mailCategory = '751999833597804624';
 const archiveCategory = '752000303787933706';
 const staffID = '737374602719920191';
 const emojis = ['❌', '✅'];
-
 class Ticket {
     channel;
     dmChannel;
@@ -24,6 +23,7 @@ class Ticket {
             {
                 type: 'text',
                 parent: mailCategory,
+                topic: 'Type -stop to end the chat and archive it',
             }
         );
         return this.channel;
@@ -57,8 +57,12 @@ class Ticket {
 
             const choice = reactions.first()._emoji.name;
 
-            if (choice == '✅') isAccepted = true;
-            else await this.reject();
+            if (choice == '✅') {
+                await this.accept();
+                isAccepted = true;
+            } else {
+                await this.reject();
+            }
         } catch (err) {
             console.error(err);
             isAccepted = null;
@@ -68,11 +72,27 @@ class Ticket {
         return isAccepted;
     }
 
+    async accept() {
+        let newEmbed = this.msg.embeds[0];
+        newEmbed.color = 0xb14cf3;
+        newEmbed.title = 'Ticket Active';
+        newEmbed.description =
+            'This ticket is now open!\nYou may close this ticket at anytime by typing -close';
+
+        await this.msg.edit('', { embed: newEmbed });
+    }
+
     async reject() {
         await this.channel.delete();
-        await this.dmChannel.send(
-            'Your message was rejected. You may try again later'
-        );
+
+        await this.dmChannel.send('', {
+            embed: {
+                color: 0xff2c02,
+                title: 'Ticket Rejected',
+                description:
+                    'Your message was rejected. You may try again later',
+            },
+        });
     }
 
     async timeout() {
@@ -87,9 +107,10 @@ class Ticket {
         let newEmbed = this.msg.embeds[0];
         newEmbed.color = 0xff2c02;
         newEmbed.title = 'ModMail Msg Timed out';
+        newEmbed.description = '';
 
         await this.msg.edit('', { embed: newEmbed });
-        await this.close();
+        await this.close(false);
     }
 
     handleConvo() {
@@ -103,32 +124,34 @@ class Ticket {
 
         return new Promise((resolve, reject) => {
             dmCollector.on('collect', async (m) => {
-                const files = getAttachmentLinks(m.attachments);
-                console.log(m.attachments);
-                console.log(files);
                 await this.channel.send('', {
                     embed: {
+                        color: 0x2caefe,
                         author: {
                             name: this.user.tag,
                             icon_url: this.user.displayAvatarURL(),
                         },
                         description: m.content,
                     },
-                    files,
                 });
-            });
-
-            cCollector.on('collect', async (m) => {
-                if (m.content.toLowerCase() === '--stop') {
-                    dmCollector.stop();
-                    cCollector.stop();
-                    this.close();
-                    return resolve();
-                }
 
                 const files = getAttachmentLinks(m.attachments);
 
+                if (files.length) {
+                    await this.channel.send('', { files });
+                }
+            });
+
+            cCollector.on('collect', async (m) => {
+                if (m.content.toLowerCase() === '-close') {
+                    dmCollector.stop();
+                    cCollector.stop();
+                    this.close();
+                    return resolve(true);
+                }
+
                 await this.dmChannel.send('', {
+                    color: 0x2caefe,
                     embed: {
                         author: {
                             name: m.author.tag,
@@ -136,13 +159,18 @@ class Ticket {
                         },
                         description: m.content,
                     },
-                    files,
                 });
+
+                const files = getAttachmentLinks(m.attachments);
+
+                if (files.length) {
+                    await this.dmChannel.send('', { files });
+                }
             });
         });
     }
 
-    async close() {
+    async close(notifyUser = true) {
         this.isActive = false;
         await this.msg.reactions.removeAll();
         await this.channel.send('', {
@@ -159,6 +187,16 @@ class Ticket {
             EMBED_LINKS: false,
             ATTACH_FILES: false,
         });
+
+        if (notifyUser)
+            await this.dmChannel.send('', {
+                embed: {
+                    color: 0x2f2f2f,
+                    title: 'Ticket Closed',
+                    description:
+                        'This ticket has been closed\nPlease reach out again if you need anything else!',
+                },
+            });
     }
 }
 
