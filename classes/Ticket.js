@@ -23,7 +23,7 @@ class Ticket {
             {
                 type: 'text',
                 parent: mailCategory,
-                topic: 'Type -stop to end the chat and archive it',
+                topic: 'Type -close to end the chat and archive it',
             }
         );
         return this.channel;
