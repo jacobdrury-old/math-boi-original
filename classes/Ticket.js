@@ -9,6 +9,8 @@ class Ticket {
     dmChannel;
     msg;
     isActive = false;
+    dmCollector;
+    cCollector;
     constructor(client, message, guild) {
         this.client = client;
         this.message = message;
@@ -117,14 +119,14 @@ class Ticket {
     handleConvo() {
         this.isActive = true;
         const dmFilter = (m) => m.author.id === this.user.id;
-        const dmCollector = this.dmChannel.createMessageCollector(dmFilter);
+        this.dmCollector = this.dmChannel.createMessageCollector(dmFilter);
 
         const cFilter = (m) =>
             m.channel.id === this.channel.id && !m.author.bot;
-        const cCollector = this.channel.createMessageCollector(cFilter);
+        this.cCollector = this.channel.createMessageCollector(cFilter);
 
         return new Promise((resolve, reject) => {
-            dmCollector.on('collect', async (m) => {
+            this.dmCollector.on('collect', async (m) => {
                 await this.channel.send('', {
                     embed: {
                         color: 0x2caefe,
@@ -143,10 +145,8 @@ class Ticket {
                 }
             });
 
-            cCollector.on('collect', async (m) => {
+            this.cCollector.on('collect', async (m) => {
                 if (m.content.toLowerCase() === '-close') {
-                    dmCollector.stop();
-                    cCollector.stop();
                     this.close();
                     return resolve(true);
                 }
@@ -173,6 +173,8 @@ class Ticket {
 
     async close(notifyUser = true) {
         this.isActive = false;
+        this.dmCollector.stop();
+        this.cCollector.stop();
         await this.msg.reactions.removeAll();
         await this.channel.send('', {
             embed: {
