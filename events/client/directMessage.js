@@ -3,6 +3,7 @@ const openedTickets = new Map();
 
 module.exports = async (client, message) => {
     if (message.author.bot) return;
+    if (message.content == 13) return;
 
     if (openedTickets.has(message.author.id)) {
         if (openedTickets.get(message.author.id).isActive) return;
