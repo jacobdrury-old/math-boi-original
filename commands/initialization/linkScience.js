@@ -32,6 +32,7 @@ module.exports = {
         emojis.set('☄️', roles.physics.Id);
         emojis.set('🪐', roles.physScience.Id);
         emojis.set('🧪', roles.chemistry.Id);
+        emojis.set('🔭', roles.sciChallenges.Id);
 
         emojis.forEach(
             async (value, emoji) => await scienceMessage.react(emoji)
