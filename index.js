@@ -12,13 +12,15 @@ const client = new Client({
     require(`./handlers/${handler}`)(client)
 );
 client.prefix = process.env.PREFIX;
-client.guildId = process.env.GUILD_ID;
 
 (async () => {
     client.db = await mongoose.connect(process.env.DB_CONNECTION_STRING, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
+
+    client.guildId = process.env.GUILD_ID;
+    client.ol = await client.guilds.cache.get(client.guildId);
 
     const logChannel = await getLogChannel();
     if (logChannel) client.logChannelId = logChannel.channelId;
