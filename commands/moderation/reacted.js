@@ -47,8 +47,6 @@ module.exports = {
 
         const user = (await reaction.users.fetch()).get(memberId);
 
-        console.log(user);
-
         return await message.channel.send(
             `<@${memberId}> ${
                 user ? 'has' : 'has not'
