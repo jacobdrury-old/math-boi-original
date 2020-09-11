@@ -45,7 +45,8 @@ module.exports = {
 
         const reaction = rulesMessage.reactions.cache.first();
 
-        const user = (await reaction.users.fetch()).get(memberId);
+        const allUsers = await getAllUsers(reaction);
+        const user = allUsers.includes(memberId);
 
         return await message.channel.send(
             `<@${memberId}> ${
@@ -53,4 +54,16 @@ module.exports = {
             } reacted to the rules message`
         );
     },
+};
+
+const getAllUsers = async (reaction) => {
+    let entries = [];
+    let users = await reaction.users.fetch();
+    entries = entries.concat(...users.keys());
+    while (users.size === 100) {
+        const { id } = users.last();
+        users = await reaction.users.fetch({ after: id });
+        entries = entries.concat(...users.keys());
+    }
+    return entries;
 };
