@@ -33,6 +33,7 @@ module.exports = {
         emojis.set('🌮', roles.spanish.Id);
         emojis.set('🗻', roles.geography.Id);
         emojis.set('🏰', roles.history.Id);
+        emojis.set('📍', roles.eventsPing.Id);
 
         emojis.forEach(async (value, emoji) => await otherMessage.react(emoji));
 
