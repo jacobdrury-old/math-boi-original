@@ -20,7 +20,6 @@ client.prefix = process.env.PREFIX;
     });
 
     client.guildId = process.env.GUILD_ID;
-    client.ol = await client.guilds.cache.get(client.guildId);
 
     const logChannel = await getLogChannel();
     if (logChannel) client.logChannelId = logChannel.channelId;
