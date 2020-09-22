@@ -7,7 +7,7 @@ module.exports = {
     args: true,
     usage: '<tag the channel>',
     guildOnly: true,
-    adminOnly: true,
+    ownerOnly: true,
     category: 'initialization',
     async execute(message, args) {
         try {

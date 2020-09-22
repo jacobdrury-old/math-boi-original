@@ -1,6 +1,10 @@
 const { MessageEmbed } = require('discord.js');
 const { readdirSync } = require('fs');
-const { getIsAdmin, getIsModerator } = require('../../modules/UserHelpers');
+const {
+    getIsOwner,
+    getIsAdmin,
+    getIsModerator,
+} = require('../../modules/UserHelpers');
 
 module.exports = {
     name: 'help',
@@ -19,15 +23,18 @@ module.exports = {
                   .members.fetch(message.author.id)
             : message.member);
 
+        const isUserOwner = getIsOwner(guildMember);
+
         const isUserAdmin = getIsAdmin(message.client, guildMember);
 
         const isUserModerator = getIsModerator(message.client, guildMember);
 
-        const useableCommands = isUserAdmin
+        const useableCommands = isUserOwner
             ? commands
             : commands.filter(
                   (cmd) =>
-                      cmd.adminOnly == null &&
+                      cmd.ownerOnly == null &&
+                      (cmd.adminOnly == null || isUserAdmin) &&
                       (cmd.moderatorOnly == null || isUserModerator)
               );
 

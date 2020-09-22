@@ -6,7 +6,7 @@ module.exports = {
     args: true,
     usage: `<tag the ${roleName} role>`,
     guildOnly: true,
-    adminOnly: true,
+    ownerOnly: true,
     category: 'initialization',
     execute(message, args) {
         const rawId = args[0];

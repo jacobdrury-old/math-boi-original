@@ -2,7 +2,11 @@ const { Collection } = require('discord.js');
 const gifs = require('../../modules/gifs.js');
 const cooldowns = new Collection();
 
-const { getIsAdmin, getIsModerator } = require('../../modules/UserHelpers');
+const {
+    getIsOwner,
+    getIsAdmin,
+    getIsModerator,
+} = require('../../modules/UserHelpers');
 
 module.exports = async (client, message) => {
     // if (message.channel.type === 'dm') {
@@ -23,6 +27,8 @@ module.exports = async (client, message) => {
               .members.fetch(message.author.id)
         : message.member);
 
+    const isOwner = getIsOwner(member);
+
     const isAdmin = getIsAdmin(client, member);
 
     const isModerator = getIsModerator(client, member);
@@ -33,7 +39,7 @@ module.exports = async (client, message) => {
 
     if (
         message.content.toLowerCase().startsWith('!') &&
-        (isAdmin || isModerator)
+        (isOwner || isAdmin || isModerator)
     ) {
         return gifs.handle(message);
     }
@@ -55,7 +61,18 @@ module.exports = async (client, message) => {
         return message.reply("I can't execute that command inside DMs!");
     }
 
-    if (command.adminOnly && !isAdmin) {
+    if (command.ownerOnly && !isOwner) {
+        await message.channel.send(
+            'https://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905'
+        );
+
+        const dmChannel = await message.author.createDM();
+        return dmChannel.send(
+            `${prefix}${command.name} is only for the server owner`
+        );
+    }
+
+    if (command.adminOnly && !isAdmin && !isOwner) {
         await message.channel.send(
             'https://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905'
         );
@@ -64,7 +81,7 @@ module.exports = async (client, message) => {
         return dmChannel.send(`${prefix}${command.name} is for admins only`);
     }
 
-    if (command.moderatorOnly && !isModerator && !isAdmin) {
+    if (command.moderatorOnly && !isModerator && !isAdmin && !isOwner) {
         await message.channel.send(
             'https://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905'
         );

@@ -3,6 +3,8 @@ const { logEmbed, setToRoleEmbedForUser } = require('./embeds.js');
 const { getLogChannel } = require('../modules/utils.js');
 const minAge = 13;
 
+exports.getIsOwner = (member) => member.guild.ownerID == member.id;
+
 exports.getIsAdmin = (client, member) =>
     member.hasPermission('ADMINISTRATOR') ||
     member.roles.cache.get(client.ids.headModId);

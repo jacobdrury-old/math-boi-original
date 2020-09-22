@@ -8,7 +8,7 @@ module.exports = {
     usage: `use in channel you want the message sent in`,
     usage: '<message id>',
     guildOnly: true,
-    adminOnly: true,
+    ownerOnly: true,
     args: true,
     category: 'initialization',
     async execute(message, args) {

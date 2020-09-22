@@ -7,7 +7,7 @@ module.exports = {
     description: `Sends an embed for the reaction roles for the math roles`,
     usage: `use in channel you want the message sent in`,
     guildOnly: true,
-    adminOnly: true,
+    ownerOnly: true,
     category: 'initialization',
     async execute(message, args) {
         const rawMessageId = args[0];
