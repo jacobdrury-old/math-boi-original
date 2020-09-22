@@ -11,13 +11,22 @@ const client = new Client({
 ['event', 'command'].forEach((handler) =>
     require(`./handlers/${handler}`)(client)
 );
+
 client.prefix = process.env.PREFIX;
 
-client.ids = {
+client.roleIds = {
     moderatorId: '725171176774828054',
     traineeModId: '725442011758461049',
     headModId: '739922768954392586',
+    middleSchoolRoleId: '742498991119269978',
+};
+
+client.channelIds = {
     announcementID: '725172917482291210',
+    helpId: '737118741510357063',
+    generalId: '729870525119332414',
+    rulesId: '725171177235939379',
+    roleSelectionId: '740316361032728615',
 };
 
 client.IGNORED = [

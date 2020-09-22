@@ -4,16 +4,12 @@ const { isUserTooYoung } = require('../../modules/UserHelpers.js');
 
 const verifiedRoleId = '729871004368633936';
 
-const rulesId = '725171177235939379';
-const roleSelectionId = '740316361032728615';
-const middleSchoolRoleId = '742498991119269978';
-
 module.exports = async (client, messageReaction, user) => {
     try {
         if (user.bot) return;
         if (
-            messageReaction.message.channel.id !== rulesId &&
-            messageReaction.message.channel.id !== roleSelectionId
+            messageReaction.message.channel.id !== client.channelIds.rulesId &&
+            messageReaction.message.channel.id !== client.channelIds.roleSelectionId
         )
             return;
 
@@ -49,7 +45,7 @@ const roleAssignment = async (
         .members.fetch(user.id);
 
     let userIsTooYoung = false;
-    if (roleId === middleSchoolRoleId) {
+    if (roleId === client.roleIds.middleSchoolRoleId) {
         userIsTooYoung = await isUserTooYoung(member);
     }
 

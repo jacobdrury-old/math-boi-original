@@ -30,7 +30,7 @@ const lock = async (message, channels) => {
     });
 
     const announcementC = message.guild.channels.cache.get(
-        client.ids.announcementID
+        client.channelIds.announcementID
     );
     await announcementC.send('', {
         embed: {
@@ -56,7 +56,7 @@ const unlock = async (message, channels) => {
     });
 
     const announcementC = message.guild.channels.cache.get(
-        client.ids.announcementID
+        client.channelIds.announcementID
     );
     await announcementC.send('', {
         embed: {
