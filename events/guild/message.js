@@ -2,9 +2,7 @@ const { Collection } = require('discord.js');
 const gifs = require('../../modules/gifs.js');
 const cooldowns = new Collection();
 
-const moderatorId = '725171176774828054';
-const traineeModId = '725442011758461049';
-const headModId = '739922768954392586';
+const { getIsAdmin, getIsModerator } = require('../../modules/UserHelpers');
 
 module.exports = async (client, message) => {
     // if (message.channel.type === 'dm') {
@@ -25,13 +23,9 @@ module.exports = async (client, message) => {
               .members.fetch(message.author.id)
         : message.member);
 
-    const isAdmin =
-        member.hasPermission('ADMINISTRATOR') ||
-        member.roles.cache.get(headModId);
+    const isAdmin = getIsAdmin(client, member);
 
-    const isModerator =
-        member.roles.cache.get(moderatorId) ||
-        member.roles.cache.get(traineeModId);
+    const isModerator = getIsModerator(client, member);
 
     if (message.content.toLowerCase().includes('invite link')) {
         return message.channel.send('https://discord.gg/S2azCgw');

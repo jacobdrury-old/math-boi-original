@@ -1,17 +1,3 @@
-const announcementID = '725172917482291210';
-
-const IGNORED = new Set([
-    '737457798123880509',
-    '730264204174688288',
-    '725171177235939378',
-    '725178491494072381',
-    '725172886821666898',
-    '740086491069546537',
-    '751999833597804624',
-    '752000303787933706',
-    '753087333506482277',
-]);
-
 module.exports = {
     name: 'lock',
     description: 'Locks/Unlocks all channels in the server',
@@ -21,7 +7,9 @@ module.exports = {
     args: true,
     async execute(message, args) {
         const channels = message.guild.channels.cache.filter(
-            (c) => !IGNORED.has(c.parentID) && c.type != 'category'
+            (c) =>
+                !message.client.IGNORED.includes(c.parentID) &&
+                c.type != 'category'
         );
 
         if (args[0] == 'on') return await lock(message, channels);
@@ -41,7 +29,9 @@ const lock = async (message, channels) => {
             .catch((err) => console.error(err));
     });
 
-    const announcementC = message.guild.channels.cache.get(announcementID);
+    const announcementC = message.guild.channels.cache.get(
+        client.ids.announcementID
+    );
     await announcementC.send('', {
         embed: {
             color: 0xff2c02,
@@ -65,7 +55,9 @@ const unlock = async (message, channels) => {
             .catch((err) => console.error(err));
     });
 
-    const announcementC = message.guild.channels.cache.get(announcementID);
+    const announcementC = message.guild.channels.cache.get(
+        client.ids.announcementID
+    );
     await announcementC.send('', {
         embed: {
             color: 0x00f763,

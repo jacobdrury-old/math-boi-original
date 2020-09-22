@@ -1,5 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const { readdirSync } = require('fs');
+const { getIsAdmin, getIsModerator } = require('../../modules/UserHelpers');
+
 module.exports = {
     name: 'help',
     description: 'List all of my commands or info about a specific command.',
@@ -17,10 +19,9 @@ module.exports = {
                   .members.fetch(message.author.id)
             : message.member);
 
-        const isUserAdmin = guildMember.hasPermission('ADMINISTRATOR');
-        const isUserModerator = guildMember.roles.cache.get(
-            '725171176774828054'
-        );
+        const isUserAdmin = getIsAdmin(message.client, guildMember);
+
+        const isUserModerator = getIsModerator(message.client, guildMember);
 
         const useableCommands = isUserAdmin
             ? commands

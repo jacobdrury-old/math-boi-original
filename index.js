@@ -13,6 +13,25 @@ const client = new Client({
 );
 client.prefix = process.env.PREFIX;
 
+client.ids = {
+    moderatorId: '725171176774828054',
+    traineeModId: '725442011758461049',
+    headModId: '739922768954392586',
+    announcementID: '725172917482291210',
+};
+
+client.IGNORED = [
+    '737457798123880509',
+    '730264204174688288',
+    '725171177235939378',
+    '725178491494072381',
+    '725172886821666898',
+    '740086491069546537',
+    '751999833597804624',
+    '752000303787933706',
+    '753087333506482277',
+];
+
 (async () => {
     client.db = await mongoose.connect(process.env.DB_CONNECTION_STRING, {
         useNewUrlParser: true,

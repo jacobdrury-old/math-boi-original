@@ -3,6 +3,14 @@ const { logEmbed, setToRoleEmbedForUser } = require('./embeds.js');
 const { getLogChannel } = require('../modules/utils.js');
 const minAge = 13;
 
+exports.getIsAdmin = (client, member) =>
+    member.hasPermission('ADMINISTRATOR') ||
+    member.roles.cache.get(client.ids.headModId);
+
+exports.getIsModerator = (client, member) =>
+    member.roles.cache.get(client.ids.moderatorId) ||
+    member.roles.cache.get(client.ids.traineeModId);
+
 exports.setToRole = async (member, role, adminId = null, shouldLog = true) => {
     await member.roles.add(role);
 
