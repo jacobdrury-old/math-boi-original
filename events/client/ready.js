@@ -20,7 +20,7 @@ module.exports = async (client) => {
 
             await channel.bulkDelete(99, true);
             await channel.send(
-                'Hey! @everyone I see you guys are not verified yet, please go check out <#725171177235939379> Then all you have to do it react the the :white_check_mark: to have access to the server! If you have any issues please tag <@&737374602719920191> 🧙‍♂️ . :slight_smile: Once you Verify you should check out <#740316361032728615> Thank you!'
+                'Hey! @everyone I see you guys are not verified yet, please go check out <#725171177235939379> Then all you have to do it react with the :white_check_mark: to get access to the server! If you have any issues please tag <@&737374602719920191> 🧙‍♂️ . :slight_smile: Once you Verify you should check out <#740316361032728615> Thank you!'
             );
         });
         job.start();
