@@ -2,14 +2,13 @@ const { getReactionMessage } = require('../../modules/utils.js');
 const { setToRole } = require('../../modules/UserHelpers.js');
 const { isUserTooYoung } = require('../../modules/UserHelpers.js');
 
-const verifiedRoleId = '729871004368633936';
-
 module.exports = async (client, messageReaction, user) => {
     try {
         if (user.bot) return;
         if (
             messageReaction.message.channel.id !== client.channelIds.rulesId &&
-            messageReaction.message.channel.id !== client.channelIds.roleSelectionId
+            messageReaction.message.channel.id !==
+                client.channelIds.roleSelectionId
         )
             return;
 
@@ -53,7 +52,7 @@ const roleAssignment = async (
 
     const role = await setToRole(member, roleId, null, false);
 
-    if (role.id === verifiedRoleId) {
+    if (role.id === client.roleIds.verifiedRoleId) {
         client.emit('welcome', member);
     }
 

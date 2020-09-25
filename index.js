@@ -19,6 +19,7 @@ client.roleIds = {
     traineeModId: '725442011758461049',
     headModId: '739922768954392586',
     middleSchoolRoleId: '742498991119269978',
+    verifiedRoleId: '729871004368633936',
 };
 
 client.channelIds = {
@@ -27,6 +28,10 @@ client.channelIds = {
     generalId: '729870525119332414',
     rulesId: '725171177235939379',
     roleSelectionId: '740316361032728615',
+};
+
+client.messageIds = {
+    rulesId: '740454952442265621',
 };
 
 client.IGNORED = [

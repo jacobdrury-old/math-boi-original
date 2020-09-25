@@ -1,6 +1,3 @@
-const rulesChannelId = '725171177235939379';
-const rulesMessageId = '740454952442265621';
-
 module.exports = {
     name: 'reacted',
     description: 'Checks if user attempted to react to rules message',
@@ -29,14 +26,18 @@ module.exports = {
             return await message.channel.send('Please pass a valid user');
 
         const rulesChannel =
-            (await guild.channels.cache.get(rulesChannelId)) || null;
+            (await guild.channels.cache.get(
+                message.client.channelIds.rulesId
+            )) || null;
 
         if (!rulesChannel) {
             return message.reply('I cannot find the rules channel');
         }
 
         const rulesMessage =
-            (await rulesChannel.messages.fetch(rulesMessageId)) || null;
+            (await rulesChannel.messages.fetch(
+                message.client.messageIds.rulesId
+            )) || null;
 
         if (!rulesMessage)
             return message.reply(
