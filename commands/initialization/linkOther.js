@@ -34,6 +34,7 @@ module.exports = {
         emojis.set('🗻', roles.geography.Id);
         emojis.set('🏰', roles.history.Id);
         emojis.set('📍', roles.eventsPing.Id);
+        emojis.set('🎉', roles.giveaway.Id);
 
         emojis.forEach(async (value, emoji) => await otherMessage.react(emoji));
 
