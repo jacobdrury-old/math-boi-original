@@ -20,6 +20,7 @@ client.roleIds = {
     headModId: '739922768954392586',
     middleSchoolRoleId: '742498991119269978',
     verifiedRoleId: '729871004368633936',
+    lvl30: '730310199273062491',
 };
 
 client.channelIds = {
@@ -28,6 +29,7 @@ client.channelIds = {
     generalId: '729870525119332414',
     rulesId: '725171177235939379',
     roleSelectionId: '740316361032728615',
+    joinLogs: '725171177235939384',
 };
 
 client.messageIds = {

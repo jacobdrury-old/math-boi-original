@@ -12,11 +12,15 @@ module.exports = async (client, message) => {
     // if (message.channel.type === 'dm') {
     //     return client.emit('directMessage', message);
     // }
-
+    
     const prefix = client.prefix;
 
     if (message.channel.id === client.logChannelId) {
         return client.emit('logChannelMessage', message);
+    }
+
+    if (message.channel.id === client.channelIds.joinLogs) {
+        return client.emit('levelLogMessage', message);
     }
 
     if (message.author.bot) return;
