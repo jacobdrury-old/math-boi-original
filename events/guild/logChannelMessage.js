@@ -1,5 +1,3 @@
-const undergrad = require('../../commands/roles/undergrad');
-
 const punishments = ['WARN', 'MUTE', 'UNMUTE'];
 const inviteLinkMsg = 'Posted an invite';
 
@@ -190,6 +188,7 @@ const buildResponse = (member, punishment, description, fields, color) => {
         timestamp: new Date(),
         footer: {
             text: member.guild.name,
+            icon_url: member.guild.iconURL({ dynamic: true }),
         },
     };
 };
