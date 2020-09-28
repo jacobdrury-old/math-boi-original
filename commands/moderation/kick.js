@@ -53,6 +53,6 @@ module.exports = {
 
         await targetMember.kick(reason);
 
-        message.client.emit('kick', client, targetMember, callingMember);
+        message.client.emit('kick', message.url, targetMember, callingMember);
     },
 };

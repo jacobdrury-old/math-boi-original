@@ -1,7 +1,7 @@
 const { WebhookClient } = require('discord.js');
 const { getLogChannel } = require('../../modules/utils');
 
-module.exports = async (client, member, admin) => {
+module.exports = async (client, messageUrl, member, admin) => {
     const logChannel = await getLogChannel(member.client);
     if (logChannel) {
         const webhookClient = new WebhookClient(
@@ -16,20 +16,17 @@ module.exports = async (client, member, admin) => {
             thumbnail: {
                 url: member.user.displayAvatarURL({ dynamic: true }),
             },
+            color: 0xffa500,
+            description: `🦶${member} has been kicked!`,
             fields: [
-                {
-                    name: 'User',
-                    value: `${member}>`,
-                    inline: true,
-                },
-                {
-                    name: 'Action',
-                    value: `🦶Kicked`,
-                    inline: true,
-                },
                 {
                     name: 'Moderator',
                     value: `${admin}`,
+                    inline: true,
+                },
+                {
+                    name: 'Command Usage',
+                    value: `[Message](${messageUrl})`,
                     inline: true,
                 },
             ],
