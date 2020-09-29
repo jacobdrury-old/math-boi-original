@@ -33,6 +33,12 @@ const lock = async (message, channels) => {
     const announcementC = message.guild.channels.cache.get(
         message.client.channelIds.announcementID
     );
+
+    await message.guild.setVerificationLevel(
+        'VERY_HIGH',
+        'Server has been locked'
+    );
+
     await announcementC.send('', {
         embed: {
             color: 0xff2c02,
@@ -41,12 +47,9 @@ const lock = async (message, channels) => {
         },
     });
 
-    await message.guild.setVerificationLevel(
-        'VERY_HIGH',
-        'Server has been locked'
+    return message.channel.send(
+        'All channels have been locked 🔒 and the moderation level has increased to very high (requiring a verified phone on acct to join)'
     );
-
-    return message.channel.send('All channels have been locked 🔒');
 };
 
 const unlock = async (message, channels) => {
@@ -64,6 +67,7 @@ const unlock = async (message, channels) => {
     const announcementC = message.guild.channels.cache.get(
         message.client.channelIds.announcementID
     );
+
     await announcementC.send('', {
         embed: {
             color: 0x00f763,
