@@ -12,7 +12,7 @@ module.exports = async (client, message) => {
     // if (message.channel.type === 'dm') {
     //     return client.emit('directMessage', message);
     // }
-    
+
     const prefix = client.prefix;
 
     if (message.channel.id === client.logChannelId) {
@@ -76,7 +76,12 @@ module.exports = async (client, message) => {
         );
     }
 
-    if (command.adminOnly && !isAdmin && !isOwner) {
+    const isHelpDeskCmd = () =>
+        command.helpDesk &&
+        message.channel.id == message.client.channelIds.helpDesk &&
+        (isModerator || isAdmin || isOwner);
+
+    if (!isHelpDeskCmd() && command.adminOnly && !isAdmin && !isOwner) {
         await message.channel.send(
             'https://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905'
         );
@@ -85,7 +90,13 @@ module.exports = async (client, message) => {
         return dmChannel.send(`${prefix}${command.name} is for admins only`);
     }
 
-    if (command.moderatorOnly && !isModerator && !isAdmin && !isOwner) {
+    if (
+        !isHelpDeskCmd() &&
+        command.moderatorOnly &&
+        !isModerator &&
+        !isAdmin &&
+        !isOwner
+    ) {
         await message.channel.send(
             'https://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905'
         );

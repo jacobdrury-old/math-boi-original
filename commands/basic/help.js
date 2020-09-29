@@ -35,9 +35,7 @@ module.exports = {
                   (cmd) =>
                       cmd.ownerOnly == null &&
                       (cmd.adminOnly == null || isUserAdmin) &&
-                      (cmd.moderatorOnly == null ||
-                          isUserModerator ||
-                          isUserAdmin)
+                      (cmd.moderatorOnly == null || isUserModerator || isUserAdmin)
               );
 
         if (!args.length) {

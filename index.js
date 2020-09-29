@@ -30,6 +30,7 @@ client.channelIds = {
     rulesId: '725171177235939379',
     roleSelectionId: '740316361032728615',
     joinLogs: '725171177235939384',
+    helpDesk: '737118741510357063',
 };
 
 client.messageIds = {

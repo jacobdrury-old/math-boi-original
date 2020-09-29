@@ -3,6 +3,7 @@ module.exports = {
     description: 'Deletes the past 10 messages',
     usage: '<number of messages to delete>',
     aliases: ['clear', 'prune'],
+    helpDesk: true,
     adminOnly: true,
     category: 'admin',
     guildOnly: true,
