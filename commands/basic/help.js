@@ -35,7 +35,9 @@ module.exports = {
                   (cmd) =>
                       cmd.ownerOnly == null &&
                       (cmd.adminOnly == null || isUserAdmin) &&
-                      (cmd.moderatorOnly == null || isUserModerator || isUserAdmin)
+                      (cmd.moderatorOnly == null ||
+                          isUserModerator ||
+                          isUserAdmin)
               );
 
         if (!args.length) {
@@ -99,7 +101,7 @@ function getCMD(message, args, helpEmbed, useableCommands) {
             `${message.client.prefix}${command.name} ${command.usage}`
         );
 
-    helpEmbed.addField('**Cooldown:**', `${command.cooldown || 3} second(s)`);
+    helpEmbed.addField('**Cooldown:**', `${command.cooldown || 0} second(s)`);
 
     message.channel.send(helpEmbed);
 }

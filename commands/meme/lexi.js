@@ -3,6 +3,6 @@ module.exports = {
     description: 'lexi',
     category: 'meme',
     execute(message) {
-        message.channel.send('I dont wan to get married');
+        message.channel.send('I dont want to get married');
     },
 };
