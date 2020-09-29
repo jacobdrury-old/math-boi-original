@@ -20,9 +20,6 @@ module.exports = {
 
         message.channel
             .bulkDelete(amount, true)
-            .then(() => {
-                message.delete();
-            })
             .catch((err) => {
                 console.error(err);
                 message.channel.send(
