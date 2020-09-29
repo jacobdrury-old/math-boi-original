@@ -1,6 +1,7 @@
 module.exports = {
     name: 'lock',
     description: 'Locks/Unlocks all channels in the server',
+    usage: '<on | off>',
     moderatorOnly: true,
     category: 'moderation',
     guildOnly: true,
@@ -30,7 +31,7 @@ const lock = async (message, channels) => {
     });
 
     const announcementC = message.guild.channels.cache.get(
-        client.channelIds.announcementID
+        message.client.channelIds.announcementID
     );
     await announcementC.send('', {
         embed: {
@@ -39,6 +40,11 @@ const lock = async (message, channels) => {
             description: `The server has been locked by ${message.author}\nPlease be patient while our team resolves the issue!`,
         },
     });
+
+    await message.guild.setVerificationLevel(
+        'VERY_HIGH',
+        'Server has been locked'
+    );
 
     return message.channel.send('All channels have been locked 🔒');
 };
@@ -56,7 +62,7 @@ const unlock = async (message, channels) => {
     });
 
     const announcementC = message.guild.channels.cache.get(
-        client.channelIds.announcementID
+        message.client.channelIds.announcementID
     );
     await announcementC.send('', {
         embed: {
