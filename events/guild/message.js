@@ -6,6 +6,7 @@ const {
     getIsOwner,
     getIsAdmin,
     getIsModerator,
+    getIsBooster,
 } = require('../../modules/UserHelpers');
 
 module.exports = async (client, message) => {
@@ -36,6 +37,8 @@ module.exports = async (client, message) => {
     const isAdmin = getIsAdmin(client, member);
 
     const isModerator = getIsModerator(client, member);
+
+    const isBooster = getIsBooster(client, member);
 
     if (message.content.toLowerCase().includes('invite link')) {
         return message.channel.send('https://discord.gg/S2azCgw');
@@ -104,6 +107,15 @@ module.exports = async (client, message) => {
         const dmChannel = await message.author.createDM();
         return dmChannel.send(
             `${prefix}${command.name} is for moderators only`
+        );
+    }
+
+    if (
+        command.boosterOnly &&
+        !(isBooster || isModerator || isAdmin || isOwner)
+    ) {
+        await message.channel.send(
+            `${prefix}${command.name} is a booster only command. Please boost the server to get access to it!`
         );
     }
 

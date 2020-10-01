@@ -13,6 +13,9 @@ exports.getIsModerator = (client, member) =>
     member.roles.cache.get(client.roleIds.moderatorId) ||
     member.roles.cache.get(client.roleIds.traineeModId);
 
+exports.getIsBooster = (client, member) =>
+    member.roles.cache.get(client.roleIds.boosterId);
+
 exports.setToRole = async (member, role, adminId = null, shouldLog = true) => {
     await member.roles.add(role);
 

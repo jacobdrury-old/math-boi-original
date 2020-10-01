@@ -21,6 +21,7 @@ client.roleIds = {
     middleSchoolRoleId: '742498991119269978',
     verifiedRoleId: '729871004368633936',
     lvl30: '730310199273062491',
+    boosterId: '737901223486685198',
 };
 
 client.channelIds = {

@@ -1,6 +1,7 @@
 module.exports = {
     name: 'lance',
     description: 'lance',
+    boosterOnly: true,
     category: 'meme',
     execute(message) {
         message.channel.send(
