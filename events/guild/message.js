@@ -114,7 +114,7 @@ module.exports = async (client, message) => {
         command.boosterOnly &&
         !(isBooster || isModerator || isAdmin || isOwner)
     ) {
-        await message.channel.send(
+        return await message.channel.send(
             `${prefix}${command.name} is a booster only command. Please boost the server to get access to it!`
         );
     }
