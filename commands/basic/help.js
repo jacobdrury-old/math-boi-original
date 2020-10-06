@@ -101,7 +101,10 @@ function getCMD(message, args, helpEmbed, useableCommands) {
             `${message.client.prefix}${command.name} ${command.usage}`
         );
 
-    helpEmbed.addField('**Cooldown:**', `${command.cooldown || 0} second(s)`);
+    helpEmbed.addField(
+        '**Cooldown:**',
+        `${(command.cooldown || 0) / 60} minute(s)`
+    );
 
     message.channel.send(helpEmbed);
 }
