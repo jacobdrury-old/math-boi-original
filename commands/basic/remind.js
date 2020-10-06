@@ -1,6 +1,6 @@
 module.exports = {
-    name: 'tutorRemind',
-    aliases: ['remind'],
+    name: 'remind',
+    aliases: ['r'],
     description: 'Lets people know how to tag tutors when they as a question',
     guildOnly: true,
     category: 'basic',
