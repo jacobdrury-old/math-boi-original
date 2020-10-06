@@ -28,7 +28,12 @@ module.exports = {
 
         if (!question.length)
             return await message.channel.send(
-                `<@&qweqqas${tutor}> Can you please help ${message.author} with their question?`
+                `<@&${tutor}> Can you please help ${message.author} with their question?`
+            );
+
+        if (args.length == 1 && message.mentions.members.first())
+            return await message.channel.send(
+                `<@&${tutor}> Can you please help ${message.mentions.members.first()} with their question?`
             );
 
         return await message.channel.send(
