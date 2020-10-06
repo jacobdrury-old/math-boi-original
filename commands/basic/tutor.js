@@ -21,7 +21,7 @@ module.exports = {
 
         const nonSubjectChannels = [general, hobbies, honorable, music, voice];
 
-        message.delete();
+        await message.delete();
 
         if (nonSubjectChannels.includes(message.channel.parentID))
             return await message.channel.send(
