@@ -5,6 +5,7 @@ module.exports = {
     usage: 'Your question',
     category: 'basic',
     guildOnly: true,
+    subjectOnlyCoolDown: true,
     cooldown: 600,
     async execute(message, args) {
         const question = args.join(' ');
@@ -27,7 +28,7 @@ module.exports = {
 
         if (!question.length)
             return await message.channel.send(
-                `<@&${tutor}> Can you please help ${message.author} with their question?`
+                `<@&qweqqas${tutor}> Can you please help ${message.author} with their question?`
             );
 
         return await message.channel.send(

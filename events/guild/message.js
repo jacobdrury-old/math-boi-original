@@ -129,6 +129,15 @@ module.exports = async (client, message) => {
         return message.channel.send(reply);
     }
 
+    const {
+        general,
+        hobbies,
+        honorable,
+        music,
+        voice,
+    } = message.client.categoryIds;
+
+    const nonSubjectChannels = [general, hobbies, honorable, music, voice];
     if (!(isOwner || isAdmin || isModerator)) {
         if (!cooldowns.has(command.name)) {
             cooldowns.set(command.name, new Collection());
@@ -138,7 +147,11 @@ module.exports = async (client, message) => {
         const timestamps = cooldowns.get(command.name);
         const cooldownAmount = (command.cooldown || 0) * 1000;
 
-        if (timestamps.has(message.author.id)) {
+        if (
+            timestamps.has(message.author.id) &&
+            command.subjectOnlyCoolDown &&
+            !nonSubjectChannels.includes(message.channel.parentID)
+        ) {
             const expirationTime =
                 timestamps.get(message.author.id) + cooldownAmount;
 
