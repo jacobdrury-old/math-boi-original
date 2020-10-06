@@ -19,7 +19,7 @@ module.exports = {
         }
 
         message.channel.send(
-            `${memberTag}Don’t forget to \`@Tutor\` the next time you post a question`
+            `${memberTag}Don’t forget to use \`${message.client.prefix}tutor\` the next time you post a question`
         );
     },
 };

@@ -3,7 +3,7 @@ module.exports = {
     description: 'Makes the bot say whatever is passed to the cmd',
     moderatorOnly: true,
     aliases: ['t'],
-    category: 'moderation',
+    category: 'basic',
     guildOnly: true,
     cooldown: 600,
     async execute(message, args) {
