@@ -1,8 +1,8 @@
 module.exports = {
     name: 'tutor',
-    description: 'Makes the bot say whatever is passed to the cmd',
-    moderatorOnly: true,
+    description: 'Tags the tutors and posts your question',
     aliases: ['t'],
+    usage: 'Your question',
     category: 'basic',
     guildOnly: true,
     cooldown: 600,
