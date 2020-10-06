@@ -1,25 +1,48 @@
 module.exports = {
     name: 'tutor',
+    description: 'Makes the bot say whatever is passed to the cmd',
+    moderatorOnly: true,
     aliases: ['t'],
-    description: 'Lets people know how to tag tutors when they as a question',
+    category: 'moderation',
     guildOnly: true,
-    category: 'basic',
+    cooldown: 600,
     async execute(message, args) {
-        await message.delete();
-        let memberTag = '';
-        const mention = args[0];
-        if (mention && mention.startsWith('<@') && mention.endsWith('>')) {
-            const id = mention
-                .replace('<@', '')
-                .replace('!', '')
-                .replace('>', '');
-            if (!isNaN(id) && id.length == 18) {
-                memberTag = `${mention} `;
-            }
-        }
+        const question = args.join(' ');
+        const { tutor } = message.client.roleIds;
 
-        message.channel.send(
-            `${memberTag}Don’t forget to \`@Tutor\` the next time you post a question`
+        const {
+            general,
+            hobbies,
+            honorable,
+            music,
+            voice,
+        } = message.client.categoryIds;
+
+        const nonSubjectChannels = [general, hobbies, honorable, music, voice];
+
+        if (nonSubjectChannels.includes(message.channel.parentID))
+            return await message.channel.send(
+                `${message.author} Please do not post questions in non-subject channels`
+            );
+
+        if (!question.length)
+            return await message.channel.send(
+                `<@&${tutor}> Can you please help ${message.author} with their question?`
+            );
+
+        return await message.channel.send(
+            `<@&${tutor}> Can you please help ${message.member}?`,
+            {
+                embed: {
+                    author: {
+                        name: `${message.author.username}#${message.author.discriminator}`,
+                        icon_url: message.author.displayAvatarURL({
+                            dynamic: true,
+                        }),
+                    },
+                    description: question,
+                },
+            }
         );
     },
 };
