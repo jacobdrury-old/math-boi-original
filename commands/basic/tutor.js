@@ -35,7 +35,8 @@ module.exports = {
 
         if (args.length == 1 && message.mentions.members.first())
             return await message.channel.send(
-                `<@&${tutor}> Can you please help ${message.mentions.members.first()} with their question?`
+                `<@&${tutor}> Can you please help ${message.mentions.members.first()} with their question?\n` +
+                    `\nAlso don’t forget to use \`${message.client.prefix}tutor\` the next time you post a question!`
             );
 
         return await message.channel.send(
