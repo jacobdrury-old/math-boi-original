@@ -53,6 +53,8 @@ module.exports = {
 
         await targetMember.kick(reason);
 
+        //TODO: Implement DMing user when they get kicked
+
         message.client.emit('kick', message.url, targetMember, callingMember);
     },
 };

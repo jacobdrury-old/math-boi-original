@@ -1,15 +1,18 @@
 module.exports = {
-    name: 'ban',
-    description: 'Bans given user',
+    name: 'tempban',
+    description: 'Temp Bans given user',
     moderatorOnly: true,
+    usage: '<User> <Time in days> <Reason>',
     category: 'moderation',
     guildOnly: true,
     args: true,
     async execute(message, args) {
-        const [, ...reasonArray] = args;
+        const [, rawTime, ...reasonArray] = args;
         const reason = reasonArray.join(' ');
         const callingMember = message.member;
         const targetMember = message.mentions.members.first();
+
+        const time = rawTime.replace(/[A-Za-z\s]/gi, '');
 
         if (!callingMember.hasPermission('BAN_MEMBERS'))
             return message.channel.send(
@@ -39,6 +42,11 @@ module.exports = {
         if (!targetMember.kickable)
             return message.channel.send(`I cannot ban this user`);
 
+        if (!time)
+            return message.channel.send(
+                `You must specify a time in days! (Ex: ${message.client.prefix}tempban @WhoNeedsKeyboard#1909 10 Goodbye)`
+            );
+
         await message.channel.send('', {
             embed: {
                 author: {
@@ -49,10 +57,16 @@ module.exports = {
             },
         });
 
-        message.client.emit('ban', message.url, targetMember, callingMember);
+        message.client.emit(
+            'tempban',
+            message.url,
+            targetMember,
+            callingMember,
+            time
+        );
 
         //TODO: Implement DMing user when they get banned
 
-        await targetMember.ban({ reason });
+        await targetMember.ban({ reason, time });
     },
 };
