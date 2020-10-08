@@ -1,6 +1,7 @@
 module.exports = {
     name: 'monke',
     description: "I'll tell you how monk you are",
+    boosterOnly: true,
     category: 'meme',
     execute(message) {
         const monkRating =

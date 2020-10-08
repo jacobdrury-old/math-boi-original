@@ -15,7 +15,7 @@ module.exports = async (client, member) => {
                     `**In order to get help you must first:**\n` +
                     `- Go and read the rules and react with a :white_check_mark:\n\n` +
                     `- Go to the role selection channel and add the subjects you need help with!\n\n` +
-                    `- Post your question in the corresponding channel and tag \`@Tutor\``,
+                    `- Post your question in the corresponding channel and use the \`${client.prefix}tutor\` command`,
             },
         });
     } catch (err) {}

@@ -6,13 +6,14 @@ const {
     getIsOwner,
     getIsAdmin,
     getIsModerator,
+    getIsBooster,
 } = require('../../modules/UserHelpers');
 
 module.exports = async (client, message) => {
     // if (message.channel.type === 'dm') {
     //     return client.emit('directMessage', message);
     // }
-    
+
     const prefix = client.prefix;
 
     if (message.channel.id === client.logChannelId) {
@@ -36,6 +37,8 @@ module.exports = async (client, message) => {
     const isAdmin = getIsAdmin(client, member);
 
     const isModerator = getIsModerator(client, member);
+
+    const isBooster = getIsBooster(client, member);
 
     if (message.content.toLowerCase().includes('invite link')) {
         return message.channel.send('https://discord.gg/S2azCgw');
@@ -76,7 +79,12 @@ module.exports = async (client, message) => {
         );
     }
 
-    if (command.adminOnly && !isAdmin && !isOwner) {
+    const isHelpDeskCmd = () =>
+        command.helpDesk &&
+        message.channel.id == message.client.channelIds.helpDesk &&
+        (isModerator || isAdmin || isOwner);
+
+    if (!isHelpDeskCmd() && command.adminOnly && !isAdmin && !isOwner) {
         await message.channel.send(
             'https://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905'
         );
@@ -85,7 +93,13 @@ module.exports = async (client, message) => {
         return dmChannel.send(`${prefix}${command.name} is for admins only`);
     }
 
-    if (command.moderatorOnly && !isModerator && !isAdmin && !isOwner) {
+    if (
+        !isHelpDeskCmd() &&
+        command.moderatorOnly &&
+        !isModerator &&
+        !isAdmin &&
+        !isOwner
+    ) {
         await message.channel.send(
             'https://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905'
         );
@@ -93,6 +107,15 @@ module.exports = async (client, message) => {
         const dmChannel = await message.author.createDM();
         return dmChannel.send(
             `${prefix}${command.name} is for moderators only`
+        );
+    }
+
+    if (
+        command.boosterOnly &&
+        !(isBooster || isModerator || isAdmin || isOwner)
+    ) {
+        return await message.channel.send(
+            `${prefix}${command.name} is a booster only command. Please boost the server to get access to it!`
         );
     }
 
@@ -106,32 +129,48 @@ module.exports = async (client, message) => {
         return message.channel.send(reply);
     }
 
-    if (!cooldowns.has(command.name)) {
-        cooldowns.set(command.name, new Collection());
-    }
-
-    const now = Date.now();
-    const timestamps = cooldowns.get(command.name);
-    const cooldownAmount = (command.cooldown || 0) * 1000;
-
-    if (timestamps.has(message.author.id)) {
-        const expirationTime =
-            timestamps.get(message.author.id) + cooldownAmount;
-
-        if (now < expirationTime) {
-            const timeLeft = (expirationTime - now) / 1000;
-            return message.reply(
-                `please wait ${timeLeft.toFixed(
-                    1
-                )} more second(s) before reusing the \`${
-                    command.name
-                }\` command.`
-            );
+    if (!(isOwner || isAdmin || isModerator)) {
+        if (!cooldowns.has(command.name)) {
+            cooldowns.set(command.name, new Collection());
         }
-    }
 
-    timestamps.set(message.author.id, now);
-    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+        const now = Date.now();
+        const timestamps = cooldowns.get(command.name);
+        const cooldownAmount = (command.cooldown || 0) * 1000;
+
+        const {
+            general,
+            hobbies,
+            honorable,
+            music,
+            voice,
+        } = message.client.categoryIds;
+
+        const nonSubjectChannels = [general, hobbies, honorable, music, voice];
+
+        if (
+            timestamps.has(message.author.id) &&
+            command.subjectOnlyCoolDown &&
+            !nonSubjectChannels.includes(message.channel.parentID)
+        ) {
+            const expirationTime =
+                timestamps.get(message.author.id) + cooldownAmount;
+
+            if (now < expirationTime) {
+                const timeLeft = (expirationTime - now) / 60000;
+                return message.reply(
+                    `please wait ${timeLeft.toFixed(
+                        1
+                    )} more minute(s) before reusing the \`${
+                        command.name
+                    }\` command.`
+                );
+            }
+        }
+
+        timestamps.set(message.author.id, now);
+        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+    }
 
     try {
         command.execute(message, args);

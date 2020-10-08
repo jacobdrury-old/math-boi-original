@@ -1,8 +1,7 @@
 module.exports = {
-    name: 'getHelp',
-    aliases: ['gh', 'gethelp'],
-    description:
-        'Lets people know how to get help with questions in the server',
+    name: 'remind',
+    aliases: ['r'],
+    description: 'Lets people know how to tag tutors when they as a question',
     guildOnly: true,
     category: 'basic',
     async execute(message, args) {
@@ -20,7 +19,7 @@ module.exports = {
         }
 
         message.channel.send(
-            `${memberTag}To get help with a question please go to <#740316361032728615> and add the subject you need help with.\n\nGo to the corresponding channel and post your question! Make sure you use the \`${message.client.prefix}tutor\` command so they can get notified of your question!`
+            `${memberTag}Don’t forget to use \`${message.client.prefix}tutor\` the next time you post a question`
         );
     },
 };

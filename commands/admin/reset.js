@@ -1,7 +1,7 @@
 module.exports = {
     name: 'reset',
     description: 'Clones and deletes original channel',
-    adminOnly: true,
+    ownerOnly: true,
     guildOnly: true,
     category: 'admin',
     async execute(message) {

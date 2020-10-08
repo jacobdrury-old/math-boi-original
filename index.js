@@ -21,6 +21,8 @@ client.roleIds = {
     middleSchoolRoleId: '742498991119269978',
     verifiedRoleId: '729871004368633936',
     lvl30: '730310199273062491',
+    boosterId: '737901223486685198',
+    tutor: '729875058972950644',
 };
 
 client.channelIds = {
@@ -30,6 +32,15 @@ client.channelIds = {
     rulesId: '725171177235939379',
     roleSelectionId: '740316361032728615',
     joinLogs: '725171177235939384',
+    helpDesk: '737118741510357063',
+};
+
+client.categoryIds = {
+    general: '725171177235939383',
+    hobbies: '740088620500647946',
+    honorable: '738998796221939802',
+    music: '739911238200328263',
+    voice: '725178677473706034',
 };
 
 client.messageIds = {

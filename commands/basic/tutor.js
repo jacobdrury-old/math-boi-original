@@ -1,25 +1,57 @@
 module.exports = {
     name: 'tutor',
+    description: 'Tags the tutors and posts your question',
     aliases: ['t'],
-    description: 'Lets people know how to tag tutors when they as a question',
-    guildOnly: true,
+    usage: 'Your question',
     category: 'basic',
+    guildOnly: true,
+    subjectOnlyCoolDown: true,
+    cooldown: 600,
     async execute(message, args) {
-        await message.delete();
-        let memberTag = '';
-        const mention = args[0];
-        if (mention && mention.startsWith('<@') && mention.endsWith('>')) {
-            const id = mention
-                .replace('<@', '')
-                .replace('!', '')
-                .replace('>', '');
-            if (!isNaN(id) && id.length == 18) {
-                memberTag = `${mention} `;
-            }
-        }
+        const question = args.join(' ');
+        const { tutor } = message.client.roleIds;
 
-        message.channel.send(
-            `${memberTag}Don’t forget to \`@Tutor\` the next time you post a question`
+        const {
+            general,
+            hobbies,
+            honorable,
+            music,
+            voice,
+        } = message.client.categoryIds;
+
+        const nonSubjectChannels = [general, hobbies, honorable, music, voice];
+
+        await message.delete();
+
+        if (nonSubjectChannels.includes(message.channel.parentID))
+            return await message.channel.send(
+                `${message.author} Please do not post questions in non-subject channels`
+            );
+
+        if (!question.length)
+            return await message.channel.send(
+                `<@&${tutor}> Can you please help ${message.author} with their question?`
+            );
+
+        if (args.length == 1 && message.mentions.members.first())
+            return await message.channel.send(
+                `<@&${tutor}> Can you please help ${message.mentions.members.first()} with their question?\n` +
+                    `\nAlso don’t forget to use \`${message.client.prefix}tutor\` the next time you post a question!`
+            );
+
+        return await message.channel.send(
+            `<@&${tutor}> Can you please help ${message.member}?`,
+            {
+                embed: {
+                    author: {
+                        name: `${message.author.username}#${message.author.discriminator}`,
+                        icon_url: message.author.displayAvatarURL({
+                            dynamic: true,
+                        }),
+                    },
+                    description: question,
+                },
+            }
         );
     },
 };
