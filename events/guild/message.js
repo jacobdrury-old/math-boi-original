@@ -6,6 +6,7 @@ const {
     getIsOwner,
     getIsAdmin,
     getIsModerator,
+    getIsTrainee,
     getIsBooster,
 } = require('../../modules/UserHelpers');
 
@@ -36,7 +37,8 @@ module.exports = async (client, message) => {
 
     const isAdmin = getIsAdmin(client, member);
 
-    const isModerator = getIsModerator(client, member);
+    const isModerator =
+        getIsModerator(client, member) || getIsTrainee(client, member);
 
     const isBooster = getIsBooster(client, member);
 
