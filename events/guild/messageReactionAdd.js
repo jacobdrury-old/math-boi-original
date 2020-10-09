@@ -8,7 +8,9 @@ module.exports = async (client, messageReaction, user) => {
         if (
             messageReaction.message.channel.id !== client.channelIds.rulesId &&
             messageReaction.message.channel.id !==
-                client.channelIds.roleSelectionId
+                client.channelIds.roleSelectionId &&
+            messageReaction.message.channel.id !==
+                client.channelIds.tutorRoleSelectionId
         )
             return;
 

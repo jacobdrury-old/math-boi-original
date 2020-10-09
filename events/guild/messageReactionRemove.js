@@ -6,7 +6,10 @@ module.exports = async (client, messageReaction, user) => {
     try {
         if (
             messageReaction.message.channel.id !== client.channelIds.rulesId &&
-            messageReaction.message.channel.id !== client.channelIds.roleSelectionId
+            messageReaction.message.channel.id !==
+                client.channelIds.roleSelectionId &&
+            messageReaction.message.channel.id !==
+                client.channelIds.tutorRoleSelectionId
         )
             return;
 
