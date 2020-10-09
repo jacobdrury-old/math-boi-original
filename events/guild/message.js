@@ -129,32 +129,48 @@ module.exports = async (client, message) => {
         return message.channel.send(reply);
     }
 
-    if (!cooldowns.has(command.name)) {
-        cooldowns.set(command.name, new Collection());
-    }
-
-    const now = Date.now();
-    const timestamps = cooldowns.get(command.name);
-    const cooldownAmount = (command.cooldown || 0) * 1000;
-
-    if (timestamps.has(message.author.id)) {
-        const expirationTime =
-            timestamps.get(message.author.id) + cooldownAmount;
-
-        if (now < expirationTime) {
-            const timeLeft = (expirationTime - now) / 60000;
-            return message.reply(
-                `please wait ${timeLeft.toFixed(
-                    1
-                )} more minute(s) before reusing the \`${
-                    command.name
-                }\` command.`
-            );
+    if (!(isOwner || isAdmin || isModerator)) {
+        if (!cooldowns.has(command.name)) {
+            cooldowns.set(command.name, new Collection());
         }
-    }
 
-    timestamps.set(message.author.id, now);
-    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+        const now = Date.now();
+        const timestamps = cooldowns.get(command.name);
+        const cooldownAmount = (command.cooldown || 0) * 1000;
+
+        const {
+            general,
+            hobbies,
+            honorable,
+            music,
+            voice,
+        } = message.client.categoryIds;
+
+        const nonSubjectChannels = [general, hobbies, honorable, music, voice];
+
+        if (
+            timestamps.has(message.author.id) &&
+            command.subjectOnlyCoolDown &&
+            !nonSubjectChannels.includes(message.channel.parentID)
+        ) {
+            const expirationTime =
+                timestamps.get(message.author.id) + cooldownAmount;
+
+            if (now < expirationTime) {
+                const timeLeft = (expirationTime - now) / 60000;
+                return message.reply(
+                    `please wait ${timeLeft.toFixed(
+                        1
+                    )} more minute(s) before reusing the \`${
+                        command.name
+                    }\` command.`
+                );
+            }
+        }
+
+        timestamps.set(message.author.id, now);
+        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+    }
 
     try {
         command.execute(message, args);

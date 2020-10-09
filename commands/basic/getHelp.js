@@ -20,7 +20,7 @@ module.exports = {
         }
 
         message.channel.send(
-            `${memberTag}To get help with a question please go to <#740316361032728615> and add the subject you need help with.\n\nGo to the corresponding channel and post your question! Make sure you tag \`@Tutor\` so they can get notified of your question!`
+            `${memberTag}To get help with a question please go to <#740316361032728615> and add the subject you need help with.\n\nGo to the corresponding channel and post your question! Make sure you use the \`${message.client.prefix}tutor\` command so they can get notified of your question!`
         );
     },
 };
