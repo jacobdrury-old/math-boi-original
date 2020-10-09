@@ -5,11 +5,11 @@ module.exports = async (client, messageReaction, user) => {
     if (user.bot) return;
     try {
         if (
-            messageReaction.message.channel.id !== client.channelIds.rulesId &&
+            messageReaction.message.channel.id !== client.ids.channels.rules &&
             messageReaction.message.channel.id !==
-                client.channelIds.roleSelectionId &&
+                client.ids.channels.roleSelection &&
             messageReaction.message.channel.id !==
-                client.channelIds.tutorRoleSelectionId
+                client.ids.channels.tutorRoleSelection
         )
             return;
 

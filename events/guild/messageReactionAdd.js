@@ -6,11 +6,11 @@ module.exports = async (client, messageReaction, user) => {
     try {
         if (user.bot) return;
         if (
-            messageReaction.message.channel.id !== client.channelIds.rulesId &&
+            messageReaction.message.channel.id !== client.ids.channels.rules &&
             messageReaction.message.channel.id !==
-                client.channelIds.roleSelectionId &&
+                client.ids.channels.roleSelection &&
             messageReaction.message.channel.id !==
-                client.channelIds.tutorRoleSelectionId
+                client.ids.channels.tutorRoleSelection
         )
             return;
 
@@ -46,7 +46,7 @@ const roleAssignment = async (
         .members.fetch(user.id);
 
     let userIsTooYoung = false;
-    if (roleId === client.roleIds.middleSchoolRoleId) {
+    if (roleId === client.ids.roles.middleSchoolRole) {
         userIsTooYoung = await isUserTooYoung(member);
     }
 
@@ -54,7 +54,7 @@ const roleAssignment = async (
 
     const role = await setToRole(member, roleId, null, false);
 
-    if (role.id === client.roleIds.verifiedRoleId) {
+    if (role.id === client.ids.roles.verifiedRole) {
         client.emit('welcome', member);
     }
 

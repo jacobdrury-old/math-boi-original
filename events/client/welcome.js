@@ -1,6 +1,6 @@
 module.exports = async (client, member) => {
     const generalChat = member.guild.channels.cache.get(
-        client.channelIds.generalId
+        client.ids.channels.general
     );
 
     const welcomeMsg = `Welcome to the server <@${member.id}>!`;
@@ -11,7 +11,9 @@ module.exports = async (client, member) => {
 
 const userMessages = async (guild, userID) => {
     const txtChannels = guild.channels.cache.filter(
-        (c) => c.type === 'text' && !guild.client.IGNORED.includes(c.parentID)
+        (c) =>
+            c.type === 'text' &&
+            !guild.client.ids.ignoredCategories.includes(c.parentID)
     );
 
     const msgCount = txtChannels.reduce(async (totalP, ch) => {

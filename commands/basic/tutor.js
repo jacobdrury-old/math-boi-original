@@ -9,7 +9,7 @@ module.exports = {
     cooldown: 600,
     async execute(message, args) {
         const question = args.join(' ');
-        const { tutor } = message.client.roleIds;
+        const { tutor } = message.client.ids.roles;
 
         const {
             general,
@@ -17,7 +17,7 @@ module.exports = {
             honorable,
             music,
             voice,
-        } = message.client.categoryIds;
+        } = message.client.ids.categories;
 
         const nonSubjectChannels = [general, hobbies, honorable, music, voice];
 
