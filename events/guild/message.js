@@ -140,7 +140,7 @@ module.exports = async (client, message) => {
         const timestamps = cooldowns.get(command.name);
         const cooldownAmount = (command.cooldown || 0) * 1000;
 
-        const { nonSubjectCategories } = message.client.ids.categories;
+        const { nonSubjectCategories } = message.client.ids;
 
         if (
             timestamps.has(message.author.id) &&

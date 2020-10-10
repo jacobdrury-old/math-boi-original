@@ -12,7 +12,7 @@ module.exports = {
     async execute(message, args) {
         const question = args.join(' ');
 
-        const { nonSubjectCategories } = message.client.ids.categories;
+        const { nonSubjectCategories } = message.client.ids;
 
         await message.delete();
 
