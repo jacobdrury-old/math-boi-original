@@ -14,7 +14,7 @@ const client = new Client({
 
 client.prefix = process.env.PREFIX;
 
-client.ids = require('./ids.json');
+client.ids = require('./json/Ids.json');
 
 (async () => {
     client.db = await mongoose.connect(process.env.DB_CONNECTION_STRING, {
