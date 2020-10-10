@@ -1,3 +1,5 @@
+const Role = require('../../db/models/roles');
+
 module.exports = {
     name: 'tutor',
     description: 'Tags the tutors and posts your question',
@@ -9,7 +11,6 @@ module.exports = {
     cooldown: 600,
     async execute(message, args) {
         const question = args.join(' ');
-        const { tutor } = message.client.roleIds;
 
         const {
             general,
@@ -17,7 +18,7 @@ module.exports = {
             honorable,
             music,
             voice,
-        } = message.client.categoryIds;
+        } = message.client.ids.categories;
 
         const nonSubjectChannels = [general, hobbies, honorable, music, voice];
 
@@ -26,6 +27,13 @@ module.exports = {
         if (nonSubjectChannels.includes(message.channel.parentID))
             return await message.channel.send(
                 `${message.author} Please do not post questions in non-subject channels`
+            );
+
+        const tutor = await getTutorId(message);
+
+        if (!tutor)
+            return await message.channel.send(
+                `<@&${message.client.ids.roles.staff}> I cannot find the Tutor role for this channel.`
             );
 
         if (!question.length)
@@ -54,4 +62,29 @@ module.exports = {
             }
         );
     },
+};
+
+const getTutorId = async (message) => {
+    const {
+        introMath,
+        intermediateMath,
+        advancedMath,
+        science,
+        humanities,
+    } = message.client.ids.subjects;
+
+    if (introMath.includes(message.channel.id))
+        return (await Role.findOne({ name: 'introMath' })).Id;
+
+    if (intermediateMath.includes(message.channel.id))
+        return (await Role.findOne({ name: 'intMath' })).Id;
+
+    if (advancedMath.includes(message.channel.id))
+        return (await Role.findOne({ name: 'advMath' })).Id;
+
+    if (science.includes(message.channel.parentID))
+        return (await Role.findOne({ name: 'sciTutor' })).Id;
+
+    if (humanities.includes(message.channel.parentID))
+        return (await Role.findOne({ name: 'humTutor' })).Id;
 };

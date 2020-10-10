@@ -27,7 +27,7 @@ module.exports = {
 
         const rulesChannel =
             (await guild.channels.cache.get(
-                message.client.channelIds.rulesId
+                message.client.ids.channels.rules
             )) || null;
 
         if (!rulesChannel) {
@@ -36,7 +36,7 @@ module.exports = {
 
         const rulesMessage =
             (await rulesChannel.messages.fetch(
-                message.client.messageIds.rulesId
+                message.client.ids.messages.rules
             )) || null;
 
         if (!rulesMessage)

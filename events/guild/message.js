@@ -21,7 +21,7 @@ module.exports = async (client, message) => {
         return client.emit('logChannelMessage', message);
     }
 
-    if (message.channel.id === client.channelIds.joinLogs) {
+    if (message.channel.id === client.ids.channels.joinLogs) {
         return client.emit('levelLogMessage', message);
     }
 
@@ -83,7 +83,7 @@ module.exports = async (client, message) => {
 
     const isHelpDeskCmd = () =>
         command.helpDesk &&
-        message.channel.id == message.client.channelIds.helpDesk &&
+        message.channel.id == message.client.ids.channels.helpDesk &&
         (isModerator || isAdmin || isOwner);
 
     if (!isHelpDeskCmd() && command.adminOnly && !isAdmin && !isOwner) {
@@ -146,7 +146,7 @@ module.exports = async (client, message) => {
             honorable,
             music,
             voice,
-        } = message.client.categoryIds;
+        } = message.client.ids.categories;
 
         const nonSubjectChannels = [general, hobbies, honorable, music, voice];
 
