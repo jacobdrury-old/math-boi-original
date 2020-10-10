@@ -140,20 +140,12 @@ module.exports = async (client, message) => {
         const timestamps = cooldowns.get(command.name);
         const cooldownAmount = (command.cooldown || 0) * 1000;
 
-        const {
-            general,
-            hobbies,
-            honorable,
-            music,
-            voice,
-        } = message.client.ids.categories;
-
-        const nonSubjectChannels = [general, hobbies, honorable, music, voice];
+        const { nonSubjectCategories } = message.client.ids.categories;
 
         if (
             timestamps.has(message.author.id) &&
             command.subjectOnlyCoolDown &&
-            !nonSubjectChannels.includes(message.channel.parentID)
+            !nonSubjectCategories.includes(message.channel.parentID)
         ) {
             const expirationTime =
                 timestamps.get(message.author.id) + cooldownAmount;

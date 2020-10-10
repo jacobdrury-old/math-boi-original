@@ -12,27 +12,11 @@ module.exports = {
     async execute(message, args) {
         const question = args.join(' ');
 
-        const {
-            general,
-            hobbies,
-            honorable,
-            music,
-            voice,
-            overflow,
-        } = message.client.ids.categories;
-
-        const nonSubjectChannels = [
-            general,
-            hobbies,
-            honorable,
-            music,
-            voice,
-            overflow,
-        ];
+        const { nonSubjectCategories } = message.client.ids.categories;
 
         await message.delete();
 
-        if (nonSubjectChannels.includes(message.channel.parentID))
+        if (nonSubjectCategories.includes(message.channel.parentID))
             return await message.channel.send(
                 `${message.author} Please do not post questions in non-subject channels`
             );
