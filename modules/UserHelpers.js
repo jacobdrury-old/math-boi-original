@@ -7,7 +7,7 @@ exports.getIsOwner = (member) => member.guild.ownerID == member.id;
 
 exports.getIsAdmin = (client, member) =>
     member.hasPermission('ADMINISTRATOR') ||
-    member.roles.cache.get(client.ids.roles.headModId);
+    member.roles.cache.get(client.ids.roles.headMod);
 
 exports.getIsModerator = (client, member) =>
     member.roles.cache.get(client.ids.roles.moderator);
