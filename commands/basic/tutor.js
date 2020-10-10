@@ -18,9 +18,17 @@ module.exports = {
             honorable,
             music,
             voice,
+            overflow,
         } = message.client.ids.categories;
 
-        const nonSubjectChannels = [general, hobbies, honorable, music, voice];
+        const nonSubjectChannels = [
+            general,
+            hobbies,
+            honorable,
+            music,
+            voice,
+            overflow,
+        ];
 
         await message.delete();
 
