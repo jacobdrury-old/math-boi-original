@@ -4,6 +4,8 @@ module.exports = async (client, message) => {
     const webhookClient = await getMessageLogChannel();
     if (!webhookClient) return;
 
+    if (!message.member.user) return;
+
     await webhookClient.send({
         embeds: [
             {
