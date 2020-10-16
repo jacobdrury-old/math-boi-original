@@ -29,5 +29,5 @@ module.exports = async (client, messages) => {
         });
     });
 
-    await webhookClient.send({ embeds });
+    await send();
 };
