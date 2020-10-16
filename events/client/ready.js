@@ -1,5 +1,5 @@
 const CronJob = require('cron').CronJob;
-const { getLogChannel } = require('../../modules/utils.js');
+const { getModLogChannel } = require('../../modules/utils.js');
 module.exports = async (client) => {
     // client.user.setPresence({
     //     status: 'online',
@@ -25,12 +25,8 @@ module.exports = async (client) => {
         });
         job.start();
     } catch (err) {
-        const logChannel = await getLogChannel(client);
-        if (logChannel) {
-            const webhookClient = new WebhookClient(
-                logChannel.Id,
-                logChannel.token
-            );
+        const webhookClient = await getModLogChannel();
+        if (webhookClient) {
             await webhookClient.send(`${err}`);
         }
         console.error(err);

@@ -17,7 +17,7 @@ module.exports = async (client, message) => {
 
     const prefix = client.prefix;
 
-    if (message.channel.id === client.logChannelId) {
+    if (message.channel.parentID === client.ids.categories.logs) {
         return client.emit('logChannelMessage', message);
     }
 

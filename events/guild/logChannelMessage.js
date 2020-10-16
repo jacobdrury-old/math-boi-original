@@ -3,7 +3,7 @@ const inviteLinkMsg = 'Posted an invite';
 
 module.exports = async (client, message) => {
     const logEmbed = message.embeds[0];
-    if (logEmbed.author == undefined || logEmbed == null || !logEmbed.author)
+    if (logEmbed.author === undefined || logEmbed === null || !logEmbed.author)
         return;
 
     const punishment = logEmbed.author.name
