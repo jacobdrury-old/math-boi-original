@@ -56,7 +56,7 @@ module.exports = async (client, oldUser, newUser) => {
     if (oldUrl !== newUrl) {
         embed.addField(
             'Avatar',
-            `[Before]${oldUrl} -> [After]${newUrl}`,
+            `[Before](${oldUrl}) -> [After](${newUrl})`,
             false
         );
         updated = true;
