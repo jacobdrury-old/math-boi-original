@@ -63,7 +63,7 @@ module.exports = async (client, message) => {
 
 const inviteLink = async (member) => {
     const logChannel = member.guild.channels.cache.get(
-        member.client.logChannelId
+        member.client.ids.channels.modLog
     );
 
     const embed = {
