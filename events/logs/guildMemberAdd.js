@@ -26,7 +26,7 @@ module.exports = async (client, member) => {
                 },
                 fields: [
                     {
-                        name: '**Account Creation',
+                        name: '**Account Creation**',
                         value: timeDifference(
                             Date.now(),
                             member.user.createdAt
