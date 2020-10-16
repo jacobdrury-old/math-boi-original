@@ -1,7 +1,6 @@
 module.exports = {
     name: 'poll',
     description: 'Starts a poll',
-    guildOnly: true,
     usage: 'What is your favorite food? |Sushi|Mexican|Chinese',
     category: 'basic',
     async execute(message, args) {
@@ -50,5 +49,7 @@ module.exports = {
         for (let i = 0; i < pollItems.length; i++) {
             await sentPoll.react(`${emojis[i]}`);
         }
+
+        await message.delete();
     },
 };
