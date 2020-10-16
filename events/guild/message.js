@@ -17,7 +17,10 @@ module.exports = async (client, message) => {
 
     const prefix = client.prefix;
 
-    if (message.channel.parentID === client.ids.categories.logs) {
+    if (
+        message.channel.parentID === client.ids.categories.logs ||
+        message.channel.id === '725171177235939382'
+    ) {
         return client.emit('logChannelMessage', message);
     }
 
