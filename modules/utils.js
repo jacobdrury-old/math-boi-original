@@ -1,10 +1,26 @@
 const Webhook = require('../db/models/webhooks.js');
 const Role = require('../db/models/roles.js');
 const ReactionMessage = require('../db/models/reactionMessages.js');
-exports.getLogChannel = async (client) => {
-    const logChannel = await Webhook.findOne({ name: 'logChannel' });
+const { WebhookClient } = require('discord.js');
 
-    return logChannel || null;
+exports.getMessageLogChannel = async () => {
+    return await this.getLogChannel('MessageLogChannel');
+};
+
+exports.getUserLogChannel = async () => {
+    return await this.getLogChannel('UserLogChannel');
+};
+
+exports.getModLogChannel = async () => {
+    return await this.getLogChannel('ModLogChannel');
+};
+
+exports.getLogChannel = async (name) => {
+    const logChannel = await Webhook.findOne({ name });
+
+    if (logChannel) return new WebhookClient(logChannel.Id, logChannel.token);
+
+    return null;
 };
 
 exports.getRoles = async (client) => {
