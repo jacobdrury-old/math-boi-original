@@ -6,6 +6,8 @@ module.exports = async (client, oldMessage, newMessage) => {
     oldMessage = await (oldMessage.partial ? oldMessage.fetch() : oldMessage);
     newMessage = await (newMessage.partial ? newMessage.fetch() : newMessage);
 
+    if (newMessage.author.bot || oldMessage.author.bot) return;
+
     await webhookClient.send({
         embeds: [
             {

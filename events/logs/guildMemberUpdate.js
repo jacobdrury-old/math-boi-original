@@ -12,6 +12,8 @@ module.exports = async (client, oldMember, newMember) => {
             .send(`Thank you for boosting the server ${newMember}!!`);
     }
 
+    let updated = false;
+
     const webhookClient = await getUserLogChannel();
     if (!webhookClient) return;
 
@@ -32,23 +34,6 @@ module.exports = async (client, oldMember, newMember) => {
         timestamp: new Date(),
     });
 
-    //Check username
-    if (oldMember.user.username !== newMember.user.username) {
-        embed.addField(
-            'Username',
-            `\`${oldMember.user.username}\` -> \`${newMember.user.username}\``,
-            false
-        );
-    }
-    //Check Discriminator
-    if (oldMember.user.discriminator !== newMember.user.discriminator) {
-        embed.addField(
-            'Discriminator',
-            `\`${oldMember.user.discriminator}\` -> \`${newMember.user.discriminator}\``,
-            false
-        );
-    }
-
     //Check nickname
     if (oldMember.nickname !== newMember.nickname) {
         embed.addField(
@@ -56,24 +41,8 @@ module.exports = async (client, oldMember, newMember) => {
             `\`${oldMember.nickname}\` -> \`${newMember.nickname}\``,
             false
         );
+        updated = true;
     }
 
-    const oldUrl = oldMember.user.displayAvatarURL({
-        dynamic: true,
-    });
-
-    const newUrl = newMember.user.displayAvatarURL({
-        dynamic: true,
-    });
-
-    //Check Pfp
-    if (oldUrl !== newUrl) {
-        embed.addField(
-            'Avatar',
-            `[Before]${oldUrl} -> [After]${newUrl}`,
-            false
-        );
-    }
-
-    await webhookClient.send({ embeds: [embed] });
+    if (updated) return await webhookClient.send({ embeds: [embed] });
 };
