@@ -38,7 +38,7 @@ module.exports = async (client, oldMember, newMember) => {
     if (oldMember.nickname !== newMember.nickname) {
         embed.addField(
             'Nickname',
-            `\`${oldMember.nickname}\` -> \`${newMember.nickname}\``,
+            `\`${oldMember.nickname}\` -> \`${newMember.nickname || 'None'}\``,
             false
         );
         updated = true;
