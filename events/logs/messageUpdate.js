@@ -8,6 +8,8 @@ module.exports = async (client, oldMessage, newMessage) => {
 
     if (newMessage.author.bot || oldMessage.author.bot) return;
 
+    if (isLatex(oldMessage.content, newMessage.content)) return;
+
     await webhookClient.send({
         embeds: [
             {
@@ -35,4 +37,13 @@ module.exports = async (client, oldMessage, newMessage) => {
             },
         ],
     });
+};
+
+const isLatex = (oldContent, newContent) => {
+    return (
+        oldContent.startsWith('$') &&
+        oldContent.endsWith('$') &&
+        newContent.startsWith('$') &&
+        newContent.endsWith('$')
+    );
 };
