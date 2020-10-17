@@ -2,8 +2,14 @@ const punishments = ['WARN', 'MUTE', 'UNMUTE'];
 const inviteLinkMsg = 'Posted an invite';
 
 module.exports = async (client, message) => {
+    //console.log(message.embeds[0]);
     const logEmbed = message.embeds[0];
-    if (logEmbed.author == undefined || logEmbed == null || !logEmbed.author)
+    if (
+        !logEmbed ||
+        logEmbed === null ||
+        logEmbed.author === undefined ||
+        !logEmbed.author
+    )
         return;
 
     const punishment = logEmbed.author.name
@@ -62,7 +68,7 @@ module.exports = async (client, message) => {
 
 const inviteLink = async (member) => {
     const logChannel = member.guild.channels.cache.get(
-        member.client.logChannelId
+        member.client.ids.channels.modLog
     );
 
     const embed = {

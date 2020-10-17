@@ -1,20 +1,22 @@
 const { WebhookClient } = require('discord.js');
 const { logEmbed, setToRoleEmbedForUser } = require('./embeds.js');
-const { getLogChannel } = require('../modules/utils.js');
+const { getUserLogChannel } = require('../modules/utils.js');
 const minAge = 13;
 
 exports.getIsOwner = (member) => member.guild.ownerID == member.id;
 
 exports.getIsAdmin = (client, member) =>
     member.hasPermission('ADMINISTRATOR') ||
-    member.roles.cache.get(client.roleIds.headModId);
+    member.roles.cache.get(client.ids.roles.headMod);
 
 exports.getIsModerator = (client, member) =>
-    member.roles.cache.get(client.roleIds.moderatorId) ||
-    member.roles.cache.get(client.roleIds.traineeModId);
+    member.roles.cache.get(client.ids.roles.moderator);
 
 exports.getIsBooster = (client, member) =>
-    member.roles.cache.get(client.roleIds.boosterId);
+    member.roles.cache.get(client.ids.roles.booster);
+
+exports.getIsTrainee = (client, member) =>
+    member.roles.cache.get(client.ids.roles.traineeMod);
 
 exports.setToRole = async (member, role, adminId = null, shouldLog = true) => {
     await member.roles.add(role);
@@ -22,12 +24,8 @@ exports.setToRole = async (member, role, adminId = null, shouldLog = true) => {
     if (shouldLog) {
         await member.send({ embed: await setToRoleEmbedForUser(member, role) });
 
-        const logChannel = await getLogChannel(member.client);
-        if (logChannel) {
-            const webhookClient = new WebhookClient(
-                logChannel.Id,
-                logChannel.token
-            );
+        const webhookClient = await getUserLogChannel();
+        if (webhookClient) {
             const embed = logEmbed(member, 'Role Added').addFields(
                 {
                     name: 'User',
@@ -60,12 +58,8 @@ exports.removeRole = async (member, role, adminId = null, shouldLog = true) => {
             embed: await removeRoleEmbedForUser(member, role),
         });
 
-        const logChannel = await getLogChannel(member.client);
-        if (logChannel) {
-            const webhookClient = new WebhookClient(
-                logChannel.Id,
-                logChannel.token
-            );
+        const webhookClient = await getUserLogChannel();
+        if (webhookClient) {
             const embed = logEmbed(member, 'Role Removed').addFields(
                 {
                     name: 'User',

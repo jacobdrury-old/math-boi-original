@@ -4,6 +4,7 @@ const {
     getIsOwner,
     getIsAdmin,
     getIsModerator,
+    getIsTrainee,
 } = require('../../modules/UserHelpers');
 
 module.exports = {
@@ -27,7 +28,9 @@ module.exports = {
 
         const isUserAdmin = getIsAdmin(message.client, guildMember);
 
-        const isUserModerator = getIsModerator(message.client, guildMember);
+        const isUserModerator =
+            getIsModerator(message.client, guildMember) ||
+            getIsTrainee(message.client, guildMember);
 
         const useableCommands = isUserOwner
             ? commands

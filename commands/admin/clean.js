@@ -1,5 +1,4 @@
-const { WebhookClient } = require('discord.js');
-const { getLogChannel } = require('../../modules/utils.js');
+const { getModLogChannel } = require('../../modules/utils.js');
 
 module.exports = {
     name: 'clean',
@@ -29,12 +28,8 @@ module.exports = {
         });
 
         const member = message.member;
-        const logChannel = await getLogChannel(message.client);
-        if (logChannel) {
-            const webhookClient = new WebhookClient(
-                logChannel.Id,
-                logChannel.token
-            );
+        const webhookClient = await getModLogChannel();
+        if (webhookClient) {
             const embed = {
                 author: {
                     name: `Clean Command Executed`,

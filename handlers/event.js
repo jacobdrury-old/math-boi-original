@@ -11,5 +11,5 @@ module.exports = (client) => {
             client.on(eName, evt.bind(null, client));
         }
     };
-    ['client', 'guild', 'moderation'].forEach((x) => load(x));
+    ['client', 'guild', 'moderation', 'logs'].forEach((x) => load(x));
 };

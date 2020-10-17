@@ -6,6 +6,7 @@ const {
     getIsOwner,
     getIsAdmin,
     getIsModerator,
+    getIsTrainee,
     getIsBooster,
 } = require('../../modules/UserHelpers');
 
@@ -16,11 +17,11 @@ module.exports = async (client, message) => {
 
     const prefix = client.prefix;
 
-    if (message.channel.id === client.logChannelId) {
+    if (message.channel.parentID === client.ids.categories.logs) {
         return client.emit('logChannelMessage', message);
     }
 
-    if (message.channel.id === client.channelIds.joinLogs) {
+    if (message.channel.id === client.ids.channels.joinLogs) {
         return client.emit('levelLogMessage', message);
     }
 
@@ -36,7 +37,8 @@ module.exports = async (client, message) => {
 
     const isAdmin = getIsAdmin(client, member);
 
-    const isModerator = getIsModerator(client, member);
+    const isModerator =
+        getIsModerator(client, member) || getIsTrainee(client, member);
 
     const isBooster = getIsBooster(client, member);
 
@@ -81,7 +83,7 @@ module.exports = async (client, message) => {
 
     const isHelpDeskCmd = () =>
         command.helpDesk &&
-        message.channel.id == message.client.channelIds.helpDesk &&
+        message.channel.id == message.client.ids.channels.helpDesk &&
         (isModerator || isAdmin || isOwner);
 
     if (!isHelpDeskCmd() && command.adminOnly && !isAdmin && !isOwner) {
@@ -138,20 +140,12 @@ module.exports = async (client, message) => {
         const timestamps = cooldowns.get(command.name);
         const cooldownAmount = (command.cooldown || 0) * 1000;
 
-        const {
-            general,
-            hobbies,
-            honorable,
-            music,
-            voice,
-        } = message.client.categoryIds;
-
-        const nonSubjectChannels = [general, hobbies, honorable, music, voice];
+        const { nonSubjectCategories } = message.client.ids;
 
         if (
             timestamps.has(message.author.id) &&
             command.subjectOnlyCoolDown &&
-            !nonSubjectChannels.includes(message.channel.parentID)
+            !nonSubjectCategories.includes(message.channel.parentID)
         ) {
             const expirationTime =
                 timestamps.get(message.author.id) + cooldownAmount;

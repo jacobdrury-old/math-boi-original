@@ -9,7 +9,7 @@ module.exports = {
     async execute(message, args) {
         const channels = message.guild.channels.cache.filter(
             (c) =>
-                !message.client.IGNORED.includes(c.parentID) &&
+                !message.client.ids.ignoredCategories.includes(c.parentID) &&
                 c.type != 'category'
         );
 
@@ -31,7 +31,7 @@ const lock = async (message, channels) => {
     });
 
     const announcementC = message.guild.channels.cache.get(
-        message.client.channelIds.announcementID
+        client.ids.channels.announcement
     );
 
     await message.guild.setVerificationLevel(
@@ -65,7 +65,7 @@ const unlock = async (message, channels) => {
     });
 
     const announcementC = message.guild.channels.cache.get(
-        message.client.channelIds.announcementID
+        client.ids.channels.announcement
     );
 
     await announcementC.send('', {
