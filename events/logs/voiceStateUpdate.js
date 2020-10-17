@@ -3,16 +3,11 @@ const { newUserEmbed } = require('../../modules/embeds');
 const { getUserLogChannel } = require('../../modules/utils');
 
 module.exports = async (client, oldState, newState) => {
-    // const oldChannelId = oldState.channelID;
-    // const newChannelId = newState.channelID;
-
-    const oldChannel = oldState.connection;
-    const newChannel = newState.connection;
+    const oldChannel = oldState.channelID;
+    const newChannel = newState.channelID;
 
     const webhookClient = await getUserLogChannel();
     if (!webhookClient) return;
-
-    //if (oldState.channelId === newState.channelId) return;
 
     //User joins a vc
     if (!oldChannel && newChannel) {
