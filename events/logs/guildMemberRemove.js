@@ -7,7 +7,7 @@ module.exports = async (client, member) => {
     await webhookClient.send({
         embeds: [
             {
-                color: 0x00f763,
+                color: 0xff2c02,
                 author: {
                     name: `${member.user.username}#${member.user.discriminator}`,
                     icon_url: member.user.displayAvatarURL({
