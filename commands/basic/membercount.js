@@ -3,9 +3,7 @@ module.exports = {
     description: 'Sends member count embed',
     category: 'basic',
     async execute(message) {
-        const [bots, humans] = message.guild.members.cache.partition(
-            (m) => m.user.bot
-        );
+        const bots = message.guild.members.cache.filter((m) => m.user.bot);
 
         const verifiedRole = await message.guild.roles.fetch(
             message.client.ids.roles.verified
