@@ -10,6 +10,7 @@ class Ticket {
         this.mailCategory = client.ids.categories.modMail;
         this.archiveCategory = client.ids.categories.archivedModMail;
         this.staffID = client.ids.roles.staff;
+        this.headModID = client.ids.roles.headMod;
         this.channel;
         this.msg;
         this.dmCollector;
@@ -21,10 +22,11 @@ class Ticket {
             `${this.user.username}-${this.user.discriminator}`,
             {
                 type: 'text',
-                parent: mailCategory,
+                parent: this.mailCategory,
                 topic: 'Type -close to end the chat and archive it',
             }
         );
+
         return this.channel;
     }
 
@@ -179,14 +181,10 @@ class Ticket {
                 description: 'This ticket has been closed and archived!',
             },
         });
-        await this.channel.setParent(archiveCategory);
+        await this.channel.setParent(this.archiveCategory);
 
-        await this.channel.updateOverwrite(staffID, {
-            SEND_MESSAGES: false,
-            MANAGE_MESSAGES: false,
-            EMBED_LINKS: false,
-            ATTACH_FILES: false,
-        });
+        //TODO: Update permissions when channel is archived
+        this.channel.lockPermissions();
 
         if (notifyUser)
             await this.dmChannel.send('', {

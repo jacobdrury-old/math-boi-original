@@ -3,12 +3,10 @@ const openedTickets = new Map();
 
 module.exports = async (client, message) => {
     if (message.author.bot) return;
-    if (message.content == 13 || message.content == 14) return;
+    if (!isNaN(message.content)) return;
 
-    if (
-        openedTickets.has(message.author.id) &&
-        openedTickets.get(message.author.id).isActive
-    ) {
+    if (openedTickets.has(message.author.id)) {
+        if (openedTickets.get(message.author.id).isActive) return;
         return await message.channel.send('You already have an open ticket');
     }
 
@@ -18,6 +16,12 @@ module.exports = async (client, message) => {
             title: 'Ticket Opened!',
             description:
                 'Hello! We have received your message. Please wait while one of our staff members gets back to you.',
+            thumbnail: {
+                url: message.guild.iconURL({
+                    dynamic: true,
+                }),
+            },
+            timestamp: new Date(),
         },
     });
 

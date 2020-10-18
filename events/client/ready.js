@@ -1,13 +1,13 @@
 const CronJob = require('cron').CronJob;
 const { getModLogChannel } = require('../../modules/utils.js');
 module.exports = async (client) => {
-    // client.user.setPresence({
-    //     status: 'online',
-    //     activity: {
-    //         name: 'DM for Staff help!',
-    //         type: 'PLAYING',
-    //     },
-    // });
+    await client.user.setPresence({
+        status: 'online',
+        activity: {
+            name: 'DM for Staff help!',
+            type: 'PLAYING',
+        },
+    });
 
     console.log('Ready!');
 
