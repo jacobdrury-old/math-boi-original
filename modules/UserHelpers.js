@@ -1,7 +1,6 @@
-const { WebhookClient } = require('discord.js');
+const AgeVerification = require('../classes/AgeVerification');
 const { logEmbed, setToRoleEmbedForUser } = require('./embeds.js');
 const { getUserLogChannel } = require('../modules/utils.js');
-const minAge = 13;
 
 exports.getIsOwner = (member) => member.guild.ownerID == member.id;
 
@@ -84,10 +83,12 @@ exports.removeRole = async (member, role, adminId = null, shouldLog = true) => {
 
 exports.isUserTooYoung = async (member) => {
     try {
+        //TODO Create AgeVerification Ticket here
         const memberDM = await member.createDM();
         memberDM.send(
             'Before I am able to give you the middle school role, I have to verify your age! How old are you?'
         );
+
         return await handleConvo(member, memberDM);
     } catch (err) {
         return await userDMsClosed(member);
@@ -95,38 +96,8 @@ exports.isUserTooYoung = async (member) => {
 };
 
 const handleConvo = async (member, channel) => {
-    try {
-        const filter = (m) => m.author.id === member.id;
-
-        const messages = await channel.awaitMessages(filter, {
-            max: 1,
-            time: 600000,
-            errors: ['time'],
-        });
-
-        const age = messages.first().content.replace(/\D/g, '');
-
-        const isTooYoung = age < minAge;
-
-        if (isTooYoung) {
-            await channel.send(
-                'Unfortunately you are not old enough to participate in this server, you will be temporality banned from this server'
-            );
-
-            await member.ban({ days: 14, reason: `User is ${age} years old` });
-        } else {
-            await channel.send(
-                'Thank you for verifying your age! I have added the middle school role to you!'
-            );
-        }
-
-        return isTooYoung;
-    } catch (err) {
-        await channel.send(
-            'This request has timed out, please try again later.'
-        );
-        return true;
-    }
+    const ticket = new AgeVerification(member.client, member, channel);
+    return await ticket.handleConvo(member, memberDM);
 };
 
 const userDMsClosed = async (member) => {

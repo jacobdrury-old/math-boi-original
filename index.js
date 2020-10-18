@@ -17,6 +17,8 @@ client.ids = require('./json/Ids.json');
 
 client.enableLogs = process.env.ENABLE_LOGS;
 
+client.openedTickets = new Map();
+
 (async () => {
     client.db = await mongoose.connect(process.env.DB_CONNECTION_STRING, {
         useNewUrlParser: true,
