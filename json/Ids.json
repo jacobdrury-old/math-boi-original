@@ -25,7 +25,9 @@
         "rules": "740454952442265621"
     },
     "categories": {
-        "logs": "766481843905757224"
+        "logs": "766481843905757224",
+        "modMail": "",
+        "archivedModMail": ""
     },
     "nonSubjectCategories": [
         "725171177235939383",

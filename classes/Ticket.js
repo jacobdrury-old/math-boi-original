@@ -1,20 +1,19 @@
-const mailCategory = '751999833597804624';
-const archiveCategory = '752000303787933706';
-const staffID = '737374602719920191';
 const emojis = ['❌', '✅'];
 class Ticket {
-    channel;
-    dmChannel;
-    msg;
-    isActive = false;
-    dmCollector;
-    cCollector;
     constructor(client, message, guild) {
         this.client = client;
         this.message = message;
         this.user = message.author;
         this.dmChannel = message.channel;
         this.guild = guild;
+        this.isActive = false;
+        this.mailCategory = client.ids.categories.modMail;
+        this.archiveCategory = client.ids.categories.archivedModMail;
+        this.staffID = client.ids.roles.staff;
+        this.channel;
+        this.msg;
+        this.dmCollector;
+        this.cCollector;
     }
 
     async init() {
