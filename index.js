@@ -15,6 +15,8 @@ client.prefix = process.env.PREFIX;
 
 client.ids = require('./json/Ids.json');
 
+client.enableLogs = process.env.ENABLE_LOGS || true;
+
 (async () => {
     client.db = await mongoose.connect(process.env.DB_CONNECTION_STRING, {
         useNewUrlParser: true,

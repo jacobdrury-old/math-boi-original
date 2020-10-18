@@ -11,9 +11,9 @@ const {
 } = require('../../modules/UserHelpers');
 
 module.exports = async (client, message) => {
-    // if (message.channel.type === 'dm') {
-    //     return client.emit('directMessage', message);
-    // }
+    if (message.channel.type === 'dm') {
+        return client.emit('directMessage', message);
+    }
 
     const prefix = client.prefix;
 

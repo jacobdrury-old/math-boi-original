@@ -2,6 +2,7 @@ const { MessageEmbed } = require('discord.js');
 const { getUserLogChannel } = require('../../modules/utils');
 
 module.exports = async (client, oldUser, newUser) => {
+    if (!client.enableLogs) return;
     let updated = false;
 
     const webhookClient = await getUserLogChannel();
