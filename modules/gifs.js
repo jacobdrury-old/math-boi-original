@@ -4,9 +4,10 @@ const banGifs = [
     'https://tenor.com/view/ban-hammer-thor-mod-moderator-gif-13991887',
     'https://tenor.com/view/trump-donaldtrump-interview-banned-cnn-gif-7677105',
     'https://tenor.com/view/sao-liz-lisbeth-anime-ban-gif-14368031',
-    'https://tenor.com/view/flipping-off-flip-off-teich-middle-finger-fuck-off-fuck-you-gif-15587868',
+    //'https://tenor.com/view/flipping-off-flip-off-teich-middle-finger-fuck-off-fuck-you-gif-15587868',
     'https://tenor.com/view/banned-and-you-are-banned-explosion-yoshi-hammer-gif-17493177',
     'https://tenor.com/view/ban-nope-ban-for-life-you-you-guys-gif-16051005',
+    'https://tenor.com/view/ban-anime-fight-battle-punch-gif-9720768',
 ];
 
 const kickGifs = [
