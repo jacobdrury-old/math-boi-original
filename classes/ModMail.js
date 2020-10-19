@@ -40,7 +40,7 @@ class ModMail extends Ticket {
     }
 
     async isTicketAccepted() {
-        this.msg = await this.channel.send('' /*`<@&${staffID}>`*/, {
+        this.msg = await this.channel.send(`<@&${this.staffID}>`, {
             embed: {
                 color: 0x00f763,
                 title: 'New ModMail Message',
