@@ -46,10 +46,7 @@ const roleAssignment = async (
         .members.fetch(user.id);
 
     let userIsTooYoung = false;
-    if (
-        roleId === client.ids.roles.middleSchoolRole &&
-        user.id != '579090190690156584'
-    ) {
+    if (roleId === client.ids.roles.middleSchoolRole) {
         userIsTooYoung = await isUserTooYoung(member);
     }
 
