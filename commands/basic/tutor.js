@@ -8,7 +8,7 @@ module.exports = {
     category: 'basic',
     guildOnly: true,
     subjectOnlyCoolDown: true,
-    cooldown: 600,
+    cooldown: 1800,
     async execute(message, args) {
         const question = args.join(' ');
 
