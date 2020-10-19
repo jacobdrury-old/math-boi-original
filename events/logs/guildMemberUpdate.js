@@ -2,6 +2,7 @@ const { MessageEmbed } = require('discord.js');
 const { getUserLogChannel } = require('../../modules/utils');
 
 module.exports = async (client, oldMember, newMember) => {
+    if (!client.enableLogs) return;
     const hadRole = oldMember.roles.cache.get(client.ids.roles.booster);
 
     const hasRole = newMember.roles.cache.get(client.ids.roles.booster);

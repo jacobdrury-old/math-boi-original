@@ -1,6 +1,7 @@
 const { getUserLogChannel } = require('../../modules/utils');
 
 module.exports = async (client, member) => {
+    if (!client.enableLogs) return;
     const webhookClient = await getUserLogChannel();
     if (!webhookClient) return;
 

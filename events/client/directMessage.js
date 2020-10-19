@@ -1,12 +1,12 @@
-const Ticket = require('../../classes/Ticket');
-const openedTickets = new Map();
+const ModMail = require('../../classes/ModMail');
 
 module.exports = async (client, message) => {
     if (message.author.bot) return;
-    if (message.content == 13 || message.content == 14) return;
 
-    if (openedTickets.has(message.author.id)) {
-        if (openedTickets.get(message.author.id).isActive) return;
+    if (!isNaN(message.content)) return;
+
+    if (client.openedTickets.has(message.author.id)) {
+        if (client.openedTickets.get(message.author.id).isActive) return;
         return await message.channel.send('You already have an open ticket');
     }
 
@@ -16,13 +16,15 @@ module.exports = async (client, message) => {
             title: 'Ticket Opened!',
             description:
                 'Hello! We have received your message. Please wait while one of our staff members gets back to you.',
+            
+            timestamp: new Date(),
         },
     });
 
     const guild = client.guilds.cache.get(client.guildId);
 
-    const ticket = new Ticket(client, message, guild);
-    openedTickets.set(message.author.id, ticket);
+    const ticket = new ModMail(client, message, guild);
+    client.openedTickets.set(message.author.id, ticket);
 
     const channel = await ticket.init();
 
@@ -30,20 +32,20 @@ module.exports = async (client, message) => {
         await message.channel.send(
             'Something went wrong. Please reach out to a staff member directly.'
         );
-        return openedTickets.delete(message.author.id);
+        return client.openedTickets.delete(message.author.id);
     }
 
     const isAccepted = await ticket.isTicketAccepted();
 
-    if (isAccepted === null) openedTickets.delete(message.author.id);
+    if (isAccepted === null) client.openedTickets.delete(message.author.id);
     else if (!isAccepted)
         setTimeout(() => {
-            openedTickets.delete(message.author.id);
+            client.openedTickets.delete(message.author.id);
         }, 300000);
 
     const isClosed = await ticket.handleConvo();
 
     if (isClosed) {
-        openedTickets.delete(message.author.id);
+        client.openedTickets.delete(message.author.id);
     }
 };

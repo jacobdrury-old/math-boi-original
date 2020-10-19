@@ -1,6 +1,8 @@
 const { getModLogChannel } = require('../../modules/utils');
 
 module.exports = async (client, guild, user) => {
+    if (!client.enableLogs) return;
+    
     const webhookClient = await getModLogChannel();
     if (!webhookClient) return;
 

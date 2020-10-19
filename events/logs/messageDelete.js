@@ -1,6 +1,7 @@
 const { getMessageLogChannel } = require('../../modules/utils');
 
 module.exports = async (client, message) => {
+    if (!client.enableLogs) return;
     try {
         const webhookClient = await getMessageLogChannel();
         if (!webhookClient) return;

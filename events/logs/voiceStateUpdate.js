@@ -3,6 +3,7 @@ const { newUserEmbed } = require('../../modules/embeds');
 const { getUserLogChannel } = require('../../modules/utils');
 
 module.exports = async (client, oldState, newState) => {
+    if (!client.enableLogs) return;
     const oldChannel = oldState.channelID;
     const newChannel = newState.channelID;
 
