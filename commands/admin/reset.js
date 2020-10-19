@@ -1,3 +1,4 @@
+const { sleep } = require('../../modules/utils');
 module.exports = {
     name: 'reset',
     description: 'Clones and deletes original channel',
@@ -25,10 +26,4 @@ module.exports = {
         await sleep(10000);
         await msg.delete();
     },
-};
-
-const sleep = (ms) => {
-    return new Promise((resolve) => {
-        setTimeout(resolve, ms);
-    });
 };

@@ -38,3 +38,9 @@ exports.getRoles = async (client) => {
 exports.getReactionMessage = async (client, id) => {
     return (await ReactionMessage.findOne({ messageId: id })) || null;
 };
+
+exports.sleep = (ms) => {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
+};

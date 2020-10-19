@@ -1,4 +1,11 @@
 const Ticket = require('../classes/Ticket');
+const { sleep } = require('../modules/utils');
+
+const {
+    getIsOwner,
+    getIsAdmin,
+    getIsHeadMod,
+} = require('../modules/UserHelpers');
 
 const emojis = ['❌', '✅'];
 class ModMail extends Ticket {
@@ -138,6 +145,7 @@ class ModMail extends Ticket {
                             }),
                         },
                         description: m.content,
+                        timestamp: new Date(),
                     },
                 });
 
@@ -155,8 +163,8 @@ class ModMail extends Ticket {
                 }
 
                 await this.dmChannel.send('', {
-                    color: 0x2caefe,
                     embed: {
+                        color: 0x2caefe,
                         author: {
                             name: m.author.tag,
                             icon_url: m.author.displayAvatarURL({
@@ -164,6 +172,10 @@ class ModMail extends Ticket {
                             }),
                         },
                         description: m.content,
+                        timestamp: new Date(),
+                        footer: {
+                            text: `${getRank(m.member)}`,
+                        },
                     },
                 });
 
@@ -185,19 +197,24 @@ class ModMail extends Ticket {
             embed: {
                 title: '🔒Archived🔒',
                 description: 'This ticket has been closed and archived!',
+                timestamp: new Date(),
             },
         });
+
         await this.channel.setParent(this.archiveCategory);
+
+        await sleep(500);
 
         await this.channel.lockPermissions();
 
         if (notifyUser)
             await this.dmChannel.send('', {
                 embed: {
-                    color: 0x2f2f2f,
+                    color: 0xf0131e,
                     title: 'Ticket Closed',
                     description:
                         'This ticket has been closed\nPlease reach out again if you need anything else!',
+                    timestamp: new Date(),
                 },
             });
     }
@@ -205,6 +222,12 @@ class ModMail extends Ticket {
 
 const getAttachmentLinks = (attachments) => {
     return attachments.array().map((attachment) => attachment.url);
+};
+
+const getRank = (member) => {
+    if (getIsOwner(member)) return 'Owner';
+    if (getIsAdmin(member.client, member)) return 'Admin';
+    if (getIsHeadMod(member.client, member)) return 'Head Moderator';
 };
 
 module.exports = ModMail;

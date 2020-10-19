@@ -1,11 +1,14 @@
 const AgeVerification = require('../classes/AgeVerification');
 const { logEmbed, setToRoleEmbedForUser } = require('./embeds.js');
 const { getUserLogChannel } = require('../modules/utils.js');
+const { sleep } = require('./utils');
 
 exports.getIsOwner = (member) => member.guild.ownerID == member.id;
 
 exports.getIsAdmin = (client, member) =>
-    member.hasPermission('ADMINISTRATOR') ||
+    member.hasPermission('ADMINISTRATOR') || this.getIsHeadMod(client, member);
+
+exports.getIsHeadMod = (client, member) =>
     member.roles.cache.get(client.ids.roles.headMod);
 
 exports.getIsModerator = (client, member) =>
@@ -83,11 +86,15 @@ exports.removeRole = async (member, role, adminId = null, shouldLog = true) => {
 
 exports.isUserTooYoung = async (member) => {
     try {
-        //TODO Create AgeVerification Ticket here
         const memberDM = await member.createDM();
-        memberDM.send(
-            'Before I am able to give you the middle school role, I have to verify your age! How old are you?'
-        );
+        memberDM.send('', {
+            embed: {
+                color: 0x00f763,
+                title: 'Age Verification',
+                description:
+                    'Before I am able to give you the middle school role, I have to verify your age! How old are you?',
+            },
+        });
 
         return await handleConvo(member, memberDM);
     } catch (err) {
@@ -96,8 +103,8 @@ exports.isUserTooYoung = async (member) => {
 };
 
 const handleConvo = async (member, channel) => {
-    const ticket = new AgeVerification(member.client, member, channel);
-    return await ticket.handleConvo(member, memberDM);
+    const ticket = new AgeVerification(member.client, member);
+    return await ticket.handleConvo(channel);
 };
 
 const userDMsClosed = async (member) => {
@@ -117,7 +124,7 @@ const userDMsClosed = async (member) => {
                 },
                 {
                     type: 'role',
-                    id: '737374602719920191',
+                    id: member.client.ids.roles.staff,
                     allow: [
                         'VIEW_CHANNEL',
                         'SEND_MESSAGES',
@@ -128,19 +135,18 @@ const userDMsClosed = async (member) => {
         }
     );
 
-    await channel.send(
-        `${member} Before I am able to give you the middle school role, I have to verify your age! How old are you?`
-    );
+    await channel.send(member, {
+        embed: {
+            color: 0x00f763,
+            title: 'Age Verification',
+            description:
+                'Before I am able to give you the middle school role, I have to verify your age! How old are you?',
+        },
+    });
 
     const isTooYoung = await handleConvo(member, channel);
 
     await sleep(30000);
     await channel.delete();
     return isTooYoung;
-};
-
-const sleep = (ms) => {
-    return new Promise((resolve) => {
-        setTimeout(resolve, ms);
-    });
 };

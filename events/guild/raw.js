@@ -3,6 +3,8 @@ const events = {
     MESSAGE_REACTION_REMOVE: 'messageReactionRemove',
 };
 
+const { sleep } = require('../../modules/utils');
+
 module.exports = async (client, event) => {
     return;
     if (!events.hasOwnProperty(event.t)) return;
@@ -24,8 +26,4 @@ module.exports = async (client, event) => {
     await sleep(750);
 
     client.emit(events[event.t], reaction, user);
-};
-
-const sleep = async (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
 };
