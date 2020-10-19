@@ -5,7 +5,6 @@ module.exports = {
     guildOnly: true,
     category: 'basic',
     async execute(message, args) {
-        await message.delete();
         let memberTag = '';
         const mention = args[0];
         if (mention && mention.startsWith('<@') && mention.endsWith('>')) {
@@ -18,8 +17,10 @@ module.exports = {
             }
         }
 
-        message.channel.send(
+        await message.channel.send(
             `${memberTag}Don’t forget to use \`${message.client.prefix}tutor\` the next time you post a question`
         );
+
+        await message.delete();
     },
 };
