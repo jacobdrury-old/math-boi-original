@@ -5,8 +5,7 @@ const { sleep } = require('./utils');
 
 exports.getIsOwner = (member) => member.guild.ownerID == member.id;
 
-exports.getIsAdmin = (client, member) =>
-    member.hasPermission('ADMINISTRATOR') || this.getIsHeadMod(client, member);
+exports.getIsAdmin = (client, member) => member.hasPermission('ADMINISTRATOR');
 
 exports.getIsHeadMod = (client, member) =>
     member.roles.cache.get(client.ids.roles.headMod);

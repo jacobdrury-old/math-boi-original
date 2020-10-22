@@ -3,6 +3,7 @@ const { readdirSync } = require('fs');
 const {
     getIsOwner,
     getIsAdmin,
+    getIsHeadMod,
     getIsModerator,
     getIsTrainee,
 } = require('../../modules/UserHelpers');
@@ -26,7 +27,9 @@ module.exports = {
 
         const isUserOwner = getIsOwner(guildMember);
 
-        const isUserAdmin = getIsAdmin(message.client, guildMember);
+        const isUserAdmin =
+            getIsAdmin(message.client, guildMember) ||
+            getIsHeadMod(message.client, guildMember);
 
         const isUserModerator =
             getIsModerator(message.client, guildMember) ||

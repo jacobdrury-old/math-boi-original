@@ -5,6 +5,7 @@ const cooldowns = new Collection();
 const {
     getIsOwner,
     getIsAdmin,
+    getIsHeadMod,
     getIsModerator,
     getIsTrainee,
     getIsBooster,
@@ -35,7 +36,7 @@ module.exports = async (client, message) => {
 
     const isOwner = getIsOwner(member);
 
-    const isAdmin = getIsAdmin(client, member);
+    const isAdmin = getIsAdmin(client, member) || getIsHeadMod(client, member);
 
     const isModerator =
         getIsModerator(client, member) || getIsTrainee(client, member);
