@@ -1,8 +1,9 @@
-const { Client, Collection } = require('discord.js');
+const { Client, Collection, Intents } = require('discord.js');
 const mongoose = require('mongoose');
 
 const client = new Client({
     partials: ['MESSAGE', 'REACTION'],
+    intents: Intents.ALL,
 });
 
 ['commands', 'aliases'].forEach((x) => (client[x] = new Collection()));
