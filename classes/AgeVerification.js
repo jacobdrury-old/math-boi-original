@@ -33,7 +33,7 @@ class AgeVerification extends Ticket {
                         color: 0xf0131e,
                         title: 'Age Verification',
                         description:
-                            'Unfortunately you are not old enough to participate in this server, you will be banned from this server',
+                            'Unfortunately you are not old enough to use Discord. You must be at least 13 to participate in this server.',
                     },
                 });
 

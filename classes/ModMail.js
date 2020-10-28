@@ -61,7 +61,7 @@ class ModMail extends Ticket {
 
             const reactions = await this.msg.awaitReactions(reactionFilter, {
                 max: 1,
-                time: 3.6e6,
+                time: 2.16e7,
                 errors: ['time'],
             });
 
@@ -146,6 +146,7 @@ class ModMail extends Ticket {
                         },
                         description: m.content,
                         timestamp: new Date(),
+                        footer: { text: `ID: ${this.user.id}` },
                     },
                 });
 
