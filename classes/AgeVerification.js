@@ -49,14 +49,16 @@ class AgeVerification extends Ticket {
                         embeds: [
                             {
                                 author: {
-                                    name: `${member.user.username}#${member.user.discriminator}`,
-                                    icon_url: member.user.displayAvatarURL({
-                                        dynamic: true,
-                                    }),
+                                    name: `${this.member.user.username}#${this.member.user.discriminator}`,
+                                    icon_url: this.member.user.displayAvatarURL(
+                                        {
+                                            dynamic: true,
+                                        }
+                                    ),
                                 },
                                 timestamp: new Date(),
                                 color: 0xff2c02,
-                                description: `${member} has been banned due to failing the middle school age check.`,
+                                description: `${this.member} has been banned due to failing the middle school age check.`,
                                 fields: [
                                     { name: '**Claimed Age**', value: age },
                                 ],
