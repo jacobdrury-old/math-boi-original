@@ -1,3 +1,5 @@
+const { getModLogChannel } = require('../modules/utils');
+
 const Ticket = require('../classes/Ticket');
 const minAge = 13;
 class AgeVerification extends Ticket {
@@ -31,14 +33,39 @@ class AgeVerification extends Ticket {
                         color: 0xf0131e,
                         title: 'Age Verification',
                         description:
-                            'Unfortunately you are not old enough to participate in this server, you will be temporality banned from this server',
+                            'Unfortunately you are not old enough to participate in this server, you will be banned from this server',
                     },
                 });
 
                 await this.member.ban({
-                    days: 14,
                     reason: `User is ${age} years old`,
                 });
+
+                try {
+                    const webhookClient = await getModLogChannel();
+                    if (!webhookClient) return;
+
+                    await webhookClient.send({
+                        embeds: [
+                            {
+                                author: {
+                                    name: `${member.user.username}#${member.user.discriminator}`,
+                                    icon_url: member.user.displayAvatarURL({
+                                        dynamic: true,
+                                    }),
+                                },
+                                timestamp: new Date(),
+                                color: 0xff2c02,
+                                description: `${member} has been banned due to failing the middle school age check.`,
+                                fields: [
+                                    { name: '**Claimed Age**', value: age },
+                                ],
+                            },
+                        ],
+                    });
+                } catch (ex) {
+                    console.error(ex);
+                }
             } else {
                 await this.channel.send('', {
                     embed: {
