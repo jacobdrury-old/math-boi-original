@@ -23,7 +23,7 @@ class AgeVerification extends Ticket {
                 errors: ['time'],
             });
 
-            const age = messages.first().content.replace(/\D/g, '');
+            const age = messages.first().content.replace(/[^.0-9]/g, '');
 
             const isTooYoung = age < minAge;
 
