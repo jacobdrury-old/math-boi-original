@@ -1,6 +1,7 @@
 const Webhook = require('../db/models/webhooks.js');
 const Role = require('../db/models/roles.js');
 const ReactionMessage = require('../db/models/reactionMessages.js');
+const BlockList = require('../db/models/blockList.js');
 const { WebhookClient } = require('discord.js');
 
 exports.getMessageLogChannel = async () => {
@@ -43,4 +44,28 @@ exports.sleep = (ms) => {
     return new Promise((resolve) => {
         setTimeout(resolve, ms);
     });
+};
+
+exports.isReactionRoleChannel = (client, messageReaction) => {
+    return (
+        messageReaction.message.channel.id === client.ids.channels.rules ||
+        messageReaction.message.channel.id ===
+            client.ids.channels.roleSelection ||
+        messageReaction.message.channel.id ===
+            client.ids.channels.tutorRoleSelection
+    );
+};
+
+exports.getBlockedTutors = async () => {
+    const blockedTutors = await BlockList.findOne({ _id: 'Blocked Tutors' });
+    if (blockedTutors) return blockedTutors;
+
+    const blockList = new BlockList({
+        _id: 'Blocked Tutors',
+        blocked: [],
+    });
+
+    await blockList.save();
+
+    return blockList;
 };
