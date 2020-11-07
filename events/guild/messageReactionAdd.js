@@ -44,11 +44,7 @@ const roleAssignment = async (
         .get(client.guildId)
         .members.fetch(user.id);
 
-    if (
-        reactionMessage.blockedUsers &&
-        reactionMessage.blockedUsers.blocked.includes(member.id)
-    )
-        return;
+    if (reactionMessage.blockedUsers.blocked.includes(member.id)) return;
 
     let userIsTooYoung = false;
 
