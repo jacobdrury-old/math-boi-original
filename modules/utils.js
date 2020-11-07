@@ -37,7 +37,11 @@ exports.getRoles = async (client) => {
 };
 
 exports.getReactionMessage = async (client, id) => {
-    return (await ReactionMessage.findOne({ messageId: id })) || null;
+    return (
+        (await ReactionMessage.findOne({ messageId: id }).populate(
+            'blockedUsers'
+        )) || null
+    );
 };
 
 exports.sleep = (ms) => {
@@ -52,8 +56,7 @@ exports.isReactionRoleChannel = (client, messageReaction) => {
         messageReaction.message.channel.id ===
             client.ids.channels.roleSelection ||
         messageReaction.message.channel.id ===
-            client.ids.channels.tutorRoleSelection ||
-        messageReaction.message.channel.id === '725171177235939381'
+            client.ids.channels.tutorRoleSelection
     );
 };
 
