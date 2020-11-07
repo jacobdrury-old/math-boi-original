@@ -52,7 +52,8 @@ exports.isReactionRoleChannel = (client, messageReaction) => {
         messageReaction.message.channel.id ===
             client.ids.channels.roleSelection ||
         messageReaction.message.channel.id ===
-            client.ids.channels.tutorRoleSelection
+            client.ids.channels.tutorRoleSelection ||
+        messageReaction.message.channel.id === '725171177235939381'
     );
 };
 

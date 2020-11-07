@@ -46,7 +46,7 @@ const roleAssignment = async (
 
     if (
         reactionMessage.blockedUsers &&
-        reactionMessage.blockedUsers.includes(member.id)
+        reactionMessage.blockedUsers.blocked.includes(member.id)
     )
         return;
 

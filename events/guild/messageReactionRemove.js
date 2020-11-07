@@ -27,7 +27,7 @@ module.exports = async (client, messageReaction, user) => {
 
         if (
             reactionMessage.blockedUsers &&
-            reactionMessage.blockedUsers.includes(member.id)
+            reactionMessage.blockedUsers.blocked.includes(member.id)
         )
             return;
 
