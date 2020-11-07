@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const ReactionMessage = require('../../db/models/reactionMessages.js');
-const { MessageEmbed } = require('discord.js');
 const { getRoles } = require('../../modules/utils.js');
 module.exports = {
     name: 'linkMath',

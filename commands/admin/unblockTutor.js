@@ -1,6 +1,6 @@
 const { getBlockedTutors } = require('../../modules/utils');
 module.exports = {
-    name: 'blockTutor',
+    name: 'unblockTutor',
     description: 'Blocks a user from getting tutor roles',
     guildOnly: true,
     adminOnly: true,
@@ -11,12 +11,14 @@ module.exports = {
 
             const blockedTutors = await getBlockedTutors();
 
-            blockedTutors.blocked.push(member.id);
+            const index = blockedTutors.blocked.indexOf(member.id);
+
+            blockedTutors.blocked.splice(index);
 
             await blockedTutors.save();
 
             await message.channel.send(
-                `${member} has been blocked from the tutor roles!`
+                `${member} has been unblocked from the tutor roles!`
             );
         } catch (err) {
             await message.channel.send(

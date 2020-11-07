@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const ReactionMessage = require('../../db/models/reactionMessages.js');
-const { getRoles } = require('../../modules/utils.js');
+const { getRoles, getBlockedTutors } = require('../../modules/utils.js');
 module.exports = {
     name: 'linkTutor',
     description: `Sends an embed for the reaction roles for the tutor roles`,
@@ -36,10 +36,13 @@ module.exports = {
 
         await message.delete();
 
+        const blockedTutors = await getBlockedTutors();
+
         const reactionMessage = new ReactionMessage({
             _id: mongoose.Types.ObjectId(),
             messageId: tutorMessage.id,
             reactions: {},
+            blockedUsers: blockedTutors,
         });
 
         reactionMessage.reactions = emojis;
