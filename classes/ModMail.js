@@ -137,7 +137,7 @@ class ModMail extends Ticket {
             this.dmCollector.on('collect', async (m) => {
                 await this.channel.send('', {
                     embed: {
-                        color: 0x2caefe,
+                        color: 0xff5e5e,
                         author: {
                             name: this.user.tag,
                             icon_url: this.user.displayAvatarURL({
