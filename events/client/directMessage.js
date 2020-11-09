@@ -92,8 +92,6 @@ const confirmTicket = async (message, guild) => {
         const reaction = collected.first();
 
         if (reaction.emoji.name === x) {
-            await embedMessage.reactions.removeAll();
-
             await embedMessage.edit('', {
                 embed: {
                     color: 0xf0131e,
@@ -109,8 +107,6 @@ const confirmTicket = async (message, guild) => {
 
             return false;
         } else if (reaction.emoji.name === check) {
-            await embedMessage.reactions.removeAll();
-
             await embedMessage.edit('', {
                 embed: {
                     color: 0x00f763,
