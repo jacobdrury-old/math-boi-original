@@ -54,7 +54,7 @@ const confirmTicket = async (message, guild) => {
         title: 'Please confirm the opening of a new ticket',
         description:
             `__**If you are trying to get help with school work please read the #welcome channel and cancel this ticket.**__\n\n` +
-            `*Tickets are only for contacting staff about issues or questions concerning ${guild.name}.*\n`,
+            `__**Tickets are only for contacting staff about issues or questions concerning ${guild.name}.**__\n`,
         fields: [
             {
                 name: 'Cancel',
