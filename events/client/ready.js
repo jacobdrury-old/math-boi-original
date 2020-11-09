@@ -20,7 +20,7 @@ module.exports = async (client) => {
 
             await channel.bulkDelete(99, true);
             await channel.send(
-                'Hey! @everyone I see you guys are not verified yet!\n\n' +
+                'Hey @everyone! I see you guys are not verified yet!\n\n' +
                     `Please go check out <#${client.ids.channels.rules}> and react with :white_check_mark: to get access to the server!\n\n` +
                     `If you have any issues please tag <@&${client.ids.roles.staff}>\n\n` +
                     `Once you Verify you should check out <#${client.ids.channels.roleSelection}>!`
