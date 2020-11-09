@@ -130,7 +130,6 @@ const confirmTicket = async (message, guild) => {
             return true;
         }
     } catch (err) {
-        console.error(err);
         await embedMessage.edit('', {
             embed: {
                 color: 0xf0131e,
