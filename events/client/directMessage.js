@@ -10,9 +10,9 @@ module.exports = async (client, message) => {
         return await message.channel.send('You already have an open ticket');
     }
 
-    if (!confirmTicket(message)) return;
-
     const guild = client.guilds.cache.get(client.guildId);
+
+    if (!confirmTicket(message, guild)) return;
 
     const ticket = new ModMail(client, message, guild);
     client.openedTickets.set(message.author.id, ticket);
@@ -41,7 +41,7 @@ module.exports = async (client, message) => {
     }
 };
 
-const confirmTicket = async (message) => {
+const confirmTicket = async (message, guild) => {
     const emojis = ['❌', '✅'];
     const [x, check] = emojis;
 
@@ -49,7 +49,7 @@ const confirmTicket = async (message) => {
         color: 0x2caefe,
         author: {
             name: 'Ticket Confirmation',
-            icon_url: message.guild.iconURL({ dynamic: true }),
+            icon_url: guild.iconURL({ dynamic: true }),
         },
         title: 'Please confirm the opening of a new ticket',
         description: `__**If you are trying to get help with school work please read the #welcome channel and cancel this ticket.**__\n\n`,
@@ -71,7 +71,7 @@ const confirmTicket = async (message) => {
         ],
         timestamp: new Date(),
         footer: {
-            text: message.guild.name,
+            text: guild.name,
         },
     };
 
@@ -99,8 +99,8 @@ const confirmTicket = async (message) => {
                     description: 'I have cancelled your ticket!',
                     timestamp: new Date(),
                     footer: {
-                        text: message.guild.name,
-                        icon_url: message.guild.iconURL({ dynamic: true }),
+                        text: guild.name,
+                        icon_url: guild.iconURL({ dynamic: true }),
                     },
                 },
             });
@@ -123,8 +123,8 @@ const confirmTicket = async (message) => {
                     ],
                     timestamp: new Date(),
                     footer: {
-                        text: message.guild.name,
-                        icon_url: message.guild.iconURL({ dynamic: true }),
+                        text: guild.name,
+                        icon_url: guild.iconURL({ dynamic: true }),
                     },
                 },
             });
@@ -140,8 +140,8 @@ const confirmTicket = async (message) => {
                     'Your request has timed out and the ticket has been cancelled. Please try again!',
                 timestamp: new Date(),
                 footer: {
-                    text: message.guild.name,
-                    icon_url: message.guild.iconURL({ dynamic: true }),
+                    text: guild.name,
+                    icon_url: guild.iconURL({ dynamic: true }),
                 },
             },
         });
