@@ -4,38 +4,12 @@ module.exports = {
     guildOnly: true,
     category: 'admin',
     async execute(message) {
-        const guild = message.guild;
-        const emojis = ['❌', '✅'];
-        const [x, check] = emojis;
-
-        const embed = {
-            color: 0x2caefe,
-            author: {
-                name: 'Ticket Confirmation',
-                icon_url: guild.iconURL({ dynamic: true }),
-            },
-            title: 'Please confirm the opening of a new ticket',
-            description:
-                `__**If you are trying to get help with school work please read the #welcome channel and cancel this ticket.**__\n\n` +
-                `*Tickets are only for contacting staff about issues or questions concerning ${guild.name}.*\n`,
-            fields: [
-                {
-                    name: 'Cancel',
-                    value: `${x} to cancel ticket`,
-                    inline: true,
-                },
-                {
-                    name: 'Confirm',
-                    value: `${check} to contact staff`,
-                    inline: true,
-                },
-            ],
-            timestamp: new Date(),
-            footer: {
-                text: guild.name,
-            },
-        };
-
-        await message.channel.send('', { embed: embed });
+        const client = message.client;
+        await message.channel.send(
+            'Hey! @ everyone I see you guys are not verified yet!\n\n' +
+                `Please go check out <#${client.ids.channels.rules}> and react with :white_check_mark: to get access to the server!\n\n` +
+                `If you have any issues please tag <@& ${client.ids.roles.staff}>\n\n` +
+                `Once you Verify you should check out <#${client.ids.channels.roleSelection}>!`
+        );
     },
 };

@@ -11,16 +11,19 @@ module.exports = async (client) => {
 
     console.log('Ready!');
 
-    //Auto send verify message everyday at noon
+    //Auto send verify message everyday at noon and midnight
     try {
-        const job = new CronJob('0 5,17 * * *', async () => {
+        const job = new CronJob('0 6,18 * * *', async () => {
             const channel = client.guilds.cache
                 .get(client.guildId)
                 .channels.cache.get(client.ids.channels.help);
 
             await channel.bulkDelete(99, true);
             await channel.send(
-                'Hey! @everyone I see you guys are not verified yet, please go check out <#725171177235939379> Then all you have to do it react with the :white_check_mark: to get access to the server! If you have any issues please tag <@&737374602719920191> 🧙‍♂️ . :slight_smile: Once you Verify you should check out <#740316361032728615> Thank you!'
+                'Hey! @everyone I see you guys are not verified yet!\n\n' +
+                    `Please go check out <#${client.ids.channels.rules}> and react with :white_check_mark: to get access to the server!\n\n` +
+                    `If you have any issues please tag <@&${client.ids.roles.staff}>\n\n` +
+                    `Once you Verify you should check out <#${client.ids.channels.roleSelection}>!`
             );
         });
         job.start();
