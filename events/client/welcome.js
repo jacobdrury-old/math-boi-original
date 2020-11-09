@@ -24,7 +24,7 @@ module.exports = async (client, member) => {
                     },
                     {
                         name: 'Step 2',
-                        value: `Post your question in the corresponding channel and use the \`${client.prefix}tutor\` command`,
+                        value: `Post your question in the corresponding channel and use the\n\`${client.prefix}tutor\` command`,
                     },
                 ],
                 timestamp: new Date(),
