@@ -64,10 +64,6 @@ const confirmTicket = async (message, guild) => {
                 value: `${check} to contact staff`,
                 inline: true,
             },
-            {
-                name: 'Your Message',
-                value: message.content,
-            },
         ],
         timestamp: new Date(),
         footer: {
@@ -113,12 +109,6 @@ const confirmTicket = async (message, guild) => {
                     title: 'Ticket Opened',
                     description:
                         'I have submitted your ticket! Please wait while one of our staff members gets back to you.',
-                    fields: [
-                        {
-                            name: 'Your Message',
-                            value: message.content,
-                        },
-                    ],
                     timestamp: new Date(),
                     footer: {
                         text: guild.name,
