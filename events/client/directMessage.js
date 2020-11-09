@@ -52,7 +52,9 @@ const confirmTicket = async (message, guild) => {
             icon_url: guild.iconURL({ dynamic: true }),
         },
         title: 'Please confirm the opening of a new ticket',
-        description: `__**If you are trying to get help with school work please read the #welcome channel and cancel this ticket.**__\n\n`,
+        description:
+            `__**If you are trying to get help with school work please read the #welcome channel and cancel this ticket.**__\n\n` +
+            `*Tickets are only for contacting staff about issues or questions concerning ${guild.name}.*\n`,
         fields: [
             {
                 name: 'Cancel',
