@@ -163,7 +163,9 @@ class ModMail extends Ticket {
                     return resolve(true);
                 }
 
-                await this.dmChannel.send('', {
+                await m.delete();
+
+                const embed = {
                     embed: {
                         color: 0x2caefe,
                         author: {
@@ -178,7 +180,11 @@ class ModMail extends Ticket {
                             text: `${getRank(m.member)}`,
                         },
                     },
-                });
+                };
+
+                await this.channel.send('', embed);
+
+                await this.dmChannel.send('', embed);
 
                 const files = getAttachmentLinks(m.attachments);
 
