@@ -12,7 +12,7 @@ module.exports = async (client, message) => {
 
     const guild = client.guilds.cache.get(client.guildId);
 
-    if (!confirmTicket(message, guild)) return;
+    if (!(await confirmTicket(message, guild))) return;
 
     const ticket = new ModMail(client, message, guild);
     client.openedTickets.set(message.author.id, ticket);
