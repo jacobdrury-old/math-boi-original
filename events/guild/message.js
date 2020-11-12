@@ -18,6 +18,7 @@ module.exports = async (client, message) => {
 
     if (
         message.channel.id === client.ids.channels.bumping &&
+        message.embeds.length &&
         message.embeds[0].description.indexOf('Bump done') > -1
     )
         return client.emit('bumpMessage', message);
