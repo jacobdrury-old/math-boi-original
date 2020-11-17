@@ -1,18 +1,15 @@
-const { getReactionMessage } = require('../../modules/utils.js');
+const {
+    getReactionMessage,
+    isReactionRoleChannel,
+} = require('../../modules/utils.js');
 const { setToRole } = require('../../modules/UserHelpers.js');
 const { isUserTooYoung } = require('../../modules/UserHelpers.js');
 
 module.exports = async (client, messageReaction, user) => {
     try {
         if (user.bot) return;
-        if (
-            messageReaction.message.channel.id !== client.ids.channels.rules &&
-            messageReaction.message.channel.id !==
-                client.ids.channels.roleSelection &&
-            messageReaction.message.channel.id !==
-                client.ids.channels.tutorRoleSelection
-        )
-            return;
+
+        if (!isReactionRoleChannel(client, messageReaction)) return;
 
         const reactionMessage = await getReactionMessage(
             client,
@@ -40,12 +37,21 @@ const roleAssignment = async (
     user
 ) => {
     const roleId = reactionMessage.reactions.get(messageReaction.emoji.name);
+
     if (!roleId) return;
+
     const member = await client.guilds.cache
         .get(client.guildId)
         .members.fetch(user.id);
 
+    if (
+        reactionMessage.blockedUsers &&
+        reactionMessage.blockedUsers.blocked.includes(member.id)
+    )
+        return;
+
     let userIsTooYoung = false;
+
     if (roleId === client.ids.roles.middleSchoolRole) {
         userIsTooYoung = await isUserTooYoung(member);
     }

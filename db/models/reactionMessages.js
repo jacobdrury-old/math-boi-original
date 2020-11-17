@@ -11,6 +11,10 @@ const reactionMessageSchema = mongoose.Schema({
         type: Map,
         of: String,
     },
+    blockedUsers: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'BlockList',
+    },
 });
 
 module.exports = mongoose.model('ReactionMessage', reactionMessageSchema);

@@ -1,17 +1,13 @@
-const { getReactionMessage } = require('../../modules/utils.js');
+const {
+    getReactionMessage,
+    isReactionRoleChannel,
+} = require('../../modules/utils.js');
 const { removeRole } = require('../../modules/UserHelpers.js');
 
 module.exports = async (client, messageReaction, user) => {
     if (user.bot) return;
     try {
-        if (
-            messageReaction.message.channel.id !== client.ids.channels.rules &&
-            messageReaction.message.channel.id !==
-                client.ids.channels.roleSelection &&
-            messageReaction.message.channel.id !==
-                client.ids.channels.tutorRoleSelection
-        )
-            return;
+        if (!isReactionRoleChannel(client, messageReaction)) return;
 
         const reactionMessage = await getReactionMessage(
             client,
@@ -28,6 +24,8 @@ module.exports = async (client, messageReaction, user) => {
         const member = await client.guilds.cache
             .get(client.guildId)
             .members.fetch(user.id);
+
+        if (reactionMessage.blockedUsers.blocked.includes(member.id)) return;
 
         return removeRole(member, roleId, null, false);
     } catch (ex) {
