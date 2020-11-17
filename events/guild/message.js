@@ -16,6 +16,13 @@ module.exports = async (client, message) => {
         return client.emit('directMessage', message);
     }
 
+    if (
+        message.channel.id === client.ids.channels.bumping &&
+        message.embeds.length &&
+        message.embeds[0].description.indexOf('Bump done') > -1
+    )
+        return client.emit('bumpMessage', message);
+
     const prefix = client.prefix;
 
     if (message.channel.parentID === client.ids.categories.logs) {

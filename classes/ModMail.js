@@ -137,7 +137,7 @@ class ModMail extends Ticket {
             this.dmCollector.on('collect', async (m) => {
                 await this.channel.send('', {
                     embed: {
-                        color: 0x2caefe,
+                        color: 0xff5e5e,
                         author: {
                             name: this.user.tag,
                             icon_url: this.user.displayAvatarURL({
@@ -163,7 +163,9 @@ class ModMail extends Ticket {
                     return resolve(true);
                 }
 
-                await this.dmChannel.send('', {
+                await m.delete();
+
+                const embed = {
                     embed: {
                         color: 0x2caefe,
                         author: {
@@ -178,7 +180,11 @@ class ModMail extends Ticket {
                             text: `${getRank(m.member)}`,
                         },
                     },
-                });
+                };
+
+                await this.channel.send('', embed);
+
+                await this.dmChannel.send('', embed);
 
                 const files = getAttachmentLinks(m.attachments);
 
