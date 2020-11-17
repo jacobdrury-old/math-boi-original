@@ -13,6 +13,10 @@ module.exports = {
                 (id) => `${blockedTutors.blocked.indexOf(id) + 1}) <@${id}>`
             );
 
+            if (blocked.length === 0) {
+                blocked.push('There are no blocked tutors!');
+            }
+
             await message.channel.send('', {
                 embed: {
                     title: 'Blocked Tutors',

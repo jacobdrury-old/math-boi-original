@@ -61,11 +61,15 @@ exports.isReactionRoleChannel = (client, messageReaction) => {
 };
 
 exports.getBlockedTutors = async () => {
-    const blockedTutors = await BlockList.findOne({ _id: 'Blocked Tutors' });
-    if (blockedTutors) return blockedTutors;
+    return await this.getBlockedRole('Blocked Tutors');
+};
+
+exports.getBlockedRole = async (role) => {
+    const blockedRole = await BlockList.findOne({ _id: role });
+    if (blockedRole) return blockedRole;
 
     const blockList = new BlockList({
-        _id: 'Blocked Tutors',
+        _id: role,
         blocked: [],
     });
 
