@@ -25,10 +25,15 @@ module.exports = async (client, messageReaction, user) => {
             .get(client.guildId)
             .members.fetch(user.id);
 
-        if (reactionMessage.blockedUsers.blocked.includes(member.id)) return;
+        if (
+            reactionMessage.blockedUsers &&
+            reactionMessage.blockedUsers.blocked.includes(member.id)
+        )
+            return;
 
         return removeRole(member, roleId, null, false);
     } catch (ex) {
+        console.error(ex);
         return;
     }
 };
