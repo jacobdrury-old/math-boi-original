@@ -21,7 +21,7 @@ module.exports = {
 
 const lock = async (message, channels) => {
     const announcementC = message.guild.channels.cache.get(
-        client.ids.channels.announcement
+        message.client.ids.channels.announcement
     );
 
     channels.forEach((channel) => {
