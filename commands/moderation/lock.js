@@ -1,4 +1,4 @@
-const lockMsgIds = [];
+const lockMsgIds = new Map();
 
 module.exports = {
     name: 'lock',
@@ -37,7 +37,7 @@ const lock = async (message, channels) => {
                     .send(
                         `Channel locked please check ${announcementC} for more info`
                     )
-                    .then((msg) => lockMsgIds.push(msg.id))
+                    .then((msg) => lockMsgIds.set(channel.id, msg.id))
                     .catch(console.error);
             })
             .catch(console.error);
@@ -65,16 +65,15 @@ const unlock = async (message, channels) => {
             })
             .then(() => {
                 channel.messages
-                    .fetch(lockMsgIds[0])
+                    .fetch(lockMsgIds.get(channel.id))
                     .then((msg) => msg.delete())
-                    .then(() => lockMsgIds.shift())
                     .catch(console.error);
             })
             .catch(console.error);
     });
 
     const announcementC = message.guild.channels.cache.get(
-        client.ids.channels.announcement
+        message.client.ids.channels.announcement
     );
     await announcementC.send('', {
         embed: {
@@ -83,6 +82,8 @@ const unlock = async (message, channels) => {
             description: `The server has been unlocked! Thank you for your patience!`,
         },
     });
+
+    lockMsgIds.clear();
 
     return message.channel.send('All channels have been unlocked 🔓');
 };
