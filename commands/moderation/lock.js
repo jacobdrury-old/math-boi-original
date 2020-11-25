@@ -65,7 +65,7 @@ const unlock = async (message, channels) => {
             })
             .then(() => {
                 channel.messages
-                    .fetch(lockMsgIds.first())
+                    .fetch(lockMsgIds[0])
                     .then((msg) => msg.delete())
                     .then(() => lockMsgIds.shift())
                     .catch(console.error);
