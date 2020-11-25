@@ -1,3 +1,5 @@
+const lockMsgIds = [];
+
 module.exports = {
     name: 'lock',
     description: 'Locks/Unlocks all channels in the server',
@@ -18,6 +20,10 @@ module.exports = {
 };
 
 const lock = async (message, channels) => {
+    const announcementC = message.guild.channels.cache.get(
+        client.ids.channels.announcement
+    );
+
     channels.forEach((channel) => {
         channel
             .updateOverwrite(message.guild.id, {
@@ -26,12 +32,17 @@ const lock = async (message, channels) => {
             .then(() => {
                 channel.setName(`${channel.name}🔒`);
             })
-            .catch((err) => console.error(err));
+            .then(() => {
+                channel
+                    .send(
+                        `Channel locked please check ${announcementC} for more info`
+                    )
+                    .then((msg) => lockMsgIds.push(msg.id))
+                    .catch(console.error);
+            })
+            .catch(console.error);
     });
 
-    const announcementC = message.guild.channels.cache.get(
-        client.ids.channels.announcement
-    );
     await announcementC.send('', {
         embed: {
             color: 0xff2c02,
@@ -52,7 +63,14 @@ const unlock = async (message, channels) => {
             .then(() => {
                 channel.setName(channel.name.replace('🔒', ''));
             })
-            .catch((err) => console.error(err));
+            .then(() => {
+                channel.messages
+                    .fetch(lockMsgIds.first())
+                    .then((msg) => msg.delete())
+                    .then(() => lockMsgIds.shift())
+                    .catch(console.error);
+            })
+            .catch(console.error);
     });
 
     const announcementC = message.guild.channels.cache.get(
