@@ -35,7 +35,9 @@ const lock = async (message, channels) => {
             .then(() => {
                 channel
                     .send(
-                        `Channel locked please check ${announcementC} for more info`
+                        `Channel locked please check ${
+                            announcementC || 'the announcements'
+                        } for more info`
                     )
                     .then((msg) => lockMsgIds.set(channel.id, msg.id))
                     .catch(console.error);
@@ -43,13 +45,15 @@ const lock = async (message, channels) => {
             .catch(console.error);
     });
 
-    await announcementC.send('', {
-        embed: {
-            color: 0xff2c02,
-            title: '🔒 Server Locked 🔒',
-            description: `The server has been locked by ${message.author}\nPlease be patient while our team resolves the issue!`,
-        },
-    });
+    if (announcementC) {
+        await announcementC.send('', {
+            embed: {
+                color: 0xff2c02,
+                title: '🔒 Server Locked 🔒',
+                description: `The server has been locked by ${message.author}\nPlease be patient while our team resolves the issue!`,
+            },
+        });
+    }
 
     return message.channel.send('All channels have been locked 🔒');
 };
@@ -75,13 +79,16 @@ const unlock = async (message, channels) => {
     const announcementC = message.guild.channels.cache.get(
         message.client.ids.channels.announcement
     );
-    await announcementC.send('', {
-        embed: {
-            color: 0x00f763,
-            title: '🔓 Server Unlocked 🔓',
-            description: `The server has been unlocked! Thank you for your patience!`,
-        },
-    });
+
+    if (announcementC) {
+        await announcementC.send('', {
+            embed: {
+                color: 0x00f763,
+                title: '🔓 Server Unlocked 🔓',
+                description: `The server has been unlocked! Thank you for your patience!`,
+            },
+        });
+    }
 
     lockMsgIds.clear();
 
