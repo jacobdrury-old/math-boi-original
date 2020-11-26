@@ -1,6 +1,8 @@
 // const { WebhookClient } = require('discord.js');
 // const { logEmbed } = require('../../modules/embeds.js');
 // const { getUserLogChannel } = require('../../modules/utils.js');
+const User = require('../../db/models/users');
+
 module.exports = async (client, member) => {
     try {
         const guild = member.guild;
@@ -19,6 +21,17 @@ module.exports = async (client, member) => {
             },
         });
     } catch (err) {}
+
+    const user = new User({
+        guildId: member.guild.id,
+        discordID: member.id,
+        username: member.user.username,
+        discriminator: member.user.discriminator,
+        tag: member.tag,
+        nickname: member.nickname,
+    });
+
+    user.save();
 
     // const nickname = member.displayName;
     // const regex = /^[a-zA-Z0-9?{}\.[\]_\-!@#$\^&*|']*$/;
