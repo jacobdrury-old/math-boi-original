@@ -35,14 +35,16 @@ const lock = async (message, channels) => {
                 channel.setName(`${channel.name}🔒`);
             })
             .then(() => {
-                channel
-                    .send(
-                        `🔒 Channel locked please check ${
-                            announcementC || 'the announcements'
-                        } for more info 🔒`
-                    )
-                    .then((msg) => lockMsgIds.set(channel.id, `${msg.id}`))
-                    .catch(console.error);
+                if (channel.type != 'voice') {
+                    channel
+                        .send(
+                            `🔒 Channel locked please check ${
+                                announcementC || 'the announcements'
+                            } for more info 🔒`
+                        )
+                        .then((msg) => lockMsgIds.set(channel.id, `${msg.id}`))
+                        .catch(console.error);
+                }
             })
             .catch(console.error);
     }
@@ -70,10 +72,12 @@ const unlock = async (message, channels) => {
                 channel.setName(channel.name.replace('🔒', ''));
             })
             .then(() => {
-                channel.messages
-                    .fetch(lockMsgIds.get(channel.id))
-                    .then((msg) => msg.delete())
-                    .catch(console.error);
+                if (channel.type != 'voice') {
+                    channel.messages
+                        .fetch(lockMsgIds.get(channel.id))
+                        .then((msg) => msg.delete())
+                        .catch(console.error);
+                }
             })
             .catch(console.error);
     }
