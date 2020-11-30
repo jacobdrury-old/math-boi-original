@@ -19,7 +19,7 @@ module.exports = async (client) => {
 
             await channel.bulkDelete(99, true);
 
-            await message.channel.send('@everyone', {
+            await channel.send('@everyone', {
                 embed: {
                     color: 0x4e5181,
                     title: `**Welcome to ${guild.name}!**`,
