@@ -6,23 +6,28 @@ module.exports = {
     guildOnly: true,
     category: 'admin',
     async execute(message) {
-        const guildMembers = await message.guild.members.fetch();
-        const members = guildMembers.filter((member) => !member.user.bot);
+        const guild = message.guild;
 
-        for (let [id, member] of members) {
-            const user = new User({
-                _id: mongoose.Types.ObjectId(),
-                guildId: member.guild.id,
-                discordID: member.id,
-                username: member.user.username,
-                discriminator: member.user.discriminator,
-                tag: member.tag,
-                nickname: member.nickname,
-            });
+        const client = message.client;
 
-            user.save();
-        }
+        const channel = message.channel;
 
-        await message.channel.send('Done');
+        await channel.send('@everyone', {
+            embed: {
+                color: 0x4e5181,
+                title: `**Welcome to ${guild.name}!**`,
+                description:
+                    'I see you guys are not verified yet!\n\n' +
+                    `Please go check out <#${client.ids.channels.rules}> and react with :white_check_mark: to get access to the server!\n\n` +
+                    `If you have any issues please tag <@&${client.ids.roles.staff}>\n\n` +
+                    `Once you Verify you should check out <#${client.ids.channels.roleSelection}>!`,
+                image: {
+                    url:
+                        'https://cdn.discordapp.com/attachments/731959466102226965/776323932890071061/banner_welcome1.png',
+                },
+            },
+        });
+
+        await message.delete();
     },
 };

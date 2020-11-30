@@ -3,8 +3,8 @@ const ReactionMessage = require('../../db/models/reactionMessages.js');
 const { MessageEmbed } = require('discord.js');
 const { getRoles } = require('../../modules/utils.js');
 module.exports = {
-    name: 'linkOther',
-    description: `Sends an embed for the reaction roles for the other roles`,
+    name: 'linkPing',
+    description: `Sends an embed for the reaction roles for the ping roles`,
     usage: `use in channel you want the message sent in`,
     guildOnly: true,
     ownerOnly: true,
@@ -14,10 +14,10 @@ module.exports = {
 
         if (isNaN(rawMessageId)) return;
 
-        const otherMessage =
+        const pingMessage =
             (await message.channel.messages.fetch(rawMessageId)) || null;
 
-        if (!otherMessage)
+        if (!pingMessage)
             return message.reply(
                 'You must use this command in the same channel as the targeted message'
             );
@@ -27,20 +27,18 @@ module.exports = {
         if (!roles) return message.reply("Cannot find 'Roles' in the database");
 
         const emojis = new Map();
-        emojis.set('🧮', roles.accounting.Id);
-        emojis.set('🤓', roles.english.Id);
-        emojis.set('🥖', roles.french.Id);
-        emojis.set('🌮', roles.spanish.Id);
-        emojis.set('🗻', roles.geography.Id);
-        emojis.set('🏰', roles.history.Id);
+        emojis.set('📣', roles.announcementPing.Id);
+        emojis.set('📍', roles.eventsPing.Id);
+        emojis.set('🎉', roles.giveaway.Id);
+        emojis.set('🏐', roles.bumpE.Id);
 
-        emojis.forEach(async (value, emoji) => await otherMessage.react(emoji));
+        emojis.forEach(async (value, emoji) => await pingMessage.react(emoji));
 
         await message.delete();
 
         const reactionMessage = new ReactionMessage({
             _id: mongoose.Types.ObjectId(),
-            messageId: otherMessage.id,
+            messageId: pingMessage.id,
             reactions: {},
         });
 
