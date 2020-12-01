@@ -41,6 +41,10 @@ module.exports = async (client, message) => {
               .members.fetch(message.author.id)
         : message.member);
 
+    if (client.ids.subjectCategories.includes(message.channel.parentID)) {
+        client.emit('subjectChannel', message, member);
+    }
+
     const isOwner = getIsOwner(member);
 
     const isAdmin = getIsAdmin(client, member) || getIsHeadMod(client, member);

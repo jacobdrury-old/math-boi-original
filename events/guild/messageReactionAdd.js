@@ -61,7 +61,7 @@ const roleAssignment = async (
     const role = await setToRole(member, roleId, null, false);
 
     if (role.id === client.ids.roles.verified) {
-        client.emit('welcome', member);
+        client.emit('verified', member);
     }
 
     return role;
