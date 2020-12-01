@@ -36,7 +36,7 @@ module.exports = {
 
         const index = tutors.indexOf(tutor) + 1;
 
-        const rank = `${index}${postfix[index > 3 ? 'default' : index]}`;
+        const rank = `${index}${postfix[index] || postfix['default']}`;
 
         await message.channel.send('', {
             embed: {
