@@ -64,7 +64,10 @@ const boosterCheck = async (client, oldMember, newMember) => {
 };
 
 const tutorAddCheck = async (client, oldMember, newMember) => {
-    const tutorOptions = client.ids.roles.tutor.options;
+    const tutorOptions = [
+        client.ids.roles.tutor.id,
+        ...client.ids.roles.tutor.options,
+    ];
 
     const oldMemberRoles = oldMember.roles.cache.keyArray();
 

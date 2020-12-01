@@ -25,6 +25,8 @@ class AgeVerification extends Ticket {
 
             const age = messages.first().content.replace(/[^.0-9]/g, '');
 
+            if (age == '') return true;
+
             const isTooYoung = age < minAge;
 
             if (isTooYoung) {

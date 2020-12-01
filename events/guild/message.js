@@ -41,7 +41,7 @@ module.exports = async (client, message) => {
               .members.fetch(message.author.id)
         : message.member);
 
-    if (!client.ids.nonSubjectCategories.includes(message.channel.parentID)) {
+    if (client.ids.subjectCategories.includes(message.channel.parentID)) {
         client.emit('subjectChannel', message, member);
     }
 
