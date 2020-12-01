@@ -19,7 +19,7 @@ module.exports = {
             verified: true,
         }).sort({ subjectMessageCount: -1 });
 
-        let member = message.author.id;
+        let member = message.member.id;
         let tag = `<@${member}>`;
 
         if (args.length == 1 && message.mentions.members.first()) {
@@ -30,7 +30,7 @@ module.exports = {
         const tutor = tutors.find((t) => t.discordID == member);
 
         if (!tutor) {
-            return await message.channel.send(`${member} is not a tutor!`);
+            return await message.channel.send(`${tag} is not a tutor!`);
         }
 
         const index = tutors.indexOf(tutor) + 1;
