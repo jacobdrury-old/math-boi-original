@@ -24,6 +24,7 @@ client.openedTickets = new Map();
     client.db = await mongoose.connect(process.env.DB_CONNECTION_STRING, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useFindAndModify: false,
     });
 
     client.guildId = process.env.GUILD_ID;

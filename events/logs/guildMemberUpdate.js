@@ -1,6 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const { getUserLogChannel } = require('../../modules/utils');
 const { setToRole, removeRole } = require('../../modules/UserHelpers');
+const User = require('../../db/models/users');
 
 module.exports = async (client, oldMember, newMember) => {
     if (!client.enableLogs) return;
@@ -8,6 +9,8 @@ module.exports = async (client, oldMember, newMember) => {
     if (await boosterCheck(client, oldMember, newMember)) return;
 
     if (await tutorAddCheck(client, oldMember, newMember)) return;
+
+    if (await verifiedCheck(client, oldMember, newMember)) return;
 
     let updated = false;
 
@@ -72,12 +75,66 @@ const tutorAddCheck = async (client, oldMember, newMember) => {
     const hasRole = tutorOptions.filter((opt) => newMemberRoles.includes(opt));
 
     if (!hadRole.length && hasRole.length) {
+        //Add Tutor role
         await setToRole(newMember, client.ids.roles.tutor.id, null, false);
+
+        await User.findOneAndUpdate(
+            {
+                guildId: newMember.guild.id,
+                discordID: newMember.id,
+                isTutor: false,
+                verified: true,
+            },
+            { isTutor: true }
+        );
+
         return true;
     } else if (hadRole.length && !hasRole.length) {
+        //Remove Tutor role
         await removeRole(newMember, client.ids.roles.tutor.id, null, false);
+
+        await User.findOneAndUpdate(
+            {
+                guildId: newMember.guild.id,
+                discordID: newMember.id,
+                isTutor: true,
+                verified: true,
+            },
+            { isTutor: false }
+        );
+
         return true;
     }
 
     return false;
+};
+
+const verifiedCheck = async (client, oldMember, newMember) => {
+    const verifiedId = client.ids.roles.verified;
+
+    const oldVerifiedRole = oldMember.roles.cache.get(verifiedId);
+
+    const newVerifiedRole = newMember.roles.cache.get(verifiedId);
+
+    if (!oldVerifiedRole && newVerifiedRole) {
+        //User Verified
+        await User.findOneAndUpdate(
+            {
+                guildId: newMember.guild.id,
+                discordID: newMember.id,
+                verified: false,
+            },
+            { verified: true }
+        );
+    } else if (oldVerifiedRole && !newVerifiedRole) {
+        //User Unverified
+        await User.findOneAndUpdate(
+            {
+                guildId: newMember.guild.id,
+                discordID: newMember.id,
+                verified: true,
+            },
+            { verified: false }
+        );
+    }
 };

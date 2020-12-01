@@ -8,16 +8,22 @@ exports.getIsOwner = (member) => member.guild.ownerID == member.id;
 exports.getIsAdmin = (client, member) => member.hasPermission('ADMINISTRATOR');
 
 exports.getIsHeadMod = (client, member) =>
-    member.roles.cache.get(client.ids.roles.headMod);
+    member.roles.cache.get(client.ids.roles.headMod) ? true : false;
 
 exports.getIsModerator = (client, member) =>
-    member.roles.cache.get(client.ids.roles.moderator);
+    member.roles.cache.get(client.ids.roles.moderator) ? true : false;
 
 exports.getIsBooster = (client, member) =>
-    member.roles.cache.get(client.ids.roles.booster);
+    member.roles.cache.get(client.ids.roles.booster) ? true : false;
 
 exports.getIsTrainee = (client, member) =>
-    member.roles.cache.get(client.ids.roles.traineeMod);
+    member.roles.cache.get(client.ids.roles.traineeMod) ? true : false;
+
+exports.getIsVerified = (client, member) =>
+    member.roles.cache.get(client.ids.roles.verified) ? true : false;
+
+exports.getIsTutor = (client, member) =>
+    member.roles.cache.get(client.ids.roles.tutor.id) ? true : false;
 
 exports.setToRole = async (member, role, adminId = null, shouldLog = true) => {
     await member.roles.add(role);

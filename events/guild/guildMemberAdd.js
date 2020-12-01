@@ -1,6 +1,7 @@
 // const { WebhookClient } = require('discord.js');
 // const { logEmbed } = require('../../modules/embeds.js');
 // const { getUserLogChannel } = require('../../modules/utils.js');
+const mongoose = require('mongoose');
 const User = require('../../db/models/users');
 
 module.exports = async (client, member) => {
@@ -23,12 +24,10 @@ module.exports = async (client, member) => {
     } catch (err) {}
 
     const user = new User({
+        _id: mongoose.Types.ObjectId(),
         guildId: member.guild.id,
         discordID: member.id,
-        username: member.user.username,
-        discriminator: member.user.discriminator,
-        tag: member.tag,
-        nickname: member.nickname,
+        username: `${member.user.username}#${member.user.discriminator}`,
     });
 
     user.save();
