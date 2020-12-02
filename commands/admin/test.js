@@ -7,11 +7,17 @@ module.exports = {
     guildOnly: true,
     category: 'admin',
     async execute(message) {
-        await message.channel.send(
-            message.client.ids.nonSubjectCategories
-                .map((i) => `<#${i}>`)
-                .join('\n')
+        const channels = message.guild.channels.cache.filter(
+            (c) => c.type != 'category'
         );
+
+        for (const [id, channel] of channels) {
+            channel.updateOverwrite('739922768954392586', {
+                MENTION_EVERYONE: true,
+            });
+        }
+
+        console.log('Done');
 
         // const guildMembers = await message.guild.members.fetch();
         // const members = guildMembers.filter((member) => !member.user.bot);

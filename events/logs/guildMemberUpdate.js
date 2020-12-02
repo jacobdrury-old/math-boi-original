@@ -77,12 +77,6 @@ const tutorAddCheck = async (client, oldMember, newMember) => {
 
     const hasRole = tutorOptions.filter((opt) => newMemberRoles.includes(opt));
 
-    console.log('Had Role');
-    console.log(hadRole);
-
-    console.log('Has Role');
-    console.log(hasRole);
-
     if (!hadRole.length && hasRole.length) {
         //Add Tutor role
         await setToRole(newMember, client.ids.roles.tutor.id, null, false);
