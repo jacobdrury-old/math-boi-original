@@ -1,5 +1,5 @@
 module.exports = {
-    name: 'membercount',
+    name: 'members',
     description: 'Sends member count embed',
     category: 'basic',
     async execute(message) {

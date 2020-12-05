@@ -3,6 +3,7 @@ module.exports = {
     name: 'getBlockedTutors',
     aliases: ['blockedTutors'],
     description: 'Gets a list of all blocked tutors',
+    moderatorOnly: true,
     guildOnly: true,
     category: 'moderation',
     async execute(message) {

@@ -1,7 +1,7 @@
 const User = require('../../db/models/users');
 
 module.exports = {
-    name: 'toptutor',
+    name: 'topTutor',
     description: 'Sends the top 20 tutor leader board',
     guildOnly: true,
     category: 'basic',
