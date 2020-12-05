@@ -7,35 +7,20 @@ module.exports = {
     guildOnly: true,
     category: 'admin',
     async execute(message) {
-        const channels = message.guild.channels.cache.filter(
-            (c) => c.type != 'category'
-        );
-
-        for (const [id, channel] of channels) {
-            channel.updateOverwrite('739922768954392586', {
-                MENTION_EVERYONE: true,
-            });
-        }
-
-        console.log('Done');
-
-        // const guildMembers = await message.guild.members.fetch();
-        // const members = guildMembers.filter((member) => !member.user.bot);
-        // for (let [id, member] of members) {
-        //     const verified = getIsVerified(message.client, member);
-        //     const isTutor = getIsTutor(message.client, member);
-        //     const user = new User({
-        //         _id: mongoose.Types.ObjectId(),
-        //         guildId: member.guild.id,
-        //         discordID: member.id,
-        //         username: `${member.user.username}#${member.user.discriminator}`,
-        //         verified,
-        //         isTutor,
-        //     });
-        //     user.save();
-        // }
-        // await message.channel.send(
-        //     'Successfully synced all users to the database'
-        // );
+        await message.channel.send('', {
+            embed: {
+                color: 0x4e5181,
+                title: `**Welcome to ${message.guild.name}!**`,
+                description:
+                    `**In order to get help you must first:**\n` +
+                    `- Go and read the rules and react with a :white_check_mark:\n\n` +
+                    `- Go to the role selection channel and add the subjects you need help with!\n\n` +
+                    `- Post your question in the corresponding channel and use the \`${message.client.prefix}tutor\` command`,
+                image: {
+                    url:
+                        'https://cdn.discordapp.com/attachments/731959466102226965/776323932890071061/banner_welcome1.png',
+                },
+            },
+        });
     },
 };
