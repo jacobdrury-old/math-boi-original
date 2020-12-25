@@ -6,54 +6,51 @@ module.exports = {
     guildOnly: true,
     args: false,
     async execute(message, args) {
-        const guild = message.client.guilds.cache.get(message.client.guildId);
-
-        if (!guild) return await message.channel.send('Cannot find guild');
-
-        let memberId = '';
-        const mention = args[0];
-        if (mention && mention.startsWith('<@') && mention.endsWith('>')) {
-            const id = mention
-                .replace('<@', '')
-                .replace('!', '')
-                .replace('>', '');
-            if (!isNaN(id) && id.length == 18) {
-                memberId = id;
-            }
-        }
-
-        if (memberId === '')
-            return await message.channel.send('Please pass a valid user');
-
-        const rulesChannel =
-            (await guild.channels.cache.get(
-                message.client.ids.channels.rules
-            )) || null;
-
-        if (!rulesChannel) {
-            return message.reply('I cannot find the rules channel');
-        }
-
-        const rulesMessage =
-            (await rulesChannel.messages.fetch(
-                message.client.ids.messages.rules
-            )) || null;
-
-        if (!rulesMessage)
-            return message.reply(
-                'You must use this command in the same channel as the targeted message'
+        try {
+            const guild = message.client.guilds.cache.get(
+                message.client.guildId
             );
 
-        const reaction = rulesMessage.reactions.cache.first();
+            if (!guild) return await message.channel.send('Cannot find guild');
 
-        const allUsers = await getAllUsers(reaction);
-        const user = allUsers.includes(memberId);
+            let member = message.mentions.members.first();
 
-        return await message.channel.send(
-            `<@${memberId}> ${
-                user ? 'has' : 'has not'
-            } reacted to the rules message`
-        );
+            let memberId = member.user.id;
+
+            if (memberId === '')
+                return await message.channel.send('Please pass a valid user');
+
+            const rulesChannel =
+                (await guild.channels.cache.get(
+                    message.client.ids.channels.rules
+                )) || null;
+
+            if (!rulesChannel) {
+                return message.reply('I cannot find the rules channel');
+            }
+
+            const rulesMessage =
+                (await rulesChannel.messages.fetch(
+                    message.client.ids.messages.rules
+                )) || null;
+
+            if (!rulesMessage)
+                return message.reply('Could not find rules message');
+
+            const reaction = rulesMessage.reactions.cache.first();
+
+            const allUsers = await getAllUsers(reaction);
+            const user = allUsers.includes(memberId);
+
+            return await message.channel.send(
+                `<@${memberId}> ${
+                    user ? 'has' : 'has not'
+                } reacted to the rules message`
+            );
+        } catch (err) {
+            await message.channel.send(err.message);
+            console.error(err);
+        }
     },
 };
 
