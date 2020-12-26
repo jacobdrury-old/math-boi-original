@@ -93,7 +93,7 @@ const confirmTicket = async (message, guild) => {
             await embedMessage.edit('', {
                 embed: {
                     color: 0xf0131e,
-                    title: 'Canceled',
+                    title: 'Cancelled',
                     description: 'I have cancelled your ticket!',
                     timestamp: new Date(),
                     footer: {
