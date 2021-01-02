@@ -13,7 +13,7 @@ module.exports = async (client) => {
 
     //Auto send verify message everyday at noon and midnight
     try {
-        const job = new CronJob('0 6,18 * * *', async () => {
+        const autoHelpDesk = new CronJob('0 6,18 * * *', async () => {
             const guild = client.guilds.cache.get(client.guildId);
             const channel = guild.channels.cache.get(client.ids.channels.help);
 
@@ -35,11 +35,16 @@ module.exports = async (client) => {
                 },
             });
         });
-        job.start();
+        autoHelpDesk.start();
+
+        const clearTutorStats = new CronJob('0 0 1 * *', async () => {
+            const guild = client.guilds.cache.get(client.guildId);
+            const channel = guild.channels.cache.get(client.ids.channels.help);
+        });
     } catch (err) {
         const webhookClient = await getModLogChannel();
         if (webhookClient) {
-            await webhookClient.send(`${err}`);
+            await webhookClient.send(`${err.message}`);
         }
         console.error(err);
     }
