@@ -1,43 +1,52 @@
-const { getUserLogChannel } = require('../../modules/utils');
+const { getJoinLeaveLogChannel } = require('../../modules/utils');
 
 module.exports = async (client, member) => {
     if (!client.enableLogs) return;
-    const webhookClient = await getUserLogChannel();
+    const webhookClient = await getJoinLeaveLogChannel();
     if (!webhookClient) return;
 
-    await webhookClient.send({
-        embeds: [
-            {
-                color: 0x00f763,
-                author: {
-                    name: `${member.user.username}#${member.user.discriminator}`,
-                    icon_url: member.user.displayAvatarURL({
-                        dynamic: true,
-                    }),
-                },
-                thumbnail: {
-                    url: member.user.displayAvatarURL({
-                        dynamic: true,
-                    }),
-                },
-                description: `**:inbox_tray: ${member} joined the server**`,
-                timestamp: new Date(),
-                footer: {
-                    text: `User ID: ${member.id}`,
-                },
-                fields: [
-                    {
-                        name: '**Account Creation**',
-                        value: timeDifference(
-                            Date.now(),
-                            member.user.createdAt
-                        ),
-                        inline: false,
-                    },
-                ],
-            },
-        ],
-    });
+    await webhookClient.send(
+        `:inbox_tray: ${member.user.username}#${
+            member.user.discriminator
+        } (${member}) has joined the server! Account created: ${timeDifference(
+            Date.now(),
+            member.user.createdAt
+        )}`
+    );
+
+    // await webhookClient.send({
+    //     embeds: [
+    //         {
+    //             color: 0x00f763,
+    //             author: {
+    //                 name: `${member.user.username}#${member.user.discriminator}`,
+    //                 icon_url: member.user.displayAvatarURL({
+    //                     dynamic: true,
+    //                 }),
+    //             },
+    //             thumbnail: {
+    //                 url: member.user.displayAvatarURL({
+    //                     dynamic: true,
+    //                 }),
+    //             },
+    //             description: `**:inbox_tray: ${member} joined the server**`,
+    //             timestamp: new Date(),
+    //             footer: {
+    //                 text: `User ID: ${member.id}`,
+    //             },
+    //             fields: [
+    //                 {
+    //                     name: '**Account Creation**',
+    //                     value: timeDifference(
+    //                         Date.now(),
+    //                         member.user.createdAt
+    //                     ),
+    //                     inline: false,
+    //                 },
+    //             ],
+    //         },
+    //     ],
+    // });
 };
 
 const timeDifference = (current, previous) => {

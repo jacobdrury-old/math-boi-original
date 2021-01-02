@@ -12,6 +12,10 @@ exports.getUserLogChannel = async () => {
     return await this.getLogChannel('UserLogChannel');
 };
 
+exports.getJoinLeaveLogChannel = async () => {
+    return await this.getLogChannel('JoinLeaveLogChannel');
+};
+
 exports.getModLogChannel = async () => {
     return await this.getLogChannel('ModLogChannel');
 };
