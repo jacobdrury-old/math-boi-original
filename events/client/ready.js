@@ -4,7 +4,7 @@ module.exports = async (client) => {
     await client.user.setPresence({
         status: 'online',
         activity: {
-            name: 'DM for Staff help!',
+            name: 'DM to contact Staff!',
             type: 'PLAYING',
         },
     });
