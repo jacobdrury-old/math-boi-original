@@ -2,7 +2,6 @@ const punishments = ['WARN', 'MUTE', 'UNMUTE'];
 const inviteLinkMsg = 'Posted an invite';
 
 module.exports = async (client, message) => {
-    //console.log(message.embeds[0]);
     const logEmbed = message.embeds[0];
     if (
         !logEmbed ||
