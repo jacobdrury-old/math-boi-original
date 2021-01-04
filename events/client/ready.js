@@ -49,9 +49,15 @@ module.exports = async (client) => {
         autoClearTutorStats.start();
 
         const autoTopTutor = new CronJob('0 11 * * *', async () => {
+            const guild = client.guilds.cache.get(client.guildId);
+
+            const announcementC = guild.channels.cache.get(
+                client.ids.channels.staffCommands
+            );
+
             const topTutorRole = client.ids.roles.tutor.top;
 
-            const tutor = (await topTutor(null, message.channel))[0];
+            const tutor = (await topTutor(null, announcementC))[0];
 
             const guild = client.guilds.cache.get(client.guildId);
 

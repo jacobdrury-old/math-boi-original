@@ -7,7 +7,6 @@ module.exports = async (client, member) => {
         {
             deleted: false,
             guildId: client.guildId,
-            verified: true,
             discordID: member.user.id,
         },
         {
