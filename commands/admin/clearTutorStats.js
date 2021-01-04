@@ -1,5 +1,5 @@
 const User = require('../../db/models/users');
-const topTutor = require('../basic/topTutor').execute;
+const topTutor = require('../basic/toptutor').execute;
 
 module.exports = {
     name: 'clearTutorStats',
