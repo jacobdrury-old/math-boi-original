@@ -10,6 +10,7 @@ module.exports = async (client, message, member) => {
 
     await User.findOneAndUpdate(
         {
+            deleted: false,
             guildId: message.guild.id,
             discordID: member.id,
             isTutor: true,
