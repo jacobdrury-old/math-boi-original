@@ -83,6 +83,7 @@ const tutorAddCheck = async (client, oldMember, newMember) => {
 
         await User.findOneAndUpdate(
             {
+                deleted: false,
                 guildId: newMember.guild.id,
                 discordID: newMember.id,
                 isTutor: false,
@@ -98,6 +99,7 @@ const tutorAddCheck = async (client, oldMember, newMember) => {
 
         await User.findOneAndUpdate(
             {
+                deleted: false,
                 guildId: newMember.guild.id,
                 discordID: newMember.id,
                 isTutor: true,
@@ -123,6 +125,7 @@ const verifiedCheck = async (client, oldMember, newMember) => {
         //User Verified
         await User.findOneAndUpdate(
             {
+                deleted: false,
                 guildId: newMember.guild.id,
                 discordID: newMember.id,
                 verified: false,
@@ -133,6 +136,7 @@ const verifiedCheck = async (client, oldMember, newMember) => {
         //User Unverified
         await User.findOneAndUpdate(
             {
+                deleted: false,
                 guildId: newMember.guild.id,
                 discordID: newMember.id,
                 verified: true,

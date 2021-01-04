@@ -15,6 +15,7 @@ module.exports = {
     category: 'basic',
     async execute(message, args) {
         const tutors = await User.find({
+            deleted: false,
             guildId: message.guild.id,
             isTutor: true,
             verified: true,

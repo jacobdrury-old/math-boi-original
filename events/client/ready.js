@@ -1,5 +1,9 @@
 const CronJob = require('cron').CronJob;
 const { getModLogChannel } = require('../../modules/utils.js');
+const { setToRole } = require('../../modules/UserHelpers.js');
+const clearTutorStats = require('../../commands/admin/clearTutorStats').execute;
+const topTutor = require('../../commands/basic/topTutor').execute;
+
 module.exports = async (client) => {
     await client.user.setPresence({
         status: 'online',
@@ -11,9 +15,9 @@ module.exports = async (client) => {
 
     console.log('Ready!');
 
-    //Auto send verify message everyday at noon and midnight
     try {
-        const job = new CronJob('0 6,18 * * *', async () => {
+        //Auto send verify message everyday at noon and midnight
+        const autoHelpDesk = new CronJob('0 6,18 * * *', async () => {
             const guild = client.guilds.cache.get(client.guildId);
             const channel = guild.channels.cache.get(client.ids.channels.help);
 
@@ -35,11 +39,39 @@ module.exports = async (client) => {
                 },
             });
         });
-        job.start();
+        autoHelpDesk.start();
+
+        //Auto clear tutor stats on the 1st of every month
+        const autoClearTutorStats = new CronJob('0 0 1 * *', async () => {
+            await clearTutorStats(null, client);
+        });
+
+        autoClearTutorStats.start();
+
+        const autoTopTutor = new CronJob('0 11 * * *', async () => {
+            const topTutorRole = client.ids.roles.tutor.top;
+
+            const tutor = (await topTutor(null, message.channel))[0];
+
+            const guild = client.guilds.cache.get(client.guildId);
+
+            const previousTopTutors = guild.roles.cache.get(topTutorRole)
+                .members;
+
+            for (const [id, member] of previousTopTutors) {
+                await removeRole(member, topTutorRole);
+            }
+
+            const member = await guild.members.fetch(tutor.discordID);
+
+            await setToRole(member, client.ids.roles.tutor.top);
+        });
+
+        autoTopTutor.start();
     } catch (err) {
         const webhookClient = await getModLogChannel();
         if (webhookClient) {
-            await webhookClient.send(`${err}`);
+            await webhookClient.send(`${err.message}`);
         }
         console.error(err);
     }

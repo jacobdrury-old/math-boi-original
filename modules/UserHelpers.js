@@ -1,5 +1,10 @@
 const AgeVerification = require('../classes/AgeVerification');
-const { logEmbed, setToRoleEmbedForUser } = require('./embeds.js');
+const User = require('../db/models/users');
+const {
+    logEmbed,
+    setToRoleEmbedForUser,
+    removeRoleEmbedForUser,
+} = require('./embeds.js');
 const { getUserLogChannel } = require('../modules/utils.js');
 const { sleep } = require('./utils');
 

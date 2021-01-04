@@ -1,13 +1,16 @@
 const User = require('../../db/models/users');
-
 module.exports = {
     name: 'topTutor',
     description: 'Sends the top 20 tutor leader board',
     guildOnly: true,
     category: 'basic',
-    async execute(message) {
+    async execute(message, aChannel) {
+        const channel = message ? message.channel : aChannel;
+        const guild = message ? message.guild : aChannel.guild;
+
         const tutors = await User.find({
-            guildId: message.guild.id,
+            deleted: false,
+            guildId: guild.id,
             isTutor: true,
             verified: true,
         }).sort({ subjectMessageCount: -1 });
@@ -15,25 +18,30 @@ module.exports = {
         const generateIndex = (tutor) => tutors.indexOf(tutor) + 1;
 
         const content = tutors
+            .slice(0, 10)
             .map(
                 (tutor) =>
-                    `${generateIndex(tutor)}) ${
-                        tutor.username.split('#')[0]
-                    } (${tutor.subjectMessageCount} messages)`
+                    `${generateIndex(tutor)}) <@!${tutor.discordID}>: ${
+                        tutor.subjectMessageCount
+                    } messages`
             )
-            .slice(0, 10)
             .join('\n');
 
-        await message.channel.send('', {
-            embed: {
-                color: 0x2caefe,
-                title: 'Top 10 Tutors!',
-                description: content,
-                footer: {
-                    text: message.guild.name,
-                    icon_url: message.guild.iconURL({ dynamic: true }),
-                },
+        const embed = {
+            color: 0x2caefe,
+            title: 'Top 10 Tutors!',
+            description: content,
+            footer: {
+                text: guild.name,
+                icon_url: guild.iconURL({ dynamic: true }),
             },
-        });
+        };
+
+        if (message)
+            await channel.send('', {
+                embed,
+            });
+
+        return tutors;
     },
 };

@@ -1,10 +1,9 @@
-// const { WebhookClient } = require('discord.js');
-// const { logEmbed } = require('../../modules/embeds.js');
-// const { getUserLogChannel } = require('../../modules/utils.js');
 const mongoose = require('mongoose');
 const User = require('../../db/models/users');
 
 module.exports = async (client, member) => {
+    client.emit('guildMemberJoins', member);
+
     try {
         const guild = member.guild;
         await member.send('', {
@@ -31,18 +30,5 @@ module.exports = async (client, member) => {
         username: `${member.user.username}#${member.user.discriminator}`,
     });
 
-    user.save();
-
-    // const nickname = member.displayName;
-    // const regex = /^[a-zA-Z0-9?{}\.[\]_\-!@#$\^&*|']*$/;
-    // if (!nickname.replace(' ', '').match(regex)) {
-    //     await member.setNickname('Moderated Nickname', 'Invalid username');
-    //     const webhookClient = await getUserLogChannel();
-    //     if (webhookClient) {
-    //         const embed = logEmbed(member, 'Invalid Username')
-    //             .setDescription(`${member}'s nickname has been auto moderated`)
-    //             .addField('Invalid Name', nickname);
-    //         await webhookClient.send({ embeds: [embed] });
-    //     }
-    // }
+    await user.save();
 };
