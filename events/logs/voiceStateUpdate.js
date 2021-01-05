@@ -8,10 +8,10 @@ module.exports = async (client, oldState, newState) => {
     const newChannel = newState.channelID;
 
     if (
-        client.ids.categories.council === oldChannel ||
-        client.ids.categories.council === newChannel ||
-        client.ids.categories.admin === oldChannel ||
-        client.ids.categories.admin === newChannel
+        client.ids.categories.council == oldChannel ||
+        client.ids.categories.council == newChannel ||
+        client.ids.categories.admin == oldChannel ||
+        client.ids.categories.admin == newChannel
     )
         return;
 
