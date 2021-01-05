@@ -7,13 +7,7 @@ module.exports = async (client, oldState, newState) => {
     const oldChannel = oldState.channelID;
     const newChannel = newState.channelID;
 
-    if (
-        client.ids.categories.council == oldChannel ||
-        client.ids.categories.council == newChannel ||
-        client.ids.categories.admin == oldChannel ||
-        client.ids.categories.admin == newChannel
-    )
-        return;
+    if ([oldChannel, newChannel].includes(client.ids.vc.council)) return;
 
     const webhookClient = await getUserLogChannel();
     if (!webhookClient) return;
