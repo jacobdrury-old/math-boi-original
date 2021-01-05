@@ -16,9 +16,9 @@ module.exports = async (client) => {
     console.log('Ready!');
 
     try {
-        const guild = client.guilds.cache.get(client.guildId);
         //Auto send verify message everyday at noon and midnight
         const autoHelpDesk = new CronJob('0 6,18 * * *', async () => {
+            const guild = client.guilds.cache.get(client.guildId);
             const channel = guild.channels.cache.get(client.ids.channels.help);
 
             await channel.bulkDelete(99, true);
@@ -49,6 +49,7 @@ module.exports = async (client) => {
         autoClearTutorStats.start();
 
         const autoTopTutor = new CronJob('0 11 * * *', async () => {
+            const guild = client.guilds.cache.get(client.guildId);
             const announcementC = guild.channels.cache.get(
                 client.ids.channels.staffCommands
             );
@@ -56,8 +57,6 @@ module.exports = async (client) => {
             const topTutorRole = client.ids.roles.tutor.top;
 
             const tutor = (await topTutor(null, announcementC))[0];
-
-            const guild = client.guilds.cache.get(client.guildId);
 
             const previousTopTutors = guild.roles.cache.get(topTutorRole)
                 .members;
