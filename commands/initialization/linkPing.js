@@ -31,6 +31,7 @@ module.exports = {
         emojis.set('📍', roles.eventsPing.Id);
         emojis.set('🎉', roles.giveaway.Id);
         emojis.set('🏐', roles.bumpE.Id);
+        emojis.set('❓', roles.qotd.Id);
 
         emojis.forEach(async (value, emoji) => await pingMessage.react(emoji));
 
