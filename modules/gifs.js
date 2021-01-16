@@ -8,6 +8,9 @@ const banGifs = [
     'https://tenor.com/view/banned-and-you-are-banned-explosion-yoshi-hammer-gif-17493177',
     'https://tenor.com/view/ban-nope-ban-for-life-you-you-guys-gif-16051005',
     'https://tenor.com/view/ban-anime-fight-battle-punch-gif-9720768',
+    'https://tenor.com/view/hyper-ban-dragonite-ban-gif-9811324',
+    'https://tenor.com/view/bongocat-banhammer-ban-hammer-bongo-gif-18219363',
+    'https://tenor.com/view/ban-hammer-tcg-gif-11837323',
 ];
 
 const kickGifs = [
