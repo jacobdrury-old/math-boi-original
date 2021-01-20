@@ -45,7 +45,12 @@ module.exports = {
             color: 0xfdb515,
         };
 
-        const sentPoll = await message.channel.send('', { embed: embed });
+        const msg =
+            message.channel.id == message.client.ids.channels.qotd
+                ? `<@&${message.client.ids.roles.qotd}>`
+                : '';
+
+        const sentPoll = await message.channel.send(msg, { embed: embed });
         for (let i = 0; i < pollItems.length; i++) {
             await sentPoll.react(`${emojis[i]}`);
         }
