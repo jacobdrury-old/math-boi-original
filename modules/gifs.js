@@ -11,6 +11,7 @@ const banGifs = [
     'https://tenor.com/view/hyper-ban-dragonite-ban-gif-9811324',
     'https://tenor.com/view/bongocat-banhammer-ban-hammer-bongo-gif-18219363',
     'https://tenor.com/view/ban-hammer-tcg-gif-11837323',
+    'https://tenor.com/view/cat-kick-move-gif-14431990',
 ];
 
 const kickGifs = [
