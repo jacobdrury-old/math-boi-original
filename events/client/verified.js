@@ -1,11 +1,12 @@
 module.exports = async (client, member) => {
-    const generalChat = member.guild.channels.cache.get(
-        client.ids.channels.general
+    return;
+    const verifiedMessageChannel = member.guild.channels.cache.get(
+        client.ids.channels.verifiedMessages
     );
 
     const userMsgs = await userMessages(member.guild, member.id);
     if (userMsgs < 10)
-        return generalChat.send(`<@${member.id}>`, {
+        return verifiedMessageChannel.send(`<@${member.id}>`, {
             embed: {
                 color: 0x2caefe,
                 title: `**To get help:**`,
