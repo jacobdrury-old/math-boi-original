@@ -1,4 +1,3 @@
-const Role = require('../../db/models/roles');
 const { getIsTutor, getIsStaff } = require('../../modules/UserHelpers');
 
 module.exports = {
