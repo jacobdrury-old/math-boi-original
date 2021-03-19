@@ -10,8 +10,6 @@ module.exports = {
     subjectOnlyCoolDown: true,
     cooldown: 1800,
     async execute(message, args) {
-        const question = args.join(' ');
-
         const {
             mathChallenges,
             scienceChallenges,
@@ -45,6 +43,21 @@ module.exports = {
                 `${message.author} This is a tutor only command.`
             );
 
-        return await message.channel.send(`<@&${challengeRole}>`);
+        const question = args.join(' ');
+
+        if (!question.length)
+            return await message.channel.send(`<@&${challengeRole}>`);
+
+        return await message.channel.send(`<@&${challengeRole}>`, {
+            embed: {
+                author: {
+                    name: `${message.author.username}#${message.author.discriminator}`,
+                    icon_url: message.author.displayAvatarURL({
+                        dynamic: true,
+                    }),
+                },
+                description: message.content,
+            },
+        });
     },
 };
