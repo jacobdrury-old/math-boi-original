@@ -27,6 +27,13 @@ exports.getIsTrainee = (client, member) =>
 exports.getIsVerified = (client, member) =>
     member.roles.cache.get(client.ids.roles.verified) ? true : false;
 
+exports.getIsStaff = (client, member) =>
+    this.getIsTrainee(client, member) ||
+    this.getIsModerator(client, member) ||
+    this.getIsHeadMod(client, member) ||
+    this.getIsAdmin(client, member) ||
+    this.getIsOwner(client, member);
+
 exports.getIsTutor = (client, member) =>
     member.roles.cache.get(client.ids.roles.tutor.id) ? true : false;
 
