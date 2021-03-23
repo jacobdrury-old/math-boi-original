@@ -17,7 +17,7 @@ module.exports = async (client) => {
 
     try {
         //Auto send verify message everyday at noon and midnight
-        const autoHelpDesk = new CronJob('0 6,18 * * *', async () => {
+        const autoHelpDesk = new CronJob('0 5,17 * * *', async () => {
             const guild = client.guilds.cache.get(client.guildId);
             const channel = guild.channels.cache.get(client.ids.channels.help);
 
