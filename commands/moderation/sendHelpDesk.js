@@ -9,6 +9,11 @@ module.exports = {
         const channel = message.channel;
         const client = message.client;
 
+        if (channel.id != client.ids.channels.helpDesk)
+            return await message.channel.send(
+                `This command can only be executed in <#${client.ids.channels.helpDesk}>`
+            );
+
         await channel.bulkDelete(99, true);
 
         await channel.send('@everyone', {
