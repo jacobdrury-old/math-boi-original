@@ -17,7 +17,7 @@ module.exports = {
         try {
             if (!message) {
                 const announcementC = guild.channels.cache.get(
-                    client.ids.channels.staffCommands
+                    client.ids.channels.announcement
                 );
 
                 const topFiveTutors = (
@@ -70,7 +70,7 @@ module.exports = {
                 }
             );
         } catch (err) {
-            console.error(err);
+            client.logger.error(err);
         }
     },
 };

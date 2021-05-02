@@ -43,10 +43,10 @@ const lock = async (message, channels) => {
                             } for more info 🔒`
                         )
                         .then((msg) => lockMsgIds.set(channel.id, `${msg.id}`))
-                        .catch(console.error);
+                        .catch(message.client.logger.error);
                 }
             })
-            .catch(console.error);
+            .catch(message.client.logger.error);
     }
 
     if (announcementC) {
@@ -76,10 +76,10 @@ const unlock = async (message, channels) => {
                     channel.messages
                         .fetch(lockMsgIds.get(channel.id))
                         .then((msg) => msg.delete())
-                        .catch(console.error);
+                        .catch(message.client.logger.error);
                 }
             })
-            .catch(console.error);
+            .catch(message.client.logger.error);
     }
 
     const announcementC = message.guild.channels.cache.get(

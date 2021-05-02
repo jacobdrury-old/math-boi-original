@@ -14,7 +14,8 @@
         "qotd": "799542083371139072",
         "mathChallenges": "753126348167315515",
         "scienceChallenges": "754803242138992650", 
-        "verifiedMessages": ""
+        "verifiedMessages": "",
+        "botErrors": "838268888248483850"
     },
     "vc": {
         "council": "737458210079768658"
@@ -44,7 +45,8 @@
         "bumping": "776344102647627786",
         "qotd": "799540923653423155",
         "mathChallengesRole": "753048859365867560",
-        "scienceChallengesRole": "753048780563021874"
+        "scienceChallengesRole": "753048780563021874",
+        "botLogs": "838285662322950174"
     },
     "messages": {
         "rules": "776334374491652106"

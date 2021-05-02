@@ -38,7 +38,7 @@ module.exports = async (client, inActiveTutors) => {
             });
         }
     } catch (err) {
-        console.error(err);
+        client.logger.error(err);
     }
 
     await webhookClient.send({

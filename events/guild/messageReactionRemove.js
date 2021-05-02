@@ -33,7 +33,7 @@ module.exports = async (client, messageReaction, user) => {
 
         return removeRole(member, roleId, null, false);
     } catch (ex) {
-        console.error(ex);
+        client.logger.error(ex);
         return;
     }
 };

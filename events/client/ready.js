@@ -13,7 +13,7 @@ module.exports = async (client) => {
         },
     });
 
-    console.log('Ready!');
+    client.emit('info', 'Ready!');
 
     try {
         //Auto send verify message everyday at noon and midnight
@@ -76,6 +76,6 @@ module.exports = async (client) => {
         if (webhookClient) {
             await webhookClient.send(`${err.message}`);
         }
-        console.error(err);
+        client.logger.error(err);
     }
 };

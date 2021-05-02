@@ -1,11 +1,10 @@
 const Webhook = require('../../db/models/webhooks.js');
-const { getModLogChannel } = require('../../modules/utils');
 const mongoose = require('mongoose');
 const { WebhookClient } = require('discord.js');
-const type = 'Mod';
+const { getBotErrorChannel } = require('../../modules/utils.js');
 module.exports = {
-    name: `set${type}LogChannel`,
-    description: `Sets the channel for all ${type} logs to be sent`,
+    name: `setBotErrorChannel`,
+    description: `Sets the channel for all bot errors to be sent`,
     args: true,
     usage: '<tag the channel>',
     guildOnly: true,
@@ -15,7 +14,7 @@ module.exports = {
         try {
             const webhook = await createWebhook(message, args);
 
-            const existingWebhook = await getModLogChannel();
+            const existingWebhook = await getBotErrorChannel();
 
             await (!existingWebhook
                 ? createNewWebhook(webhook)
@@ -24,7 +23,7 @@ module.exports = {
             await webhook.send(
                 `Successfully ${
                     !existingWebhook ? 'initialized' : 'updated'
-                } the ${type} log channel!`
+                } the Bot Error channel!`
             );
         } catch (ex) {
             message.client.logger.error(ex);
@@ -58,7 +57,7 @@ const updateExistingWebhook = async (existingWebhook, webhook) => {
 const createNewWebhook = async (webhook) => {
     const wbhook = new Webhook({
         _id: mongoose.Types.ObjectId(),
-        name: `${type}LogChannel`,
+        name: `botErrorChannel`,
         channelId: webhook.channelID,
         Id: webhook.id,
         token: webhook.token,

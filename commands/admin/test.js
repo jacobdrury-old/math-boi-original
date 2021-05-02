@@ -2,6 +2,7 @@ const User = require('../../db/models/users');
 const { setToRole, removeRole } = require('../../modules/UserHelpers');
 const mongoose = require('mongoose');
 const topTutor = require('../basic/topTutor').execute;
+const { logger } = require('../../classes/ErrorLogging');
 
 module.exports = {
     name: 'test',
@@ -11,20 +12,10 @@ module.exports = {
     async execute(message) {
         const client = message.client;
 
-        const topTutorRole = client.ids.roles.tutor.top;
-
-        const tutor = (await topTutor(null, message.channel))[0];
-
-        const guild = client.guilds.cache.get(client.guildId);
-
-        const previousTopTutors = guild.roles.cache.get(topTutorRole).members;
-
-        for (const [id, member] of previousTopTutors) {
-            await removeRole(member, topTutorRole);
+        try {
+            throw 'Error2';
+        } catch (ex) {
+            logger.error(ex);
         }
-
-        const member = await guild.members.fetch(tutor.discordID);
-
-        await setToRole(member, client.ids.roles.tutor.top);
     },
 };
