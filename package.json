@@ -18,9 +18,9 @@
     "homepage": "https://github.com/jacobdrury75/math-boi#readme",
     "dependencies": {
         "cron": "^1.8.2",
-        "discord.js": "^12.2.0",
+        "discord.js": "github:discordjs/discord.js",
         "dotenv": "^8.2.0",
-        "mongoose": "^5.9.17",
+        "mongoose": "^5.12.7",
         "node-cron": "^2.0.3"
     }
 }

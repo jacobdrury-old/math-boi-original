@@ -10,6 +10,8 @@ module.exports = async (client, oldMember, newMember) => {
 
     if (await tutorAddCheck(client, oldMember, newMember)) return;
 
+    if (await pendingCheck(client, oldMember, newMember)) return;
+
     if (await verifiedCheck(client, oldMember, newMember)) return;
 
     let updated = false;
@@ -144,4 +146,14 @@ const verifiedCheck = async (client, oldMember, newMember) => {
             { verified: false }
         );
     }
+};
+
+const pendingCheck = async (client, oldMember, newMember) => {
+    if (oldMember.pending && !newMember.pending) {
+        client.emit('verified', newMember);
+        console.log(`${newMember.displayName} has verified`);
+        return true;
+    }
+
+    return false;
 };
