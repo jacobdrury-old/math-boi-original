@@ -28,6 +28,15 @@ exports.getLogChannel = async (name) => {
     return null;
 };
 
+exports.getBotErrorChannel = async (channelId) => {
+    const botErrorChannel = await Webhook.findOne({ channelId });
+
+    if (botErrorChannel)
+        return new WebhookClient(botErrorChannel.Id, botErrorChannel.token);
+
+    return null;
+};
+
 exports.getRoles = async (client) => {
     const roles = await Role.find();
 

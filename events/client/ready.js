@@ -13,7 +13,7 @@ module.exports = async (client) => {
         },
     });
 
-    console.log('Ready!');
+    client.emit('info', 'Ready!');
 
     try {
         //Auto send verify message everyday at noon and midnight
