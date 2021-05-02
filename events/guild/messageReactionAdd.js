@@ -58,11 +58,11 @@ const roleAssignment = async (
 
     if (userIsTooYoung) return;
 
-    const role = await setToRole(member, roleId, null, false);
-
-    if (role.id === client.ids.roles.verified) {
-        client.emit('verified', member);
+    if (roleId === client.ids.roles.verified) {
+        return client.emit('verified', member);
     }
+
+    const role = await setToRole(member, roleId, null, false);
 
     return role;
 };

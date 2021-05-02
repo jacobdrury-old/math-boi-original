@@ -1,5 +1,4 @@
 const AgeVerification = require('../classes/AgeVerification');
-const User = require('../db/models/users');
 const {
     logEmbed,
     setToRoleEmbedForUser,
@@ -10,7 +9,8 @@ const { sleep } = require('./utils');
 
 exports.getIsOwner = (member) => member.guild.ownerID == member.id;
 
-exports.getIsAdmin = (client, member) => member.hasPermission('ADMINISTRATOR');
+exports.getIsAdmin = (client, member) =>
+    member.roles.cache.get(client.ids.roles.admin) ? true : false;
 
 exports.getIsHeadMod = (client, member) =>
     member.roles.cache.get(client.ids.roles.headMod) ? true : false;
