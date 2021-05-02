@@ -27,6 +27,6 @@ module.exports = async (client, message) => {
             ],
         });
     } catch (ex) {
-        console.error(ex);
+        client.logger.error(ex);
     }
 };

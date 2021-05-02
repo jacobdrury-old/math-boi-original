@@ -68,7 +68,7 @@ class AgeVerification extends Ticket {
                         ],
                     });
                 } catch (ex) {
-                    console.error(ex);
+                    this.client.logger.error(ex);
                 }
             } else {
                 await this.channel.send('', {
@@ -86,7 +86,7 @@ class AgeVerification extends Ticket {
 
             return isTooYoung;
         } catch (err) {
-            console.error(err);
+            this.client.logger.error(err);
 
             await this.channel.send(
                 'This request has timed out, please try again later.'

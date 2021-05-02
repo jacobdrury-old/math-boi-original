@@ -2,6 +2,7 @@ const User = require('../../db/models/users');
 const { setToRole, removeRole } = require('../../modules/UserHelpers');
 const mongoose = require('mongoose');
 const topTutor = require('../basic/topTutor').execute;
+const { logger } = require('../../classes/ErrorLogging');
 
 module.exports = {
     name: 'test',
@@ -12,10 +13,9 @@ module.exports = {
         const client = message.client;
 
         try {
-            throw new Error('Test');
+            throw 'Error2';
         } catch (ex) {
-            client.logger.error(ex.message, ex.stack);
-            client.emit('error', ex.message, ex.stack);
+            logger.error(ex);
         }
     },
 };

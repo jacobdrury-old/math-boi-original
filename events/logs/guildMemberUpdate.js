@@ -151,7 +151,7 @@ const verifiedCheck = async (client, oldMember, newMember) => {
 const pendingCheck = async (client, oldMember, newMember) => {
     if (oldMember.pending && !newMember.pending) {
         client.emit('verified', newMember);
-        console.log(`${newMember.displayName} has verified`);
+        client.logger.info(`${newMember.displayName} has verified`);
         return true;
     }
 

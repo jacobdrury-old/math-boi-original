@@ -49,7 +49,7 @@ module.exports = {
             );
         } catch (err) {
             await message.channel.send(err.message);
-            console.error(err);
+            message.client.logger.error(err);
         }
     },
 };

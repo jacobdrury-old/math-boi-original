@@ -1,10 +1,15 @@
+const { MessageEmbed } = require('discord.js');
+const os = require('os');
 const winston = require('winston');
-const chalk = require('chalk');
 const { getBotErrorChannel } = require('../modules/utils');
 
-class ErrorLogging {
+const { printf } = winston.format;
+
+class Logger {
     constructor(client) {
         this.client = client;
+        this.botChannelLogId = client.ids.channels.botErrors;
+        this.botLogRoleId = client.ids.roles.botLogs;
 
         this.colors = {
             info: '#487eff',
@@ -12,62 +17,102 @@ class ErrorLogging {
             error: '#f0131e',
         };
 
-        this.botChannelLogId = client.ids.channels.botErrors;
-        this.botLogRoleId = client.ids.roles.botLogs;
+        this.logger = winston.createLogger({
+            transports: [
+                new winston.transports.Console({
+                    format: winston.format.combine(
+                        winston.format.timestamp(),
+                        winston.format.metadata({
+                            fillExcept: [
+                                'timestamp',
+                                'service',
+                                'level',
+                                'message',
+                            ],
+                        }),
+                        winston.format.colorize(),
+                        this.winstonConsoleFormat()
+                    ),
+                }),
+            ],
+        });
     }
 
     async init() {
-        this.logger = winston.createLogger({
-            transports: [new winston.transports.Console()],
-            format: winston.format.printf((log) => {
-                var level = log.level.toUpperCase();
-                switch (log.level) {
-                    case 'info':
-                        level = chalk.blue(level);
-                        break;
-                    case 'warn':
-                        level = chalk.yellow(level);
-                        break;
-                    case 'error':
-                        level = chalk.redBright(level);
-                        break;
-                    default:
-                        break;
-                }
-
-                return `[${level}] - ${log.message}`;
-            }),
-        });
-
         this.BotErrorChannelWebhook = await getBotErrorChannel(
             this.botChannelLogId
         );
     }
 
-    async info(m) {
-        await this.log('info', m);
-    }
-
-    async warn(m) {
-        await this.log('warn', m);
-    }
-
-    async error(m) {
-        await this.log('error', m);
-    }
-
-    async log(level, message) {
-        this.logger.log(level, message);
-        await this.BotErrorChannelWebhook.send(`<@&${this.botLogRoleId}>`, {
-            embeds: [
-                {
-                    timestamp: new Date(),
-                    color: this.colors[level],
-                    title: `${level.toUpperCase()}`,
-                    description: `${message}`,
-                },
-            ],
+    winstonConsoleFormat() {
+        return printf(({ timestamp, level, message, metadata }) => {
+            const metadataString =
+                metadata != null ? 'METADATA:' + JSON.stringify(metadata) : '';
+            return `[${timestamp}][${level}] ${message} ${metadataString}`;
         });
     }
+    // We expose four levels of logging for this tutorial
+
+    debug(log, metadata) {
+        this.log('debug', log, metadata);
+    }
+
+    info(log, metadata) {
+        this.log('info', log, metadata);
+    }
+
+    warn(log, metadata) {
+        this.log('warn', log, metadata);
+    }
+
+    error(log, metadata) {
+        this.log('error', log, metadata);
+    }
+
+    async log(level, log, metadata, stackTrace) {
+        const metadataObject = {};
+
+        if (metadata) metadataObject.metadata = metadata;
+        if (stackTrace) metadataObject.stackTrace = stackTrace;
+
+        var embed = new MessageEmbed();
+        embed
+            .setColor(this.colors[level])
+            .setTimestamp()
+            .setTitle(level.toUpperCase());
+
+        if (log instanceof Error) {
+            embed.setDescription(log.message);
+            embed.addField('Stack Trace', log.stack);
+
+            await this.BotErrorChannelWebhook.send(`<@&${this.botLogRoleId}>`, {
+                embeds: [embed.toJSON()],
+            });
+
+            return this.logger[level](log.message, {
+                metadata: { stack: log.stack },
+            });
+        }
+
+        var metadataString = JSON.stringify(metadataObject);
+
+        this.logger[level](JSON.stringify(log), metadataString);
+
+        embed.setDescription(JSON.stringify(log));
+
+        if (metadataString != '{}') {
+            embed.addField('Metadata', metadataString);
+        }
+
+        await this.BotErrorChannelWebhook.send(`<@&${this.botLogRoleId}>`, {
+            embeds: [embed.toJSON()],
+        });
+    }
+
+    logTrace(level, log, metadata) {
+        const stackTrace = new Error().stack;
+        this.log(level, log, metadata, stackTrace);
+    }
 }
-module.exports = ErrorLogging;
+
+module.exports = Logger;

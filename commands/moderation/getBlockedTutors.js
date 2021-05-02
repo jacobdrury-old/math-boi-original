@@ -30,7 +30,7 @@ module.exports = {
                 { embed: { description: err.message } }
             );
 
-            console.error(err);
+            message.client.logger.error(err);
         }
     },
 };

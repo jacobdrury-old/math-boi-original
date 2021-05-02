@@ -74,7 +74,7 @@ class ModMail extends Ticket {
                 await this.reject();
             }
         } catch (err) {
-            console.error(err);
+            this.client.logger.error(err);
             isAccepted = null;
             await this.timeout();
         }

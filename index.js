@@ -1,6 +1,6 @@
 const { Client, Collection, Intents } = require('discord.js');
 const mongoose = require('mongoose');
-const ErrorLogging = require('./classes/ErrorLogging');
+const Logger = require('./classes/ErrorLogging');
 
 const client = new Client({
     partials: ['MESSAGE', 'REACTION'],
@@ -28,7 +28,7 @@ client.openedTickets = new Map();
 //#endregion
 
 //#region Init Logging
-client.logger = new ErrorLogging(client);
+client.logger = new Logger(client);
 
 client.on('info', (m) => client.logger.info(m));
 client.on('warn', (m) => client.logger.warn(m));

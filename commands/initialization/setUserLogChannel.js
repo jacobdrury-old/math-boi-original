@@ -27,7 +27,7 @@ module.exports = {
                 } the ${type} log channel!`
             );
         } catch (ex) {
-            console.error(ex);
+            message.client.logger.error(ex);
             await message.reply('Something went wrong :(\n' + ex.message);
         }
     },

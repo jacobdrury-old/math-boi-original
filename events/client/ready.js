@@ -76,6 +76,6 @@ module.exports = async (client) => {
         if (webhookClient) {
             await webhookClient.send(`${err.message}`);
         }
-        console.error(err);
+        client.logger.error(err);
     }
 };

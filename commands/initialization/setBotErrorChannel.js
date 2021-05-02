@@ -26,7 +26,7 @@ module.exports = {
                 } the Bot Error channel!`
             );
         } catch (ex) {
-            console.error(ex);
+            message.client.logger.error(ex);
             await message.reply('Something went wrong :(\n' + ex.message);
         }
     },
