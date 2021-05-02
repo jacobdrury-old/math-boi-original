@@ -28,13 +28,13 @@ client.openedTickets = new Map();
 //#endregion
 
 //#region Init Logging
-const logger = new ErrorLogging(client);
+client.logger = new ErrorLogging(client);
 
-client.on('info', (m) => logger.info(m));
-client.on('warn', (m) => logger.warn(m));
-client.on('error', (m) => logger.error(m));
+client.on('info', (m) => client.logger.info(m));
+client.on('warn', (m) => client.logger.warn(m));
+client.on('error', (m) => client.logger.error(m));
 
-process.on('uncaughtException', (error) => logger.uncaughtException(error));
+process.on('uncaughtException', (error) => client.logger.error(error));
 //#endregion
 
 (async () => {
@@ -46,7 +46,7 @@ process.on('uncaughtException', (error) => logger.uncaughtException(error));
     });
     //#endregion
 
-    await logger.init();
+    await client.logger.init();
 
     client.guildId = process.env.GUILD_ID;
 

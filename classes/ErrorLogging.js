@@ -8,10 +8,8 @@ class ErrorLogging {
 
         this.colors = {
             info: '#487eff',
-            debug: '#00f763',
             warn: '#feac2f',
             error: '#f0131e',
-            uncaughtException: '#f0131e',
         };
 
         this.botChannelLogId = client.ids.channels.botErrors;
@@ -21,9 +19,24 @@ class ErrorLogging {
     async init() {
         this.logger = winston.createLogger({
             transports: [new winston.transports.Console()],
-            format: winston.format.printf(
-                (log) => `[${log.level.toUpperCase()}] - ${log.message}`
-            ),
+            format: winston.format.printf((log) => {
+                var level = log.level.toUpperCase();
+                switch (log.level) {
+                    case 'info':
+                        level = chalk.blue(level);
+                        break;
+                    case 'warn':
+                        level = chalk.yellow(level);
+                        break;
+                    case 'error':
+                        level = chalk.redBright(level);
+                        break;
+                    default:
+                        break;
+                }
+
+                return `[${level}] - ${log.message}`;
+            }),
         });
 
         this.BotErrorChannelWebhook = await getBotErrorChannel(
@@ -32,19 +45,15 @@ class ErrorLogging {
     }
 
     async info(m) {
-        await this.log(chalk.blue('info'), m);
+        await this.log('info', m);
     }
 
     async warn(m) {
-        await this.log(chalk.yellow('warning'), m);
+        await this.log('warn', m);
     }
 
     async error(m) {
-        await this.log(chalk.redBright('fatal error'), m);
-    }
-
-    async uncaughtException(error) {
-        await this.log(chalk.redBright('fatal uncaught exception'), error);
+        await this.log('error', m);
     }
 
     async log(level, message) {

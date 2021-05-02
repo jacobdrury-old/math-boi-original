@@ -11,20 +11,11 @@ module.exports = {
     async execute(message) {
         const client = message.client;
 
-        const topTutorRole = client.ids.roles.tutor.top;
-
-        const tutor = (await topTutor(null, message.channel))[0];
-
-        const guild = client.guilds.cache.get(client.guildId);
-
-        const previousTopTutors = guild.roles.cache.get(topTutorRole).members;
-
-        for (const [id, member] of previousTopTutors) {
-            await removeRole(member, topTutorRole);
+        try {
+            throw new Error('Test');
+        } catch (ex) {
+            client.logger.error(ex.message, ex.stack);
+            client.emit('error', ex.message, ex.stack);
         }
-
-        const member = await guild.members.fetch(tutor.discordID);
-
-        await setToRole(member, client.ids.roles.tutor.top);
     },
 };
