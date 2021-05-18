@@ -19,8 +19,8 @@ class ModMail extends Ticket {
         this.mailCategory = client.ids.StaffServer.categories.modMail;
         this.archiveCategory =
             client.ids.StaffServer.categories.archivedModMail;
-        this.staffID = client.ids.opt.roles.staff;
-        this.headModID = client.ids.opt.roles.headMod;
+        this.staffID = client.ids.StaffServer.roles.staff;
+        this.headModID = client.ids.StaffServer.roles.headMod;
         this.channel;
         this.msg;
         this.dmCollector;
