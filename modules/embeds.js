@@ -36,6 +36,6 @@ exports.removeRoleEmbedForUser = async (member, roleId) => {
     return new MessageEmbed({
         color: 0xff2c02,
         title: `Role Removed!`,
-        description: `You have been added to the \`${role.name}\` role!`,
+        description: `You have been removed from the \`${role.name}\` role.`,
     });
 };
