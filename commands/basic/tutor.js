@@ -25,7 +25,7 @@ module.exports = {
 
         if (!tutor)
             return await message.channel.send(
-                `<@&${message.client.ids.roles.staff}> I cannot find the Tutor role for this channel.`
+                `<@&${message.client.ids.opt.roles.staff}> I cannot find the Tutor role for this channel.`
             );
 
         if (!question.length)
@@ -57,13 +57,8 @@ module.exports = {
 };
 
 const getTutorId = async (message) => {
-    const {
-        introMath,
-        intermediateMath,
-        advancedMath,
-        science,
-        humanities,
-    } = message.client.ids.subjects;
+    const { introMath, intermediateMath, advancedMath, science, humanities } =
+        message.client.ids.opt.subjects;
 
     if (introMath.includes(message.channel.id))
         return (await Role.findOne({ name: 'introMath' })).Id;

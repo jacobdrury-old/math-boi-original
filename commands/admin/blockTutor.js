@@ -15,7 +15,7 @@ module.exports = {
 
             await blockedTutors.save();
 
-            const tutorJson = message.client.ids.roles.tutor;
+            const tutorJson = message.client.ids.opt.roles.tutor;
 
             await member.roles.remove(
                 [tutorJson.id, ...tutorJson.options],

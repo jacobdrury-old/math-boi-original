@@ -10,10 +10,8 @@ module.exports = {
     subjectOnlyCoolDown: true,
     cooldown: 1800,
     async execute(message, args) {
-        const {
-            mathChallenges,
-            scienceChallenges,
-        } = message.client.ids.channels;
+        const { mathChallenges, scienceChallenges } =
+            message.client.ids.opt.channels;
 
         const challengeChannels = [mathChallenges, scienceChallenges];
 
@@ -24,10 +22,8 @@ module.exports = {
                 `${message.author} Please do not use this command outside of <#${mathChallenges}> or <#${scienceChallenges}>`
             );
 
-        const {
-            mathChallengesRole,
-            scienceChallengesRole,
-        } = message.client.ids.roles;
+        const { mathChallengesRole, scienceChallengesRole } =
+            message.client.ids.opt.roles;
 
         const challengeRole =
             mathChallenges == message.channel.id

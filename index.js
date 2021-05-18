@@ -49,6 +49,7 @@ process.on('uncaughtException', (error) => client.logger.error(error));
     await client.logger.init();
 
     client.guildId = process.env.GUILD_ID;
+    client.StaffServerId = process.env.STAFF_SERVER_ID;
 
     return client.login(process.env.TOKEN);
 })();

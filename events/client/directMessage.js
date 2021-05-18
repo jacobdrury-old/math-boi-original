@@ -10,11 +10,12 @@ module.exports = async (client, message) => {
         return await message.channel.send('You already have an open ticket');
     }
 
-    const guild = client.guilds.cache.get(client.guildId);
+    const staffGuild = client.guilds.cache.get(client.StaffServerId);
+    const optGuild = client.guilds.cache.get(client.guildId);
 
-    if (!(await confirmTicket(message, guild))) return;
+    if (!(await confirmTicket(message, optGuild))) return;
 
-    const ticket = new ModMail(client, message, guild);
+    const ticket = new ModMail(client, message, staffGuild);
     client.openedTickets.set(message.author.id, ticket);
 
     const channel = await ticket.init();

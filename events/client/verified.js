@@ -1,11 +1,11 @@
 const { setToRole } = require('../../modules/UserHelpers');
 
 module.exports = async (client, member) => {
-    await setToRole(member, client.ids.roles.verified, null, false);
+    await setToRole(member, client.ids.opt.roles.verified, null, false);
 
     return;
     const verifiedMessageChannel = member.guild.channels.cache.get(
-        client.ids.channels.verifiedMessages
+        client.ids.opt.channels.verifiedMessages
     );
 
     const userMsgs = await userMessages(member.guild, member.id);
@@ -25,7 +25,7 @@ module.exports = async (client, member) => {
                 fields: [
                     {
                         name: 'Step 1',
-                        value: `Please go to <#${client.ids.channels.roleSelection}> to add your roles`,
+                        value: `Please go to <#${client.ids.opt.channels.roleSelection}> to add your roles`,
                     },
                     {
                         name: 'Step 2',
@@ -45,7 +45,7 @@ const userMessages = async (guild, userID) => {
     const txtChannels = guild.channels.cache.filter(
         (c) =>
             c.type === 'text' &&
-            !guild.client.ids.ignoredCategories.includes(c.parentID)
+            !guild.client.ids.opt.ignoredCategories.includes(c.parentID)
     );
 
     const msgCount = txtChannels.reduce(async (totalP, ch) => {

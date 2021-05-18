@@ -6,7 +6,7 @@ module.exports = {
         const bots = message.guild.members.cache.filter((m) => m.user.bot);
 
         const verifiedRole = await message.guild.roles.fetch(
-            message.client.ids.roles.verified
+            message.client.ids.opt.roles.verified
         );
 
         const serverCount = message.guild.memberCount;

@@ -1,6 +1,6 @@
 module.exports = async (client, message) => {
     setTimeout(() => {
-        message.channel.send(`<@&${client.ids.roles.bumping}>`, {
+        message.channel.send(`<@&${client.ids.opt.roles.bumping}>`, {
             embed: {
                 title: "Bump timer's out!",
                 description: "It's time to bump again!",
