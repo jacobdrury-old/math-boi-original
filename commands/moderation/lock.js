@@ -10,8 +10,9 @@ module.exports = {
     async execute(message, args) {
         const channels = message.guild.channels.cache.filter(
             (c) =>
-                !message.client.ids.ignoredCategories.includes(c.parentID) &&
-                c.type != 'category'
+                !message.client.ids.opt.ignoredCategories.includes(
+                    c.parentID
+                ) && c.type != 'category'
         );
 
         if (args[0] == 'on') return await lock(message, channels);
@@ -23,7 +24,7 @@ const lock = async (message, channels) => {
     lockMsgIds.clear();
 
     const announcementC = message.guild.channels.cache.get(
-        message.client.ids.channels.announcement
+        message.client.ids.opt.channels.announcement
     );
 
     for (const [id, channel] of channels) {
@@ -83,7 +84,7 @@ const unlock = async (message, channels) => {
     }
 
     const announcementC = message.guild.channels.cache.get(
-        message.client.ids.channels.announcement
+        message.client.ids.opt.channels.announcement
     );
 
     if (announcementC) {

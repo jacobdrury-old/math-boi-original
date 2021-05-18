@@ -17,7 +17,7 @@ module.exports = async (client, message) => {
     }
 
     if (
-        message.channel.id === client.ids.channels.bumping &&
+        message.channel.id === client.ids.opt.channels.bumping &&
         message.embeds.length &&
         message.embeds[0].description.indexOf('Bump done') > -1
     )
@@ -25,11 +25,11 @@ module.exports = async (client, message) => {
 
     const prefix = client.prefix;
 
-    if (message.channel.parentID === client.ids.categories.logs) {
+    if (message.channel.parentID === client.ids.StaffServer.categories.logs) {
         return client.emit('logChannelMessage', message);
     }
 
-    if (message.channel.id === client.ids.channels.joinLogs) {
+    if (message.channel.id === client.ids.opt.channels.joinLogs) {
         return client.emit('levelLogMessage', message);
     }
 
@@ -41,7 +41,7 @@ module.exports = async (client, message) => {
               .members.fetch(message.author.id)
         : message.member);
 
-    if (client.ids.subjectCategories.includes(message.channel.parentID)) {
+    if (client.ids.opt.subjectCategories.includes(message.channel.parentID)) {
         client.emit('subjectChannel', message, member);
     }
 
@@ -95,7 +95,7 @@ module.exports = async (client, message) => {
 
     const isHelpDeskCmd = () =>
         command.helpDesk &&
-        message.channel.id == message.client.ids.channels.helpDesk &&
+        message.channel.id == message.client.ids.opt.channels.helpDesk &&
         (isModerator || isAdmin || isOwner);
 
     if (!isHelpDeskCmd() && command.adminOnly && !isAdmin && !isOwner) {

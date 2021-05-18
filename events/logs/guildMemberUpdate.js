@@ -50,13 +50,13 @@ module.exports = async (client, oldMember, newMember) => {
 };
 
 const boosterCheck = async (client, oldMember, newMember) => {
-    const hadRole = oldMember.roles.cache.get(client.ids.roles.booster);
+    const hadRole = oldMember.roles.cache.get(client.ids.opt.roles.booster);
 
-    const hasRole = newMember.roles.cache.get(client.ids.roles.booster);
+    const hasRole = newMember.roles.cache.get(client.ids.opt.roles.booster);
 
     if (!hadRole && hasRole) {
         await newMember.guild.channels.cache
-            .get(client.ids.channels.announcement)
+            .get(client.ids.opt.channels.announcement)
             .send(`Thank you for boosting the server ${newMember}!!`);
 
         return true;
@@ -67,8 +67,8 @@ const boosterCheck = async (client, oldMember, newMember) => {
 
 const tutorAddCheck = async (client, oldMember, newMember) => {
     const tutorOptions = [
-        client.ids.roles.tutor.id,
-        ...client.ids.roles.tutor.options,
+        client.ids.opt.roles.tutor.id,
+        ...client.ids.opt.roles.tutor.options,
     ];
 
     const oldMemberRoles = oldMember.roles.cache.keyArray();
@@ -81,7 +81,7 @@ const tutorAddCheck = async (client, oldMember, newMember) => {
 
     if (!hadRole.length && hasRole.length) {
         //Add Tutor role
-        await setToRole(newMember, client.ids.roles.tutor.id, null, false);
+        await setToRole(newMember, client.ids.opt.roles.tutor.id, null, false);
 
         await User.findOneAndUpdate(
             {
@@ -97,7 +97,7 @@ const tutorAddCheck = async (client, oldMember, newMember) => {
         return true;
     } else if (hadRole.length && hasRole.length <= 1) {
         //Remove Tutor role
-        await removeRole(newMember, client.ids.roles.tutor.id, null, false);
+        await removeRole(newMember, client.ids.opt.roles.tutor.id, null, false);
 
         await User.findOneAndUpdate(
             {
@@ -117,7 +117,7 @@ const tutorAddCheck = async (client, oldMember, newMember) => {
 };
 
 const verifiedCheck = async (client, oldMember, newMember) => {
-    const verifiedId = client.ids.roles.verified;
+    const verifiedId = client.ids.opt.roles.verified;
 
     const oldVerifiedRole = oldMember.roles.cache.get(verifiedId);
 

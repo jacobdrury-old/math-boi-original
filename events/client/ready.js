@@ -19,7 +19,9 @@ module.exports = async (client) => {
         //Auto send verify message everyday at noon and midnight
         const autoHelpDesk = new CronJob('0 5,17 * * *', async () => {
             const guild = client.guilds.cache.get(client.guildId);
-            const channel = guild.channels.cache.get(client.ids.channels.help);
+            const channel = guild.channels.cache.get(
+                client.ids.opt.channels.help
+            );
 
             await channel.bulkDelete(99, true);
 
@@ -29,12 +31,11 @@ module.exports = async (client) => {
                     title: `**Welcome to ${guild.name}!**`,
                     description:
                         'I see you guys are not verified yet!\n\n' +
-                        `Please go check out <#${client.ids.channels.rules}> and react with :white_check_mark: to get access to the server!\n\n` +
-                        `If you have any issues please tag <@&${client.ids.roles.staff}>\n\n` +
-                        `Once you Verify you should check out <#${client.ids.channels.roleSelection}>!`,
+                        `Please go check out <#${client.ids.opt.channels.rules}> and react with :white_check_mark: to get access to the server!\n\n` +
+                        `If you have any issues please tag <@&${client.ids.opt.roles.staff}>\n\n` +
+                        `Once you Verify you should check out <#${client.ids.opt.channels.roleSelection}>!`,
                     image: {
-                        url:
-                            'https://cdn.discordapp.com/attachments/731959466102226965/776323932890071061/banner_welcome1.png',
+                        url: 'https://cdn.discordapp.com/attachments/731959466102226965/776323932890071061/banner_welcome1.png',
                     },
                 },
             });
@@ -51,15 +52,15 @@ module.exports = async (client) => {
         const autoTopTutor = new CronJob('0 11 * * *', async () => {
             const guild = client.guilds.cache.get(client.guildId);
             const announcementC = guild.channels.cache.get(
-                client.ids.channels.staffCommands
+                client.ids.opt.channels.announcement
             );
 
-            const topTutorRole = client.ids.roles.tutor.top;
+            const topTutorRole = client.ids.opt.roles.tutor.top;
 
             const tutor = (await topTutor(null, announcementC))[0];
 
-            const previousTopTutors = guild.roles.cache.get(topTutorRole)
-                .members;
+            const previousTopTutors =
+                guild.roles.cache.get(topTutorRole).members;
 
             for (const [id, member] of previousTopTutors) {
                 await removeRole(member, topTutorRole);
@@ -67,7 +68,7 @@ module.exports = async (client) => {
 
             const member = await guild.members.fetch(tutor.discordID);
 
-            await setToRole(member, client.ids.roles.tutor.top);
+            await setToRole(member, client.ids.opt.roles.tutor.top);
         });
 
         autoTopTutor.start();

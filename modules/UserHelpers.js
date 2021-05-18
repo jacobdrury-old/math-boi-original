@@ -10,22 +10,34 @@ const { sleep } = require('./utils');
 exports.getIsOwner = (member) => member.guild.ownerID == member.id;
 
 exports.getIsAdmin = (client, member) =>
-    member.roles.cache.get(client.ids.roles.admin) ? true : false;
+    member.roles.cache.get(client.ids.opt.roles.admin) ||
+    member.roles.cache.get(client.ids.StaffServer.roles.admin)
+        ? true
+        : false;
 
 exports.getIsHeadMod = (client, member) =>
-    member.roles.cache.get(client.ids.roles.headMod) ? true : false;
+    member.roles.cache.get(client.ids.opt.roles.headMod) ||
+    member.roles.cache.get(client.ids.StaffServer.roles.headMod)
+        ? true
+        : false;
 
 exports.getIsModerator = (client, member) =>
-    member.roles.cache.get(client.ids.roles.moderator) ? true : false;
+    member.roles.cache.get(client.ids.opt.roles.moderator) ||
+    member.roles.cache.get(client.ids.StaffServer.roles.moderator)
+        ? true
+        : false;
 
 exports.getIsBooster = (client, member) =>
-    member.roles.cache.get(client.ids.roles.booster) ? true : false;
+    member.roles.cache.get(client.ids.opt.roles.booster) ? true : false;
 
 exports.getIsTrainee = (client, member) =>
-    member.roles.cache.get(client.ids.roles.traineeMod) ? true : false;
+    member.roles.cache.get(client.ids.opt.roles.traineeMod) ||
+    member.roles.cache.get(client.ids.StaffServer.roles.traineeMod)
+        ? true
+        : false;
 
 exports.getIsVerified = (client, member) =>
-    member.roles.cache.get(client.ids.roles.verified) ? true : false;
+    member.roles.cache.get(client.ids.opt.roles.verified) ? true : false;
 
 exports.getIsStaff = (client, member) =>
     this.getIsTrainee(client, member) ||
@@ -35,7 +47,7 @@ exports.getIsStaff = (client, member) =>
     this.getIsOwner(client, member);
 
 exports.getIsTutor = (client, member) =>
-    member.roles.cache.get(client.ids.roles.tutor.id) ? true : false;
+    member.roles.cache.get(client.ids.opt.roles.tutor.id) ? true : false;
 
 exports.setToRole = async (member, role, adminId = null, shouldLog = true) => {
     await member.roles.add(role);
@@ -141,7 +153,7 @@ const userDMsClosed = async (member) => {
                 },
                 {
                     type: 'role',
-                    id: member.client.ids.roles.staff,
+                    id: member.client.ids.opt.roles.staff,
                     allow: [
                         'VIEW_CHANNEL',
                         'SEND_MESSAGES',

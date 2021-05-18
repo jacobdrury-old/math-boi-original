@@ -16,10 +16,11 @@ class ModMail extends Ticket {
         this.user = message.author;
         this.dmChannel = message.channel;
         this.guild = guild;
-        this.mailCategory = client.ids.categories.modMail;
-        this.archiveCategory = client.ids.categories.archivedModMail;
-        this.staffID = client.ids.roles.staff;
-        this.headModID = client.ids.roles.headMod;
+        this.mailCategory = client.ids.StaffServer.categories.modMail;
+        this.archiveCategory =
+            client.ids.StaffServer.categories.archivedModMail;
+        this.staffID = client.ids.opt.roles.staff;
+        this.headModID = client.ids.opt.roles.headMod;
         this.channel;
         this.msg;
         this.dmCollector;
@@ -110,8 +111,7 @@ class ModMail extends Ticket {
         this.dmChannel.send('', {
             embed: {
                 color: 0xff2c02,
-                title:
-                    'No one was able to accept your request. Please try again',
+                title: 'No one was able to accept your request. Please try again',
             },
         });
 

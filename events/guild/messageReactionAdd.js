@@ -52,13 +52,13 @@ const roleAssignment = async (
 
     let userIsTooYoung = false;
 
-    if (roleId === client.ids.roles.middleSchoolRole) {
+    if (roleId === client.ids.opt.roles.middleSchoolRole) {
         userIsTooYoung = await isUserTooYoung(member);
     }
 
     if (userIsTooYoung) return;
 
-    if (roleId === client.ids.roles.verified) {
+    if (roleId === client.ids.opt.roles.verified) {
         return client.emit('verified', member);
     }
 

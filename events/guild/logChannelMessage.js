@@ -67,7 +67,7 @@ module.exports = async (client, message) => {
 
 const inviteLink = async (member) => {
     const logChannel = member.guild.channels.cache.get(
-        member.client.ids.channels.modLog
+        member.client.ids.StaffServer.channels.modLog
     );
 
     const embed = {
@@ -85,9 +85,12 @@ const inviteLink = async (member) => {
         },
     };
 
-    const embedMessage = await logChannel.send('<@&737374602719920191>', {
-        embed,
-    });
+    const embedMessage = await logChannel.send(
+        `<@&${member.client.ids.StaffServer.roles.staff}>`,
+        {
+            embed,
+        }
+    );
 
     const emojis = ['🚫', '740468921961938974'];
 
@@ -103,62 +106,75 @@ const inviteLink = async (member) => {
         .then(async (collected) => {
             const reaction = collected.first();
             if (reaction.emoji.name === '🚫') {
-                return embedMessage.edit('<@&737374602719920191>', {
-                    embed: {
-                        color: 0xb14cf3,
-                        author: {
-                            name: `${member.user.username}#${member.user.discriminator}`,
-                            icon_url: member.user.displayAvatarURL(),
+                return embedMessage.edit(
+                    `<@&${member.client.ids.StaffServer.roles.staff}>`,
+                    {
+                        embed: {
+                            color: 0xb14cf3,
+                            author: {
+                                name: `${member.user.username}#${member.user.discriminator}`,
+                                icon_url: member.user.displayAvatarURL(),
+                            },
+                            description: `Auto ban has been denied by <@${
+                                reaction.users.cache
+                                    .filter((u) => !u.bot)
+                                    .first().id
+                            }>`,
+                            timestamp: new Date(),
+                            footer: {
+                                text: 'They told me no :(',
+                            },
                         },
-                        description: `Auto ban has been denied by <@${
-                            reaction.users.cache.filter((u) => !u.bot).first()
-                                .id
-                        }>`,
-                        timestamp: new Date(),
-                        footer: {
-                            text: 'They told me no :(',
-                        },
-                    },
-                });
+                    }
+                );
             } else if (reaction.emoji.id === '740468921961938974') {
                 await banUser(member);
 
-                return embedMessage.edit('<@&737374602719920191>', {
-                    embed: {
-                        color: 0x00c766,
-                        author: {
-                            name: `${member.user.username}#${member.user.discriminator}`,
-                            icon_url: member.user.displayAvatarURL(),
+                return embedMessage.edit(
+                    `<@&${member.client.ids.StaffServer.roles.staff}>`,
+                    {
+                        embed: {
+                            color: 0x00c766,
+                            author: {
+                                name: `${member.user.username}#${member.user.discriminator}`,
+                                icon_url: member.user.displayAvatarURL(),
+                            },
+                            description: `<@${
+                                member.id
+                            }> has been banned by <@${
+                                reaction.users.cache
+                                    .filter((u) => !u.bot)
+                                    .first().id
+                            }>`,
+                            timestamp: new Date(),
+                            footer: {
+                                text: 'Bye Bitch',
+                            },
                         },
-                        description: `<@${member.id}> has been banned by <@${
-                            reaction.users.cache.filter((u) => !u.bot).first()
-                                .id
-                        }>`,
-                        timestamp: new Date(),
-                        footer: {
-                            text: 'Bye Bitch',
-                        },
-                    },
-                });
+                    }
+                );
             }
         })
         .catch(async () => {
             await banUser(member);
 
-            embedMessage.edit('<@&737374602719920191>', {
-                embed: {
-                    color: 0x2caefe,
-                    author: {
-                        name: `${member.user.username}#${member.user.discriminator}`,
-                        icon_url: member.user.displayAvatarURL(),
+            embedMessage.edit(
+                `<@&${member.client.ids.StaffServer.roles.staff}>`,
+                {
+                    embed: {
+                        color: 0x2caefe,
+                        author: {
+                            name: `${member.user.username}#${member.user.discriminator}`,
+                            icon_url: member.user.displayAvatarURL(),
+                        },
+                        description: `<@${member.id}> has been auto banned due to lack of response`,
+                        timestamp: new Date(),
+                        footer: {
+                            text: 'Bye Bitch',
+                        },
                     },
-                    description: `<@${member.id}> has been auto banned due to lack of response`,
-                    timestamp: new Date(),
-                    footer: {
-                        text: 'Bye Bitch',
-                    },
-                },
-            });
+                }
+            );
         });
 };
 

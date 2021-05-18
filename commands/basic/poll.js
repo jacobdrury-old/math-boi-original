@@ -46,8 +46,8 @@ module.exports = {
         };
 
         const msg =
-            message.channel.id == message.client.ids.channels.qotd
-                ? `<@&${message.client.ids.roles.qotd}>`
+            message.channel.id == message.client.ids.opt.channels.qotd
+                ? `<@&${message.client.ids.opt.roles.qotd}>`
                 : '';
 
         const sentPoll = await message.channel.send(msg, { embed: embed });

@@ -8,8 +8,8 @@ const { printf } = winston.format;
 class Logger {
     constructor(client) {
         this.client = client;
-        this.botChannelLogId = client.ids.channels.botErrors;
-        this.botLogRoleId = client.ids.roles.botLogs;
+        this.botChannelLogId = client.ids.StaffServer.channels.botErrors;
+        this.botLogRoleId = client.ids.StaffServer.roles.botLogs;
 
         this.colors = {
             info: '#487eff',
@@ -83,7 +83,7 @@ class Logger {
 
         if (log instanceof Error) {
             embed.setDescription(log.message);
-            embed.addField('Stack Trace', log.stack);
+            embed.addField('Stack Trace', `\`\`\`${log.stack}\`\`\``);
 
             await this.BotErrorChannelWebhook.send(`<@&${this.botLogRoleId}>`, {
                 embeds: [embed.toJSON()],

@@ -7,6 +7,6 @@ module.exports = async (client, message) => {
 
     //Give honorable to lvl 30+
     if (message.content === `GG ${member}, you just advanced to level 30!`) {
-        await setToRole(member, client.ids.roles.lvl30, message.member.id);
+        await setToRole(member, client.ids.opt.roles.lvl30, message.member.id);
     }
 };

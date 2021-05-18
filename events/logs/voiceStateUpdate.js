@@ -7,7 +7,8 @@ module.exports = async (client, oldState, newState) => {
     const oldChannel = oldState.channelID;
     const newChannel = newState.channelID;
 
-    if ([oldChannel, newChannel].includes(client.ids.vc.council)) return;
+    if ([oldChannel, newChannel].includes(client.ids.StaffServer.vc.council))
+        return;
 
     const webhookClient = await getUserLogChannel();
     if (!webhookClient) return;

@@ -1,8 +1,16 @@
 const { getMessageLogChannel } = require('../../modules/utils');
 module.exports = async (client, oldMessage, newMessage) => {
     if (!client.enableLogs) return;
-    if (client.ids.categories.council === oldMessage.channel.parentID) return;
-    if (newMessage.channel.parentID === client.ids.categories.modMail) return;
+    if (
+        client.ids.StaffServer.categories.council ===
+        oldMessage.channel.parentID
+    )
+        return;
+    if (
+        newMessage.channel.parentID ===
+        client.ids.StaffServer.categories.modMail
+    )
+        return;
 
     const webhookClient = await getMessageLogChannel();
     if (!webhookClient) return;

@@ -65,11 +65,11 @@ exports.sleep = (ms) => {
 
 exports.isReactionRoleChannel = (client, messageReaction) => {
     return (
-        messageReaction.message.channel.id === client.ids.channels.rules ||
+        messageReaction.message.channel.id === client.ids.opt.channels.rules ||
         messageReaction.message.channel.id ===
-            client.ids.channels.roleSelection ||
+            client.ids.opt.channels.roleSelection ||
         messageReaction.message.channel.id ===
-            client.ids.channels.tutorRoleSelection
+            client.ids.opt.channels.tutorRoleSelection
     );
 };
 
