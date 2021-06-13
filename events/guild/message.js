@@ -55,7 +55,7 @@ module.exports = async (client, message) => {
     const isBooster = getIsBooster(client, member);
 
     if (message.content.toLowerCase().includes('invite link')) {
-        return message.channel.send('https://discord.gg/S2azCgw');
+        return message.channel.send('https://discord.gg/optimal');
     }
 
     if (
