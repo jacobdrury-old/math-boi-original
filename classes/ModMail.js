@@ -5,6 +5,7 @@ const {
     getIsOwner,
     getIsAdmin,
     getIsHeadMod,
+    getIsModerator
 } = require('../modules/UserHelpers');
 
 const emojis = ['❌', '✅'];
@@ -235,6 +236,8 @@ const getRank = (member) => {
     if (getIsOwner(member)) return 'Owner';
     if (getIsAdmin(member.client, member)) return 'Admin';
     if (getIsHeadMod(member.client, member)) return 'Head Moderator';
+    if (getIsModerator(member.client, member)) return 'Moderator';
+    return "Staff"
 };
 
 module.exports = ModMail;

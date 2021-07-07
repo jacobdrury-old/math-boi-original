@@ -40,7 +40,7 @@ module.exports = async (client) => {
                 },
             });
         });
-        autoHelpDesk.start();
+        // autoHelpDesk.start();
 
         //Auto clear tutor stats on the 1st of every month
         const autoClearTutorStats = new CronJob('0 0 1 * *', async () => {
