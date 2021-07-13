@@ -1,9 +1,9 @@
 const { setToRole } = require('../../modules/UserHelpers');
 
 module.exports = async (client, member) => {
+    return;
     await setToRole(member, client.ids.opt.roles.verified, null, false);
 
-    return;
     const verifiedMessageChannel = member.guild.channels.cache.get(
         client.ids.opt.channels.verifiedMessages
     );
