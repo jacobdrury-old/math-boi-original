@@ -15,16 +15,12 @@ module.exports = {
         if (isNaN(amount)) {
             amount = 10;
         } else if (amount <= 1 || amount > 100) {
-            return message.reply(
-                'You need to input a number between 1 and 99.'
-            );
+            return message.reply('You need to input a number between 1 and 99.');
         }
 
         message.channel.bulkDelete(amount, true).catch((err) => {
             message.client.logger.error(err);
-            message.channel.send(
-                'There was an error trying to prune messages in this channel!'
-            );
+            message.channel.send('There was an error trying to prune messages in this channel!');
         });
 
         const member = message.member;
