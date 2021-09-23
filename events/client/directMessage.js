@@ -1,6 +1,7 @@
 const ModMail = require('../../classes/ModMail');
 
 module.exports = async (client, message) => {
+    return;
     if (message.author.bot) return;
 
     if (!isNaN(message.content)) return;
