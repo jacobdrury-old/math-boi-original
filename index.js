@@ -11,9 +11,7 @@ const client = new Client({
 
 ['commands', 'aliases'].forEach((x) => (client[x] = new Collection()));
 
-['event', 'command'].forEach((handler) =>
-    require(`./handlers/${handler}`)(client)
-);
+['event', 'command'].forEach((handler) => require(`./handlers/${handler}`)(client));
 
 //#endregion
 

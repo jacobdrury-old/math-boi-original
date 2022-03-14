@@ -36,9 +36,7 @@ module.exports = async (client, message) => {
     if (message.author.bot) return;
 
     const member = await (message.channel.type !== 'text'
-        ? message.client.guilds.cache
-              .get(client.guildId)
-              .members.fetch(message.author.id)
+        ? message.client.guilds.cache.get(client.guildId).members.fetch(message.author.id)
         : message.member);
 
     if (client.ids.opt.subjectCategories.includes(message.channel.parentID)) {
@@ -49,19 +47,15 @@ module.exports = async (client, message) => {
 
     const isAdmin = getIsAdmin(client, member) || getIsHeadMod(client, member);
 
-    const isModerator =
-        getIsModerator(client, member) || getIsTrainee(client, member);
+    const isModerator = getIsModerator(client, member) || getIsTrainee(client, member);
 
     const isBooster = getIsBooster(client, member);
 
     if (message.content.toLowerCase().includes('invite link')) {
-        return message.channel.send('https://discord.gg/optimal');
+        return message.channel.send('https://discord.gg/S2azCgw');
     }
 
-    if (
-        message.content.toLowerCase().startsWith('!') &&
-        (isOwner || isAdmin || isModerator)
-    ) {
+    if (message.content.toLowerCase().startsWith('!') && (isOwner || isAdmin || isModerator)) {
         return gifs.handle(message);
     }
 
@@ -72,9 +66,7 @@ module.exports = async (client, message) => {
 
     const command =
         client.commands.get(commandName) ||
-        client.commands.find(
-            (cmd) => cmd.aliases && cmd.aliases.includes(commandName)
-        );
+        client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
 
     if (!command) return;
 
@@ -83,14 +75,10 @@ module.exports = async (client, message) => {
     }
 
     if (command.ownerOnly && !isOwner) {
-        await message.channel.send(
-            'https://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905'
-        );
+        await message.channel.send('https://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905');
 
         const dmChannel = await message.author.createDM();
-        return dmChannel.send(
-            `${prefix}${command.name} is only for the server owner`
-        );
+        return dmChannel.send(`${prefix}${command.name} is only for the server owner`);
     }
 
     const isHelpDeskCmd = () =>
@@ -99,35 +87,20 @@ module.exports = async (client, message) => {
         (isModerator || isAdmin || isOwner);
 
     if (!isHelpDeskCmd() && command.adminOnly && !isAdmin && !isOwner) {
-        await message.channel.send(
-            'https://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905'
-        );
+        await message.channel.send('https://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905');
 
         const dmChannel = await message.author.createDM();
         return dmChannel.send(`${prefix}${command.name} is for admins only`);
     }
 
-    if (
-        !isHelpDeskCmd() &&
-        command.moderatorOnly &&
-        !isModerator &&
-        !isAdmin &&
-        !isOwner
-    ) {
-        await message.channel.send(
-            'https://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905'
-        );
+    if (!isHelpDeskCmd() && command.moderatorOnly && !isModerator && !isAdmin && !isOwner) {
+        await message.channel.send('https://tenor.com/view/stop-stopit-mj-jordan-nope-gif-5098905');
 
         const dmChannel = await message.author.createDM();
-        return dmChannel.send(
-            `${prefix}${command.name} is for moderators only`
-        );
+        return dmChannel.send(`${prefix}${command.name} is for moderators only`);
     }
 
-    if (
-        command.boosterOnly &&
-        !(isBooster || isModerator || isAdmin || isOwner)
-    ) {
+    if (command.boosterOnly && !(isBooster || isModerator || isAdmin || isOwner)) {
         return await message.channel.send(
             `${prefix}${command.name} is a booster only command. Please boost the server to get access to it!`
         );
@@ -159,17 +132,12 @@ module.exports = async (client, message) => {
             command.subjectOnlyCoolDown &&
             !nonSubjectCategories.includes(message.channel.parentID)
         ) {
-            const expirationTime =
-                timestamps.get(message.author.id) + cooldownAmount;
+            const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
             if (now < expirationTime) {
                 const timeLeft = (expirationTime - now) / 60000;
                 return message.reply(
-                    `please wait ${timeLeft.toFixed(
-                        1
-                    )} more minute(s) before reusing the \`${
-                        command.name
-                    }\` command.`
+                    `please wait ${timeLeft.toFixed(1)} more minute(s) before reusing the \`${command.name}\` command.`
                 );
             }
         }

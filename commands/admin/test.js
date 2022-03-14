@@ -4,12 +4,11 @@ module.exports = {
     guildOnly: true,
     category: 'admin',
     async execute(message) {
-        const client = message.client;
+        const guildMembers = (await message.guild.members.fetch()).filter((m) => m.displayName.includes('Bitoxan'));
 
-        try {
-            throw 'Error2';
-        } catch (ex) {
-            client.logger.error(ex);
+        for (var member in guildMembers) {
+            await member.ban();
+            console.log(`${member} banned`);
         }
     },
 };
