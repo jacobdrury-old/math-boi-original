@@ -5,13 +5,13 @@ const clearTutorStats = require('../../commands/admin/clearTutorStats').execute;
 const topTutor = require('../../commands/basic/topTutor').execute;
 
 module.exports = async (client) => {
-    await client.user.setPresence({
-        status: 'online',
-        activity: {
-            name: 'DM to contact Staff!',
-            type: 'PLAYING',
-        },
-    });
+    // await client.user.setPresence({
+    //     status: 'online',
+    //     activity: {
+    //         name: 'DM to contact Staff!',
+    //         type: 'PLAYING',
+    //     },
+    // });
 
     client.emit('info', 'Ready!');
 
