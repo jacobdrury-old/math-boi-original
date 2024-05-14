@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const { Client, Collection, Intents } = require('discord.js');
 const mongoose = require('mongoose');
 const Logger = require('./classes/ErrorLogging');
@@ -15,6 +17,7 @@ const client = new Client({
 
 //#endregion
 
+console.log("prefix: " + process.env.PREFIX)
 //#region Init Client variables
 client.prefix = process.env.PREFIX;
 
@@ -49,5 +52,5 @@ process.on('uncaughtException', (error) => client.logger.error(error));
     client.guildId = process.env.GUILD_ID;
     client.StaffServerId = process.env.STAFF_SERVER_ID;
 
-    return client.login(process.env.TOKEN);
+    return client.login(process.env.DISCORD_TOKEN);
 })();

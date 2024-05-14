@@ -1,0 +1,7 @@
+services:
+  app:
+    build: .
+    environment:
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - DB_CONNECTION_STRING=${MONGO_URI}
+    restart: always
